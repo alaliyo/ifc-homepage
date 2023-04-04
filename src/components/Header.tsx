@@ -4,52 +4,76 @@ import { Link } from 'react-router-dom';
 function Header() {
     return(
         <HeaderBox>
-            <LinkBox>
-                <Link to={'/'}>IFC<span>(Hobby Pairing)</span></Link>
-            </LinkBox>
-            <LinkBox></LinkBox>
-    </HeaderBox>
+            <LinkBoxs>
+                <HomeTitle>
+                    <Link to={'/'}>열방교회</Link>
+                </HomeTitle>
+                <LinkBox>
+                    <Link to={'/login'}>
+                        login
+                    </Link>
+                </LinkBox>
+            </LinkBoxs>
+
+            <NavBox>
+
+            </NavBox>
+        </HeaderBox>
     );
 }
 
 export default Header;
 
 const HeaderBox = styled.header`
+    height: 100px;
+    width: 1020px;
+    padding: 0 10px;
+    margin: 0 auto;
+    @media screen and (max-width: 1020px) {
+        height: 100px;
+        width: 100%;
+        padding: 0px;
+    }
+`;
+
+const LinkBoxs = styled.div`
+    height: 50%;
+    padding-left: 15px;
+    padding-right: 15px;
     display: flex;
     justify-content: space-between;
-    height: 60px;
-    padding: 10px 15%;
-    @media screen and (max-width: 978px) {
-        padding-left: 10%;
-        padding-right: 10%;  
-    }
-    @media screen and (max-width: 768px) {
-        padding-left: 5%;
-        padding-right: 5%;  
-    }
-    @media screen and (max-width: 600px) {
-        padding-left: 10px;
-        padding-right: 0;  
+`;
+
+const HomeTitle = styled.div`
+    display: flex;
+    align-items: center;
+    a {
+        color: #ffffff;
+        font-weight: 900;
+        text-shadow: 1px 1px 4px #808080, -1px -1px 4px #808080;
+        font-size: 25px;
+        text-decoration: none;
     }
 `;
 
 const LinkBox = styled.div`
-        display: flex;
-        align-items: center;
+    display: flex;
+    align-items: center;
     a {
-        font-weight: 900;
-        font-size: 20px;
-        color: #ad4fd8;
-        margin-right: 20px;
+        font-size: 16px;
+        color: #ffffff;
+        text-shadow: 1px 1px 4px #808080, -1px -1px 4px #808080;
         display: block;
         text-decoration: none;
         &:hover {
-            color: #e3a8ff;
-            text-shadow: -2px 0 #000, 0 2px #000, 2px 0 #000, 0 -2px #000;
-            transition: .3s;
-        }
-        span {
-            font-size: 14px;
+            text-decoration: underline;
         }
     }
+
+`;
+
+const NavBox = styled.nav`
+    height: 50%;
+    background-color: #363636c9;
+    box-shadow: 1px 1px 2px #808080, -1px -1px 2px #808080;
 `;
