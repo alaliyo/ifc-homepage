@@ -52,9 +52,10 @@ const OffcanvaBtn = styled(Button)`
     --bs-btn-bg: none;
     --bs-btn-border-color: none;
     --bs-btn-hover-bg: none;
+    text-shadow: 1px 1px 4px #757575, -1px -1px 4px #757575;
+    font-weight: 900;
     &:hover{
-        font-weight: 900;
-        text-shadow: -2px 0 #000, 0 2px #000, 2px 0 #000, 0 -2px #000;
+        text-shadow: 1px 1px 3px #3d3d3d, -1px -1px 3px #3d3d3d;
     }
 `;
 

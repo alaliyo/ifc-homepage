@@ -6,12 +6,16 @@ export interface WindowSize {
     WindowSize: number
 }
 
+interface HomeTitleProps {
+    isActive: boolean;
+  }
+
 function Header({ WindowSize }: WindowSize) {
     
     return(
         <HeaderBox>
             <LinkBoxs>
-                <HomeTitle>
+                <HomeTitle isActive={WindowSize > 650}>
                     <Link to={'/'}>열방교회</Link>
                 </HomeTitle>
                 <LinkBox>
@@ -79,14 +83,14 @@ const LinkBoxs = styled.div`
     }
 `;
 
-const HomeTitle = styled.div`
+const HomeTitle = styled.div<HomeTitleProps>`
     display: flex;
     align-items: center;
     a {
         color: #ffffff;
         font-weight: 900;
         text-shadow: 1px 1px 4px #808080, -1px -1px 4px #808080;
-        font-size: 25px;
+        font-size: ${p => p.isActive ? '25px' : '20px'};
         text-decoration: none;
     }
 `;
