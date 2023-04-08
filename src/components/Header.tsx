@@ -1,20 +1,13 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
+import Offcanva from "./Offcanva";
 
-function Header() {
-    const [windowWidth, setwindowWidth] = useState(window.innerWidth);
+export interface WindowSize {
+    WindowSize: number
+}
 
-    useEffect(() => {
-        const handleResize = () => {
-            setwindowWidth(window.innerWidth);
-        }
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, [])
-
-    console.log(windowWidth)
-
+function Header({ WindowSize }: WindowSize) {
+    
     return(
         <HeaderBox>
             <LinkBoxs>
@@ -22,29 +15,35 @@ function Header() {
                     <Link to={'/'}>열방교회</Link>
                 </HomeTitle>
                 <LinkBox>
-                    <Link to={'/login'}>
-                        login
-                    </Link>
+                    {WindowSize <= 650 ? (
+                        <Offcanva />
+                    ) : (
+                        <Link to={'/login'}>
+                            login
+                        </Link>
+                    )}
+
                 </LinkBox>
             </LinkBoxs>
-
-            <NavBox>
-                <Link to={'/introduction'}>
-                    {windowWidth <= 825 ? '소게' : '교회소개' }
-                </Link>
-                <Link to={'/schedule'}>
-                    {windowWidth <= 825 ? '일정' : '교회일정' }
-                </Link>
-                <Link to={'/youtube'}>
-                    {windowWidth <= 825 ? '유튜브' : '교회 유튜브' }
-                </Link>
-                <Link to={'/ministry'}>
-                    {windowWidth <= 825 ? '사역' : '교회학교 및 훈련사역' }
-                </Link>
-                <Link to={'/mission'}>
-                    {windowWidth <= 825 ? '선교' : '전도 및 선교' }
-                </Link>
-            </NavBox>
+            {WindowSize > 650 && (
+                <NavBox>
+                    <Link to={'/introduction'}>
+                        {WindowSize <= 825 ? '소게' : '교회소개' }
+                    </Link>
+                    <Link to={'/schedule'}>
+                        {WindowSize <= 825 ? '일정' : '교회일정' }
+                    </Link>
+                    <Link to={'/youtube'}>
+                        {WindowSize <= 825 ? '유튜브' : '교회 유튜브' }
+                    </Link>
+                    <Link to={'/ministry'}>
+                        {WindowSize <= 825 ? '사역' : '교회학교 및 훈련사역' }
+                    </Link>
+                    <Link to={'/mission'}>
+                        {WindowSize <= 825 ? '선교' : '전도 및 선교' }
+                    </Link>
+                </NavBox>
+            )}
         </HeaderBox>
     );
 }
