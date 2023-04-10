@@ -54,7 +54,7 @@ const StyledCarousel = styled(Carousel)`
         height: 0;
     }
     @media screen and (max-width: 650px) {
-        width: 100%; /* 웹 창 가로폭에 맞게 조정됩니다. */
+        width: 100%;
         height: 200px;
         img {
             width: 100%;

@@ -45,16 +45,6 @@ const StyledCarousel = styled(Carousel)`
         height: 600px;
         object-fit: cover;
     }
-
-    .carousel-indicators {
-        width: 0;
-        height: 0;
-    }
-
-    div > div > a {
-        width: 0;
-        height: 0;
-    }
     @media screen and (max-width: 650px) {
         width: 100%; /* 웹 창 가로폭에 맞게 조정됩니다. */
         height: auto; /* 이미지 비율이 유지됩니다. */

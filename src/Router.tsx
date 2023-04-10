@@ -7,6 +7,12 @@ import Schedule from './pages/Schedule';
 import Youtube from './pages/Youtube';
 import Ministry from './pages/Ministry';
 import Mission from './pages/Mission';
+import Vision from "./components/Introductoin/Vision";
+import History from "./components/Introductoin/History";
+import Pastor from "./components/Introductoin/Pastor";
+import Pastors from "./components/Introductoin/Pastors";
+import Elder from "./components/Introductoin/Elder";
+import SketchMap from "./components/Introductoin/SketchMap";
 
 const router = createBrowserRouter([
     {
@@ -15,31 +21,57 @@ const router = createBrowserRouter([
         children: [
             {
                 path: ``,
-                element: <Home />
+                element: <Home />,
             },
             {
                 path: `logIn`,
-                element: <LogIn />
+                element: <LogIn />,
             },
             {
                 path: `introduction`,
-                element: <Introduction />
+                element: <Introduction />,
+                children: [
+                    {
+                        path: 'vision',
+                        element: <Vision />
+                    },
+                    {
+                        path: 'history',
+                        element: <History />
+                    },
+                    {
+                        path: 'pastor',
+                        element: <Pastor />
+                    },
+                    {
+                        path: 'pastors',
+                        element: <Pastors />
+                    },
+                    {
+                        path: 'elder',
+                        element: <Elder />
+                    },
+                    {
+                        path: 'sketch-map',
+                        element: <SketchMap />
+                    },
+                ],
             },
             {
                 path: `schedule`,
-                element: <Schedule />
+                element: <Schedule />,
             },
             {
                 path: `youtube`,
-                element: <Youtube />
+                element: <Youtube />,
             },
             {
                 path: `ministry`,
-                element: <Ministry />
+                element: <Ministry />,
             },
             {
                 path: `mission`,
-                element: <Mission />
+                element: <Mission />,
             },
         ]
     }

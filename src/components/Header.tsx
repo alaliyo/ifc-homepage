@@ -12,6 +12,7 @@ interface HomeTitleProps {
 
 function Header({ WindowSize }: WindowSize) {
     
+    
     return(
         <HeaderBox>
             <LinkBoxs>
@@ -26,13 +27,12 @@ function Header({ WindowSize }: WindowSize) {
                             login
                         </Link>
                     )}
-
                 </LinkBox>
             </LinkBoxs>
             {WindowSize > 650 && (
                 <NavBox>
-                    <Link to={'/introduction'}>
-                        {WindowSize <= 825 ? '소게' : '교회소개' }
+                    <Link to={'/introduction'} >
+                        {WindowSize <= 825 ? '소개' : '교회소개' }
                     </Link>
                     <Link to={'/schedule'}>
                         {WindowSize <= 825 ? '일정' : '교회일정' }
