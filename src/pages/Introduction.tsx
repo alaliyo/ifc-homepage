@@ -13,7 +13,6 @@ function Introduction() {
                     <Outlet />
                 </OutletBox>
             </IntroductionBox>
-            
         </>
     );
 }

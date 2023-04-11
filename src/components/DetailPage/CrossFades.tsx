@@ -1,33 +1,49 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Carousel } from 'react-bootstrap';
-import img1 from '../../imgs/FadesImg1.png';
-import img2 from '../../imgs/FadesImg2.png';
-import img3 from '../../imgs/FadesImg3.png';
+import { ref, listAll, getDownloadURL  } from "firebase/storage";
+import { storage } from "../../friebase";
 
 function CrossFades() {
+    const [imgList, setImgList] = useState<string[]>([]);
+
+    useEffect(() => {   
+        // 로컬스토리지에서 이미지 URL 가져오기
+        const storedImgList = localStorage.getItem('FadesImgList');
+        if (storedImgList) {
+            setImgList(JSON.parse(storedImgList));
+        } else {
+            const storageRef = ref(storage, "FadesImg"); // 이미지 경로
+            
+            listAll(storageRef)
+                .then(async (result) => {
+                    const urls: string[] = [];
+                    for (let i = 0; i < result.items.length; i++) {
+                        const item = result.items[i];
+                        const url = await getDownloadURL(item); // 파일의 다운로드 URL 가져오기
+                        urls.push(url); // 배열에 URL 추가
+                    }
+                    setImgList(urls); // 상태 업데이트
+                    // 이미지 URL을 로컬스토리지에 저장
+                    localStorage.setItem('FadesImgList', JSON.stringify(urls));
+                })
+                .catch((error) => {
+                    console.error("사진 가져오기 실패:", error);
+                });
+        }
+    }, []);
+
     return(
         <StyledCarousel fade>
-            <Carousel.Item>
+            {imgList.map((e, i) => (
+                <Carousel.Item key={i}>
                 <img
                 className="d-block w-100"
-                src={img1}
+                src={e}
                 alt=""
                 />
             </Carousel.Item>
-            <Carousel.Item>
-                <img
-                className="d-block w-100"
-                src={img2}
-                alt=""
-                />
-            </Carousel.Item>
-            <Carousel.Item>
-                <img
-                className="d-block w-100"
-                src={img3}
-                alt=""
-                />
-            </Carousel.Item>
+            ))}
         </StyledCarousel>
     );
 }

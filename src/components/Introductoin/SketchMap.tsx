@@ -17,6 +17,7 @@ function SketchMap() {
     const options = { //지도를 생성할 때 필요한 기본 옵션
         center: mapPosition, //지도의 중심좌표.
         level: 2, //지도의 레벨(확대, 축소 정도)
+        draggable: false, //이동 제한
     };
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
@@ -81,6 +82,12 @@ const Title = styled.h3`
   margin: 20px 0;
   margin-left: 30px;
   font-weight: 900;
+  @media screen and (max-width: 650px) {
+    margin: 15px 0;
+    width: 100%;
+    font-size: 17px;
+    text-align: center;
+  }
 `;
 
 const Map = styled.div`
@@ -89,6 +96,11 @@ const Map = styled.div`
   margin: 10px auto;
   border: 2px solid gray;
   border-radius: 15px;
+  @media screen and (max-width: 650px) {
+    margin: 0 0;
+    width: 100%;
+    height: 250px;
+  }
 `;
 
 const TextBox = styled.div`
@@ -99,5 +111,8 @@ const TextBox = styled.div`
     font-size: 18px;
     font-weight: 900;
     text-align: center;
+    @media screen and (max-width: 650px) {
+      font-size: 13px;
+    }
   }
 `;

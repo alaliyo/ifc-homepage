@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "./Root";
 import Home from "./pages/Home";
+import CrossFade from './components/Home/CrossFade';
 import LogIn from './pages/LogIn';
 import Introduction from "./pages/Introduction";
 import Schedule from './pages/Schedule';

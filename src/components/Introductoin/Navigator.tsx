@@ -41,6 +41,9 @@ const NavBox = styled.nav`
         display: block;
         text-decoration: none;
         font-weight: 900;
+        @media screen and (max-width: 650px) {
+            font-size: 13px;
+        }
         :hover {
             color: #ffffff;
             background-color: #7c7c7c;
@@ -52,4 +55,7 @@ const NavBox = styled.nav`
 const Title = styled.h5`
     font-weight: 900;
     margin-bottom: 20px;
+    @media screen and (max-width: 650px) {
+        font-size: 13px;
+    }
 `;
