@@ -35,7 +35,7 @@ function CrossFades() {
 export default CrossFades;
 
 const StyledCarousel = styled(Carousel)`
-    width: 100%;
+    width: 99.99%;
     height: 300px;
     top: 0;
     left: 0;
