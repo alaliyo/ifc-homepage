@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 
-declare global {
+declare global { //타입 선언
   interface Window {
     kakao: any;
   }
 }
 
-const { kakao } = window;
+const { kakao } = window; //window 객체에서 kakao라는 속성을 추출
 
 function SketchMap() {
   useEffect(() => {
-    const mapPosition = new kakao.maps.LatLng(35.41155, 129.1747);
+    const mapPosition = new kakao.maps.LatLng(35.41155, 129.1747); //좌표
   
     const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
     const options = { //지도를 생성할 때 필요한 기본 옵션
@@ -25,11 +25,10 @@ function SketchMap() {
       position: mapPosition,
     });
 
-    const zoomControl = new kakao.maps.ZoomControl();
+    const zoomControl = new kakao.maps.ZoomControl(); //확대 축소 컨트롤
       map.addControl(zoomControl, window.kakao.maps.ControlPosition.BOTTOMRIGHT); // 제어 UI의 위치 설정
 
-      // 커스텀 오버레이 생성
-    const customOverlay = new kakao.maps.CustomOverlay({
+    const customOverlay = new kakao.maps.CustomOverlay({ // 커스텀 오버레이 생성
       map: map,
       content: `
       <div style="position:relative;">
@@ -46,11 +45,17 @@ function SketchMap() {
       yAnchor: 2.5, // 오버레이의 세로 위치 설정
     });
 
-    // 마커 클릭 시 이벤트 처리
-    kakao.maps.event.addListener(marker, 'click', () => {
-      // 카카오 맵으로 길찾기 팝업 띄우기
+    const handleMarkerClick = () => { //클릭 시 page url 반환
       window.open(`https://map.kakao.com/link/search/경남 양산시 삼호동부6길 18`);
-    });
+    };
+
+    // 마커 클릭 시 이벤트 처리
+    kakao.maps.event.addListener(marker, 'click', handleMarkerClick);
+
+    // 클린업 함수를 활용하여 이벤트 리스너 제거
+    return () => {
+      kakao.maps.event.removeListener(marker, 'click', handleMarkerClick);
+    };
 
   }, []);
   
