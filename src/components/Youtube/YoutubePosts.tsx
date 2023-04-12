@@ -95,8 +95,7 @@ const PostsHeader = styled.header`
 const Title = styled.h3`
     width: 100px;
     @media screen and (max-width: 650px) {
-        font-size: 0;
-        width: 0;
+        font-size: 15px;
     }
 `;
 

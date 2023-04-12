@@ -29,14 +29,12 @@ function PostDetail() {
             <LinkBox>
                 <Link to="/youtube/posts">←목록으로</Link>
             </LinkBox>
-            <iframe 
-                width="560"
-                height="315"
+            <PostIframe 
                 src={post?.url}
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen>
-            </iframe>
+            </PostIframe>
             <h4>제목: {post?.title}</h4>
             <h5>말씀: {post?.bibleVerse}</h5>
         </PostDetailBox>
@@ -56,10 +54,22 @@ const PostDetailBox = styled.div`
     h4 {
         margin-top: 10px;
         font-weight: 900;
+        @media screen and (max-width: 650px) {
+            font-size: 14px;
+            margin-top: 5px;
+        }
     }
     h5 {
         margin-top: 10px;
         font-weight: 900;
+        @media screen and (max-width: 650px) {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    }
+    @media screen and (max-width: 650px) {
+        padding: 20px 2px;
+        font-size: 13px;
     }
 `;
 
@@ -69,5 +79,18 @@ const LinkBox = styled.div`
         color: gray;
         text-decoration: none;
         font-weight: 900;
+    }
+`;
+
+const PostIframe = styled.iframe`
+    width: 560px;
+    height: 315px;
+    @media screen and (max-width: 950px) {
+        width: 460px;
+        height: 252px;
+    }
+    @media screen and (max-width: 650px) {
+        width: 230px;
+        height: 126px;
     }
 `;
