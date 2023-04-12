@@ -4,24 +4,9 @@ import { Link } from 'react-router-dom';
 function Navigator() {
     return(
         <NavBox>
-            <Title>교회소개</Title>
-            <Link to={'vision'}>
-                교회 비전
-            </Link>
-            <Link to={'history'}>
-                교회 연혁
-            </Link>
-            <Link to={'pastor'}>
-                담임 목사
-            </Link>
-            <Link to={'pastors'}>
-                교역자
-            </Link>
-            <Link to={'elder'}>
-                장로
-            </Link>
-            <Link to={'sketch-map'}>
-                교회 약도
+            <Title>유튜브</Title>
+            <Link to={'posts'}>
+                2023
             </Link>
         </NavBox>
     );

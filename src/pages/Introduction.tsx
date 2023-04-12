@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import { Outlet } from 'react-router-dom';
 import CrossFades from "../components/DetailPage/CrossFades";
-import Navigator from '../components/Introductoin/Navigator';
+import NavIntroductoin from '../components/Introductoin/NavIntroductoin';
 
 function Introduction() {
     return(
         <>
             <CrossFades />
             <IntroductionBox>
-                <Navigator />
+                <NavIntroductoin />
                 <OutletBox>
                     <Outlet />
                 </OutletBox>

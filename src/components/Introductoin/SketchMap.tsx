@@ -29,7 +29,7 @@ function SketchMap() {
     const zoomControl = new kakao.maps.ZoomControl(); //확대 축소 컨트롤
       map.addControl(zoomControl, window.kakao.maps.ControlPosition.BOTTOMRIGHT); // 제어 UI의 위치 설정
 
-    const customOverlay = new kakao.maps.CustomOverlay({ // 커스텀 오버레이 생성
+    new kakao.maps.CustomOverlay({ // 커스텀 오버레이 생성
       map: map,
       content: `
       <div style="position:relative;">

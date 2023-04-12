@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "./Root";
 import Home from "./pages/Home";
-import CrossFade from './components/Home/CrossFade';
 import LogIn from './pages/LogIn';
 import Introduction from "./pages/Introduction";
 import Schedule from './pages/Schedule';
 import Youtube from './pages/Youtube';
+import YoutubePosts from "./components/Youtube/YoutubePosts";
+import PostDetail from "./components/Youtube/PostDetail";
 import Ministry from './pages/Ministry';
 import Mission from './pages/Mission';
 import Vision from "./components/Introductoin/Vision";
@@ -65,6 +66,16 @@ const router = createBrowserRouter([
             {
                 path: `youtube`,
                 element: <Youtube />,
+                children: [
+                    {
+                        path: 'posts',
+                        element: <YoutubePosts />,
+                    },
+                    {
+                        path: 'detail/:postsId',
+                        element: <PostDetail />,
+                    },
+                ],
             },
             {
                 path: `ministry`,

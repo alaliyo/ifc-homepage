@@ -31,13 +31,13 @@ function Header({ WindowSize }: WindowSize) {
             </LinkBoxs>
             {WindowSize > 650 && (
                 <NavBox>
-                    <Link to={'/introduction'} >
+                    <Link to={'/introduction/vision'} >
                         {WindowSize <= 825 ? '소개' : '교회소개' }
                     </Link>
                     <Link to={'/schedule'}>
                         {WindowSize <= 825 ? '일정' : '교회일정' }
                     </Link>
-                    <Link to={'/youtube'}>
+                    <Link to={'/youtube/posts'}>
                         {WindowSize <= 825 ? '유튜브' : '교회 유튜브' }
                     </Link>
                     <Link to={'/ministry'}>
