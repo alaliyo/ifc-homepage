@@ -15,11 +15,16 @@ interface Props {//객체를 배열로 감쌈
     postsDate: Array<postsData>
 }
 
+interface WindowSize {
+    windowWidth: number
+}
+
 function YoutubePosts() {
     const { postsDate } = useOutletContext<Props>(); //포스트 데이터를 부모에서 받음
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [postsPerPage] = useState(15); // 한 페이지당 보여질 게시물 수
     const [totalPages] = useState(Math.max(1, Math.ceil(postsDate.length / postsPerPage))); // 총 페이지 수
+    const { windowWidth } = useOutletContext<WindowSize>();
 
     // 페이지 변경 시 호출되는 함수
     const handlePageChange = (pageNumber: number) => {
@@ -44,7 +49,7 @@ function YoutubePosts() {
     return(
         <PostsBox>
             <PostsHeader>
-                <Title>목록</Title>
+                {windowWidth > 650 && <Title>목록</Title>}
                 {/*
                 <InputBox className="mb-3">
                     <Form.Control
@@ -85,6 +90,10 @@ export default YoutubePosts;
 const PostsBox = styled.div`
     width: 80%;
     padding: 20px;
+    @media screen and (max-width: 650px) {
+        width: 100%;
+        padding: 5px;
+    }
 `;
 
 const PostsHeader = styled.header`
@@ -137,7 +146,9 @@ const PostsBody = styled.div`
             }
         }
     }
-
+    @media screen and (max-width: 650px) {
+        border-top: none;
+    }
 `;
 
 const Pagination = styled.div`

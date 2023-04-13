@@ -76,6 +76,9 @@ function SketchMap() {
 export default SketchMap;
 
 const SketchMapBox = styled.div`
+@media screen and (max-width: 650px) {
+    padding: 5px;
+  }
 `
 
 const Title = styled.h3`

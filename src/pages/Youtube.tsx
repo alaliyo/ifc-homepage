@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Outlet } from 'react-router-dom';
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
-import CrossFades from "../components/DetailPage/CrossFades";
+import CrossFades from "../components/generally/CrossFades";
 import NavYoutube from '../components/Youtube/NavYoutube';
 import { dbService } from '../friebase';
 
@@ -53,5 +53,8 @@ const YoutubeBox = styled.div`
     @media screen and (max-width: 1020px) {
         margin: 0 0;
         width: 100%;
+    }
+    @media screen and (max-width: 650px) {
+        display: grid;
     }
 `;

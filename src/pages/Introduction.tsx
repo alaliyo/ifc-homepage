@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Outlet } from 'react-router-dom';
-import CrossFades from "../components/DetailPage/CrossFades";
+import CrossFades from "../components/generally/CrossFades";
 import NavIntroductoin from '../components/Introductoin/NavIntroductoin';
 
 function Introduction() {
@@ -27,8 +27,14 @@ const IntroductionBox = styled.div`
         margin: 0 0;
         width: 100%;
     }
+    @media screen and (max-width: 650px) {
+        display: grid;
+    }
 `;
 
 const OutletBox = styled.div`
     width: 80%;
+    @media screen and (max-width: 650px) {
+        width: 100%;
+    }
 `;

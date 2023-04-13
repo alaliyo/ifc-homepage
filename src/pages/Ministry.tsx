@@ -1,4 +1,4 @@
-import CrossFades from "../components/DetailPage/CrossFades";
+import CrossFades from "../components/generally/CrossFades";
 
 function Ministry() {
     return(

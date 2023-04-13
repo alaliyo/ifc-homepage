@@ -25,20 +25,23 @@ function Offcanva() {
                 </LinkStyle>
             </Offcanvas.Header>
             <Offcanvas.Body>
-                <LinkStyle to={'/introduction'} onClick={onClick}>
+                <LinkStyle to={'/introduction/vision'} onClick={onClick}>
                     교회소개
                 </LinkStyle>
                 <LinkStyle to={'/schedule'} onClick={onClick}>
                     교회일정
                 </LinkStyle>
-                <LinkStyle to={'/youtube'} onClick={onClick}>
+                <LinkStyle to={'/youtube/posts'} onClick={onClick}>
                     교회 유튜브
                 </LinkStyle>
                 <LinkStyle to={'/ministry'} onClick={onClick}>
-                    교회학교 및 훈련사역
+                    교회 사역
                 </LinkStyle>
                 <LinkStyle to={'/mission'} onClick={onClick}>
                     전도 및 선교
+                </LinkStyle>
+                <LinkStyle to={'/login'} onClick={onClick}>
+                    관리자 로그인
                 </LinkStyle>
             </Offcanvas.Body>
         </OffcanvaBox>
@@ -74,5 +77,8 @@ const LinkStyle = styled(Link)`
     :hover {
         color: white;
         font-weight: 900;
+    }
+    @media screen and (max-width: 400px) {
+        font-size: 13px;
     }
 `

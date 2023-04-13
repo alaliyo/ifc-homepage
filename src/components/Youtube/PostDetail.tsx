@@ -29,7 +29,9 @@ function PostDetail() {
             <LinkBox>
                 <Link to="/youtube/posts">←목록으로</Link>
             </LinkBox>
-            <PostIframe 
+            <PostIframe
+                width="100%"
+                height="100%"
                 src={post?.url}
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -68,8 +70,9 @@ const PostDetailBox = styled.div`
         }
     }
     @media screen and (max-width: 650px) {
-        padding: 20px 2px;
+        padding: 5px;
         font-size: 13px;
+        width: 100%;
     }
 `;
 
@@ -83,14 +86,12 @@ const LinkBox = styled.div`
 `;
 
 const PostIframe = styled.iframe`
-    width: 560px;
-    height: 315px;
-    @media screen and (max-width: 950px) {
-        width: 460px;
-        height: 252px;
+    width: 100%;
+    height: 100%;
+    @media screen and (max-width: 900px) {
+        height: 330px;
     }
     @media screen and (max-width: 650px) {
-        width: 230px;
-        height: 126px;
+        height: 100%;
     }
 `;
