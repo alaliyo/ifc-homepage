@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import Offcanva from "./Offcanva";
+import Logo from '../imgs/IFC-Logo.png';
 
 export interface WindowSize {
     WindowSize: number
@@ -17,7 +18,13 @@ function Header({ WindowSize }: WindowSize) {
         <HeaderBox>
             <LinkBoxs>
                 <HomeTitle isActive={WindowSize > 650}>
-                    <Link to={'/'}>열방교회</Link>
+                    <Link to={'/'}>
+                        <div>
+                            <img src={Logo} alt='' />
+                            <span>대한예수교장로회</span> 
+                        </div>
+                        열 방 교 회
+                    </Link>
                 </HomeTitle>
                 <LinkBox>
                     {WindowSize <= 650 ? (
@@ -86,12 +93,23 @@ const LinkBoxs = styled.div`
 const HomeTitle = styled.div<HomeTitleProps>`
     display: flex;
     align-items: center;
+    margin-top: -10px;
     a {
         color: #ffffff;
         font-weight: 900;
         text-shadow: 1px 1px 4px #808080, -1px -1px 4px #808080;
         font-size: ${p => p.isActive ? '25px' : '20px'};
         text-decoration: none;
+        img {
+            width: 20px;
+            height: 20px;
+        }
+        span {
+            font-size: 12px;
+            @media screen and (max-width: 650px) {
+                font-size: 10px;
+            }
+        }
     }
 `;
 
