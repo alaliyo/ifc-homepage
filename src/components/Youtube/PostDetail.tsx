@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useOutletContext, useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
+import History from './../Introductoin/History';
 
 interface PostsData {
     postId: number,
@@ -29,14 +30,16 @@ function PostDetail() {
             <LinkBox>
                 <Link to="/youtube/posts">←목록으로</Link>
             </LinkBox>
-            <PostIframe
-                width="100%"
-                height="100%"
-                src={post?.url}
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen>
-            </PostIframe>
+            <PostBox>
+                <PostIframe
+                    width="100%"
+                    height="100%"
+                    src={post?.url}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen>
+                </PostIframe>
+            </PostBox>
             <h4>제목: {post?.title}</h4>
             <h5>말씀: {post?.bibleVerse}</h5>
         </PostDetailBox>
@@ -46,18 +49,14 @@ function PostDetail() {
 export default PostDetail;
 
 const PostDetailBox = styled.div`
-    width: 80%;
     padding: 20px;
+    width: 80%;
     text-align: center;
-
-    iframe {
-        margin: 10px 0;
-    }
     h4 {
         margin-top: 10px;
         font-weight: 900;
         @media screen and (max-width: 650px) {
-            font-size: 14px;
+            font-size: 15px;
             margin-top: 5px;
         }
     }
@@ -65,13 +64,12 @@ const PostDetailBox = styled.div`
         margin-top: 10px;
         font-weight: 900;
         @media screen and (max-width: 650px) {
-            font-size: 12px;
+            font-size: 15px;
             margin-top: 5px;
         }
     }
     @media screen and (max-width: 650px) {
         padding: 5px;
-        font-size: 13px;
         width: 100%;
     }
 `;
@@ -85,13 +83,32 @@ const LinkBox = styled.div`
     }
 `;
 
-const PostIframe = styled.iframe`
+const PostBox = styled.div`
     width: 100%;
-    height: 100%;
+    height: 436px;
     @media screen and (max-width: 900px) {
-        height: 330px;
+        height: 350px;
     }
     @media screen and (max-width: 650px) {
-        height: 100%;
+        height: 350px;
+    }
+    @media screen and (max-width: 550px) {
+        height: 320px;
+    }
+    @media screen and (max-width: 400px) {
+        height: 220px;
+    }
+`;
+
+const PostIframe = styled.iframe`
+    width: 100%;
+    @media screen and (max-width: 650px) {
+        height: 330px;
+    }
+    @media screen and (max-width: 550px) {
+        height: 300px;
+    }
+    @media screen and (max-width: 400px) {
+        height: 200px;
     }
 `;

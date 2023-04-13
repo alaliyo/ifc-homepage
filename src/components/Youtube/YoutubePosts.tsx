@@ -187,6 +187,7 @@ const GoBun = styled.button`
     margin: 0 2px;
     border-radius: 5px;
     transition: 0.3s;
+    color: black;
     :hover {
         background-color: #adadad;
         color: white;

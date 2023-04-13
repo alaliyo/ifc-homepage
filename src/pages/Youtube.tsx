@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Outlet } from 'react-router-dom';
+import { Outlet, useOutletContext } from 'react-router-dom';
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import CrossFades from "../components/generally/CrossFades";
 import NavYoutube from '../components/Youtube/NavYoutube';
@@ -14,8 +14,13 @@ interface PostsData {
     bibleVerse:string,
 }
 
+interface WindowSize {
+    windowWidth: number
+}
+
 function Youtube() {
     const [postsDate, setpostsDate] = useState<Array<PostsData>>([]);
+    const { windowWidth } = useOutletContext<WindowSize>();
 
     // Get 게시물
     useEffect(() => {
@@ -38,6 +43,7 @@ function Youtube() {
                 <NavYoutube />
                 <Outlet context={{
                     postsDate: postsDate,
+                    windowWidth: windowWidth,
                 }} />
             </YoutubeBox>
         </>
