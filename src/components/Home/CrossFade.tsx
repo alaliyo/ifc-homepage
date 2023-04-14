@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Carousel } from 'react-bootstrap';
 import { ref, listAll, getDownloadURL  } from "firebase/storage";
-import { storage } from "../../friebase";
+import { storage } from "../../firebase";
 
 function CrossFade() {
     const [imgList, setImgList] = useState<string[]>([]);

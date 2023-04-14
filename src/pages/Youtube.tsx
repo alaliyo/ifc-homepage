@@ -4,7 +4,7 @@ import { Outlet, useOutletContext } from 'react-router-dom';
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import CrossFades from "../components/generally/CrossFades";
 import NavYoutube from '../components/Youtube/NavYoutube';
-import { dbService } from '../friebase';
+import { dbService } from '../firebase';
 
 interface PostsData {
     postId: number,
@@ -14,13 +14,15 @@ interface PostsData {
     bibleVerse:string,
 }
 
-interface WindowSize {
-    windowWidth: number
+interface YoutubeProps {
+    windowWidth: number;
+    loggedIn: boolean;
 }
 
 function Youtube() {
     const [postsDate, setpostsDate] = useState<Array<PostsData>>([]);
-    const { windowWidth } = useOutletContext<WindowSize>();
+    const { windowWidth } = useOutletContext<YoutubeProps>();
+    const { loggedIn } = useOutletContext<YoutubeProps>();
 
     // Get 게시물
     useEffect(() => {
@@ -44,6 +46,7 @@ function Youtube() {
                 <Outlet context={{
                     postsDate: postsDate,
                     windowWidth: windowWidth,
+                    loggedIn: loggedIn,
                 }} />
             </YoutubeBox>
         </>

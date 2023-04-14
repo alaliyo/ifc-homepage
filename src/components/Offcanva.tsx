@@ -1,15 +1,26 @@
 import { useState  } from 'react';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Button, Offcanvas } from 'react-bootstrap';
-import styled from 'styled-components';
+import { authService } from '../firebase';
 
-function Offcanva() {
+interface OffcanvaProps {
+    loggedIn: boolean;
+}
+
+function Offcanva({ loggedIn }: OffcanvaProps) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const onClick = () => {
         setShow(false)
+    }
+
+    const onLogOutClick = () => {
+        authService.signOut();
+        alert("로그아웃 되었습니다.")
+        window.location.href="/"
     }
 
     return(
@@ -40,9 +51,16 @@ function Offcanva() {
                 <LinkStyle to={'/mission'} onClick={onClick}>
                     전도 및 선교
                 </LinkStyle>
-                <LinkStyle to={'/login'} onClick={onClick}>
-                    관리자 로그인
-                </LinkStyle>
+                {loggedIn ? (
+                    <LinkStyle to={'/'} onClick={onLogOutClick}>
+                        로그아웃
+                    </LinkStyle>
+                ) : (
+                    <LinkStyle to={'/login'} onClick={onClick}>
+                        관리자 로그인
+                    </LinkStyle>
+                )}
+
             </Offcanvas.Body>
         </OffcanvaBox>
       </>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Link, useOutletContext } from 'react-router-dom';
-import { Button, Form, InputGroup } from 'react-bootstrap';
+// import { Button, Form, InputGroup } from 'react-bootstrap';
 
 interface postsData { //객체 타입
     postId: number,
@@ -15,8 +15,9 @@ interface Props {//객체를 배열로 감쌈
     postsDate: Array<postsData>
 }
 
-interface WindowSize {
-    windowWidth: number
+interface YoutubePostsProps {
+    windowWidth: number;
+    loggedIn: boolean;
 }
 
 function YoutubePosts() {
@@ -24,7 +25,8 @@ function YoutubePosts() {
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [postsPerPage] = useState(15); // 한 페이지당 보여질 게시물 수
     const [totalPages] = useState(Math.max(1, Math.ceil(postsDate.length / postsPerPage))); // 총 페이지 수
-    const { windowWidth } = useOutletContext<WindowSize>();
+    const { windowWidth } = useOutletContext<YoutubePostsProps>();
+    const { loggedIn } = useOutletContext<YoutubePostsProps>();
 
     // 페이지 변경 시 호출되는 함수
     const handlePageChange = (pageNumber: number) => {
@@ -48,6 +50,8 @@ function YoutubePosts() {
 
     return(
         <PostsBox>
+            {loggedIn && <Writin to="/youtube/writin-post" >글 작성</Writin> }
+            
             <PostsHeader>
                 {windowWidth > 650 && <Title>목록</Title>}
                 {/*
@@ -96,6 +100,12 @@ const PostsBox = styled.div`
     }
 `;
 
+const Writin = styled(Link)`
+    color: black;
+    font-weight: 900;
+    text-decoration: none;
+`;
+
 const PostsHeader = styled.header`
     display: flex;
     justify-content: space-between; 
@@ -108,7 +118,7 @@ const Title = styled.h3`
     }
 `;
 
-const InputBox = styled(InputGroup)`
+/* const InputBox = styled(InputGroup)`
     width: 300px;
     input {
         height: 30px;
@@ -119,7 +129,7 @@ const InputBox = styled(InputGroup)`
         height: 30px;
         padding: 0 15px;
     }
-`;
+`; */
 
 const PostsBody = styled.div`
     border-top: 2px solid gray;

@@ -1,13 +1,13 @@
 import CrossFade from './../components/Home/CrossFade';
-import { useOutletContext } from "react-router-dom";
+//import { useOutletContext } from "react-router-dom";
 
-interface WindowSize {
+/*interface WindowSize {
     windowWidth: number
-}
+}*/
 
 function Home() {
-    const { windowWidth } = useOutletContext<WindowSize>();
-    console.log('home', windowWidth)
+    //const { windowWidth } = useOutletContext<WindowSize>();
+
     return(
         <div>
             <CrossFade />

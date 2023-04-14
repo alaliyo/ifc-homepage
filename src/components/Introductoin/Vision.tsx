@@ -72,7 +72,7 @@ const Title = styled.h3`
     }
 `;
 
-const TextBox = styled.p`
+const TextBox = styled.div`
     font-weight: 900;
     margin-bottom: 10px;
     font-size: 17.5px;
@@ -97,6 +97,7 @@ const TextBox = styled.p`
 `;
 
 const MinistryDirectionList = styled.ol`
+    padding-right: 20px;
     li {
         margin-top: 15px;
         @media screen and (max-width: 650px) {

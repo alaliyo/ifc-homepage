@@ -2,17 +2,23 @@ import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import Offcanva from "./Offcanva";
 import Logo from '../imgs/IFC-Logo.png';
+import { authService } from '../firebase';
 
-export interface WindowSize {
-    WindowSize: number
+interface HeaderProps {
+    WindowSize: number;
+    loggedIn: boolean;
 }
 
 interface HomeTitleProps {
     isActive: boolean;
   }
 
-function Header({ WindowSize }: WindowSize) {
-    
+function Header({ WindowSize, loggedIn }: HeaderProps ) {
+    const onLogOutClick = () => {
+        authService.signOut();
+        alert("로그아웃 되었습니다.")
+        window.location.href="/"
+    }
     
     return(
         <HeaderBox>
@@ -28,11 +34,17 @@ function Header({ WindowSize }: WindowSize) {
                 </HomeTitle>
                 <LinkBox>
                     {WindowSize <= 650 ? (
-                        <Offcanva />
+                        <Offcanva loggedIn={loggedIn} />
                     ) : (
-                        <Link to={'/login'}>
-                            login
-                        </Link>
+                        loggedIn ? (
+                            <Link to={'/'} onClick={onLogOutClick}>
+                                logout
+                            </Link>
+                        ) : (
+                            <Link to={'/login'}>
+                                login
+                            </Link>
+                        )
                     )}
                 </LinkBox>
             </LinkBoxs>

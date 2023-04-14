@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useOutletContext, useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
-import History from './../Introductoin/History';
 
 interface PostsData {
     postId: number,
