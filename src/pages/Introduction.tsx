@@ -34,7 +34,9 @@ const IntroductionBox = styled.div`
 
 const OutletBox = styled.div`
     width: 80%;
+    padding: 20px;
     @media screen and (max-width: 650px) {
         width: 100%;
+        padding: 5px;
     }
 `;
