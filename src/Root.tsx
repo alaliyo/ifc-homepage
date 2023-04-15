@@ -4,7 +4,7 @@ import { authService } from './firebase';
 import { Spinner } from 'react-bootstrap';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 function Root() {
   const [windowWidth, setwindowWidth] = useState(window.innerWidth); //웹 넓이 
@@ -32,6 +32,7 @@ function Root() {
   return (
     <div>
       {init ? (<>
+        <GlobalStyle />
         <Header WindowSize={windowWidth} loggedIn={loggedIn} />
         <Outlet context={{
           windowWidth: windowWidth,
@@ -48,6 +49,12 @@ function Root() {
 }
 
 export default Root;
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    font-family: 'NanumSquareRound';
+  }
+`;
 
 const SpinnerStyled = styled(Spinner)`
   margin: 200px 46%;

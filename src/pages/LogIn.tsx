@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate, useOutletContext, } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { collection, getDocs, query } from "firebase/firestore";
+import { dbService } from '../firebase';
 import { Button, Form, Stack, Alert } from 'react-bootstrap';
 import CrossFades from "../components/generally/CrossFades";
+
 
 interface LogInProps {
     loggedIn: boolean
@@ -16,29 +19,6 @@ function LogIn() {
     const navigate = useNavigate(); //router v6 페이지 자동 이동
     const { loggedIn } = useOutletContext<LogInProps>(); //로그인 확인 여부
     const [chack, setChack] = useState(false); //페이지 이동 인증 
-    const certification = 'ifc3927(^^)'; //비밀!!
-
-    useEffect(() => { //로그인 페이지 접속 시 인증 및 중복 로그인 막기
-        if (loggedIn) {
-            alert('이미 로그인 되어 있습니다.')
-            navigate('/');
-            return;
-        }
-        
-        if (chack) {
-            return;
-        }
-
-        const answer = prompt('관리자 로그인입니다. 인증번호를 입력해주세요', "");
-        
-        if (certification === answer) {
-            setChack(true);
-            navigate('/login');
-        } else {
-            alert("인증 번호가 틀렸습니다. 제작자에게 문의하세요")
-            navigate('/');
-        }
-    }, [navigate, chack, loggedIn]);
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => { //이이디, 비말번호 받음 
         const {
@@ -74,6 +54,45 @@ function LogIn() {
         }
     };
     
+    useEffect(() => { //로그인 페이지 접속 시 인증 및 중복 로그인 막기
+        if (loggedIn) {
+            alert('이미 로그인 되어 있습니다.')
+            navigate('/');
+            return;
+        }
+        
+        if (chack) {
+            return;
+        }
+    
+        const answer = prompt('관리자 로그인입니다. 인증번호를 입력해주세요', "");
+        
+        const checkCertification = async () => {
+            const q = query(
+                collection(dbService, "admin"),
+            );
+            const snapshot = await getDocs(q);
+            const postsArr: any = snapshot.docs.map((doc) => ({
+                ...doc.data(),
+            }));
+            const certification = postsArr[0].password;
+            if (certification === answer) {
+                setChack(true);
+                navigate('/login');
+            } else {
+                alert("인증 번호가 틀렸습니다. 제작자에게 문의하세요")
+                navigate('/');
+            }
+        }
+        
+        if (answer == null || answer === '') {
+            alert("인증 번호가 틀렸습니다. 제작자에게 문의하세요")
+            navigate('/');
+        } else (
+            checkCertification()
+        )
+    }, [navigate, chack, loggedIn]);
+
     return(
         <div>
             <CrossFades />
