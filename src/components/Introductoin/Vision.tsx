@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-function Vision() {
+function Vision(){
     return(
         <VisionBox>
             <Title>교회 비전</Title>

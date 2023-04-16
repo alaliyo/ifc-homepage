@@ -67,7 +67,7 @@ function LogIn() {
     
         const answer = prompt('관리자 로그인입니다. 인증번호를 입력해주세요', "");
         
-        const checkCertification = async () => {
+        const checkCertification = async () => { //DB 인증 값 가져오기
             const q = query(
                 collection(dbService, "admin"),
             );

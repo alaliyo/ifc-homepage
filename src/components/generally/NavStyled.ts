@@ -14,12 +14,12 @@ export const NavBox = styled.nav`
         font-weight: 900;
         flex: 1;
         @media screen and (max-width: 650px) {
-            font-size: 12px;
+            font-size: 13px;
             padding: 4.5px 1px;
             border-right: 1px solid gray;
         }
         @media screen and (max-width: 350px) {
-            font-size: 11px;
+            font-size: 12px;
             padding: 6px 1px;
         }
         :hover {

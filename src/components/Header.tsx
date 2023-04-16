@@ -56,12 +56,15 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
                     <Link to={'/schedule'}>
                         {WindowSize <= 825 ? '일정' : '교회일정' }
                     </Link>
+                    
                     <Link to={'/youtube/posts'}>
                         {WindowSize <= 825 ? '유튜브' : '교회 유튜브' }
                     </Link>
+                    
                     <Link to={'/ministry'}>
                         {WindowSize <= 825 ? '사역' : '교회학교 및 훈련사역' }
                     </Link>
+                    
                     <Link to={'/mission'}>
                         {WindowSize <= 825 ? '선교' : '전도 및 선교' }
                     </Link>
