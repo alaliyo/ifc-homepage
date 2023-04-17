@@ -2,6 +2,7 @@ import { Card } from 'react-bootstrap';
 import { Body, Title, HrBottom, CardBox, CardFrame, CardText, SeparationText } from './IntroStyled';
 import PastorChoi from '../../imgs/PastorChoi.jpg';
 import PastorOh from '../../imgs/PastorOh.jpg';
+import PastorJeong from '../../imgs/PastorKim.jpg';
 import PastorKim from '../../imgs/PastorKim.jpg';
 
 function Pastors() {
@@ -32,7 +33,7 @@ function Pastors() {
                 </CardFrame>
                 <CardFrame>
                     <Card style={{ width: '10rem' }}>
-                        <Card.Img variant="top" src={PastorOh} />
+                        <Card.Img variant="top" src={PastorJeong} />
                         <Card.Body>
                             <CardText>정옥경 전도사</CardText>
                         </Card.Body>
