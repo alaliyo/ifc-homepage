@@ -6,7 +6,7 @@ import { collection, getDocs, query } from "firebase/firestore";
 import { dbService } from '../firebase';
 import { Button, Form, Stack, Alert } from 'react-bootstrap';
 import CrossFades from "../components/generally/CrossFades";
-
+import { PageBody } from './PageStyled';
 
 interface LogInProps {
     loggedIn: boolean
@@ -94,7 +94,7 @@ function LogIn() {
     }, [navigate, chack, loggedIn]);
 
     return(
-        <div>
+        <PageBody>
             <CrossFades />
             <LogInBox>
                 <Form onSubmit={onSubmit}>
@@ -116,7 +116,7 @@ function LogIn() {
                     {errors !== '' && <Alert variant="danger">{errors}</Alert>}
                 </Form>
             </LogInBox>
-        </div>
+        </PageBody>
     );
 }
 

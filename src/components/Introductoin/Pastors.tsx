@@ -1,6 +1,8 @@
 import { Card } from 'react-bootstrap';
 import { Body, Title, HrBottom, CardBox, CardFrame, CardText, SeparationText } from './IntroStyled';
+import PastorChoi from '../../imgs/PastorChoi.jpg';
 import PastorOh from '../../imgs/PastorOh.jpg';
+import PastorKim from '../../imgs/PastorKim.jpg';
 
 function Pastors() {
     return(
@@ -11,7 +13,7 @@ function Pastors() {
             <CardBox>
                 <CardFrame>
                     <Card style={{ width: '10rem' }}>
-                        <Card.Img variant="top" src={PastorOh} />
+                        <Card.Img variant="top" src={PastorChoi} />
                         <Card.Body>
                             <CardText>최영미 협동목사</CardText>
                         </Card.Body>
@@ -24,7 +26,7 @@ function Pastors() {
                     <Card style={{ width: '10rem' }}>
                         <Card.Img variant="top" src={PastorOh} />
                         <Card.Body>
-                            <CardText>오순자 전도사</CardText>
+                            <CardText>오순자 선임전도사</CardText>
                         </Card.Body>
                     </Card>
                 </CardFrame>
@@ -38,7 +40,7 @@ function Pastors() {
                 </CardFrame>
                 <CardFrame>
                     <Card style={{ width: '10rem' }}>
-                        <Card.Img variant="top" src={PastorOh} />
+                        <Card.Img variant="top" src={PastorKim} />
                         <Card.Body>
                             <CardText>김염미 전도사</CardText>
                         </Card.Body>

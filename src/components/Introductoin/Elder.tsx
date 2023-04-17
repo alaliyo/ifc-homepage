@@ -1,6 +1,7 @@
 import { Card } from 'react-bootstrap';
 import { Body, Title, HrBottom, CardBox, CardFrame, CardText } from './IntroStyled';
 import ElderSong from '../../imgs/ElderSong.jpg';
+import ElderKim from '../../imgs/ElderKim.jpg';
 
 function Elder() {
     return(
@@ -10,9 +11,9 @@ function Elder() {
             <CardBox>
                 <CardFrame>
                     <Card style={{ width: '10rem' }}>
-                        <Card.Img variant="top" src={ElderSong} />
+                        <Card.Img variant="top" src={ElderKim} />
                         <Card.Body>
-                            <CardText>송명열 장로</CardText>
+                            <CardText>김차묵 장로</CardText>
                         </Card.Body>
                     </Card>
                 </CardFrame>

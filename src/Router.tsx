@@ -5,7 +5,7 @@ import LogIn from './pages/LogIn';
 import Introduction from "./pages/Introduction";
 import Vision from "./components/Introductoin/Vision";
 import History from "./components/Introductoin/History";
-import Pastor from "./components/Introductoin/Pastor";
+import Rev from "./components/Introductoin/Rev";
 import Pastors from "./components/Introductoin/Pastors";
 import Elder from "./components/Introductoin/Elder";
 import SketchMap from "./components/Introductoin/SketchMap";
@@ -17,8 +17,6 @@ import WritinPost from "./components/Youtube/WritinPost";
 import Ministry from './pages/Ministry';
 import Mission from './pages/Mission';
 import NotFound from "./pages/NotFound";
-
-
 
 const router = createBrowserRouter([
     {
@@ -46,8 +44,8 @@ const router = createBrowserRouter([
                         element: <History />
                     },
                     {
-                        path: 'pastor',
-                        element: <Pastor />
+                        path: 'rev',
+                        element: <Rev />
                     },
                     {
                         path: 'pastors',

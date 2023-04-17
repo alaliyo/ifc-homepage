@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import CrossFades from "../components/generally/CrossFades";
+import { PageBody } from './PageStyled';
 
 function Mission() {
     return(
-        <div>
+        <PageBody>
             <CrossFades />
             <Title>선교 페이지 제작중입니다...</Title>
-        </div>
+        </PageBody>
     );
 }
 

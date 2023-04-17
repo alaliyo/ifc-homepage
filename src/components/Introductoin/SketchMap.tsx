@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
+import { Body, Title } from './IntroStyled';
 
 declare global { //타입 선언
   interface Window {
@@ -61,7 +62,7 @@ function SketchMap() {
   }, []);
   
   return (
-      <SketchMapBox>
+      <Body>
         <Title>찾아오는 길</Title>
         <Map id="map"></Map>
         <TextBox>
@@ -69,26 +70,11 @@ function SketchMap() {
           <div>전화번호: 055-365-1080 / 010-4314-6007</div>
           <div>(마크를 누르면 길 찾기도 가능합니다.)</div>
         </TextBox>
-      </SketchMapBox>
+      </Body>
     );
   }
 
 export default SketchMap;
-
-const SketchMapBox = styled.div`
-`
-
-const Title = styled.h3`
-  margin: 20px 0;
-  margin-left: 30px;
-  font-weight: 900;
-  @media screen and (max-width: 650px) {
-    margin: 15px 0;
-    width: 100%;
-    font-size: 17px;
-    text-align: center;
-  }
-`;
 
 const Map = styled.div`
   width: 80%;

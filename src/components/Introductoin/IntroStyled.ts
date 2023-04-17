@@ -1,9 +1,19 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 import { Card } from 'react-bootstrap';
+
+const fadeInAnimation = keyframes`
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+`;
 
 export const Body = styled.div`
     width: 100%;
     margin-top: 20px;
+    animation: ${fadeInAnimation} 0.3s ease-in;
     @media screen and (max-width: 650px) {
         margin-top: 10px;
     }
@@ -59,7 +69,9 @@ export const SeparationText = styled.p`
     margin-bottom: 20px;
     text-align: center;
     @media screen and (max-width: 650px) {
-        font-size: 16px;
-        width: 70px;
+        margin-right: auto;
+        margin-left: auto;
+        font-size: 18px;
+        width: 80px;
     }
 `;

@@ -2,18 +2,19 @@ import styled from "styled-components";
 import { Outlet } from 'react-router-dom';
 import CrossFades from "../components/generally/CrossFades";
 import NavIntroductoin from '../components/Introductoin/NavIntroductoin';
+import { PageBody } from './PageStyled';
 
 function Introduction() {
     return(
-        <>
+        <PageBody>
             <CrossFades />
             <IntroductionBox>
                 <NavIntroductoin />
-                <OutletBox>
-                    <Outlet />
-                </OutletBox>
+                    <OutletBox> 
+                        <Outlet/>
+                    </OutletBox>
             </IntroductionBox>
-        </>
+        </PageBody>
     );
 }
 

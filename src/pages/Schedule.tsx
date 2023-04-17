@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import CrossFades from "../components/generally/CrossFades";
+import { PageBody } from './PageStyled';
 
 function Schedule() {
     return(
-        <div>
+        <PageBody>
             <CrossFades />
             <Title>일정 페이지 제작중입니다...</Title>
-        </div>
+        </PageBody>
     );
 }
 

@@ -21,7 +21,7 @@ function NavIntroductoin() {
                 {windowWidth > 650 && <br />}
                 연혁
             </Link>
-            <Link to={'pastor'}>
+            <Link to={'rev'}>
                 담임
                 {windowWidth > 650 && <br />}
                 목사

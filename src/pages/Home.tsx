@@ -1,4 +1,5 @@
 import CrossFade from './../components/Home/CrossFade';
+import { PageBody } from './PageStyled';
 //import { useOutletContext } from "react-router-dom";
 
 /*interface WindowSize {
@@ -9,9 +10,9 @@ function Home() {
     //const { windowWidth } = useOutletContext<WindowSize>();
 
     return(
-        <div>
+        <PageBody>
             <CrossFade />
-        </div>
+        </PageBody>
     );
 }
 

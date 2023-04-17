@@ -5,6 +5,7 @@ import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import CrossFades from "../components/generally/CrossFades";
 import NavYoutube from '../components/Youtube/NavYoutube';
 import { dbService } from '../firebase';
+import { PageBody } from './PageStyled';
 
 interface PostsData {
     postId: number,
@@ -39,7 +40,7 @@ function Youtube() {
     }, [])
 
     return(
-        <>
+        <PageBody>
             <CrossFades />
             <YoutubeBox>
                 <NavYoutube />
@@ -49,7 +50,7 @@ function Youtube() {
                     loggedIn: loggedIn,
                 }} />
             </YoutubeBox>
-        </>
+        </PageBody>
     );
 }
 
