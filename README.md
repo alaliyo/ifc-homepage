@@ -1,46 +1,48 @@
-# Getting Started with Create React App
+<h1>⛪IFC 홈페이지 제작</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br/>
 
-## Available Scripts
+<h2>🖼 프로젝트 소개</h2>
+<div>
+  <span>&emsp;교회 홈페이지 입니다~~ 교회 소개(비전, 방향, 근무자, 약도), 스케줄(예배 시간, 연계획), youtube 예배영상, 해외 사역을 기록하고 있는 홈페이지 입니다.</span><br/>
+  <span>&emsp;열방 교회를 알고 싶은 분들에게 온라인으로 간단하게 알 수 있게 해주는 홈페이지입니다.</span>
+</div>
 
-In the project directory, you can run:
+<br/>
 
-### `npm start`
+<h2>💻개방 언어 및 활용 기술</h2>
+<h3>언어 및 프레임워크</h3>
+<ul>
+  <li>HTML, CSS, JS</li>
+  <li>TS, TSX</li>
+  <li>React</li>
+</ul>
+<h3>라이브러리</h3>
+<ul>
+  <li>Styled-Components</li>
+  <li>React-Router-dom v6</li>
+  <li>React-Bootstrap</li>
+  <li>fullcalendar</li>
+</ul>
+<h3>DB 및 서버(Firebase)</h3>
+<ul>
+  <li>Hosting</li>
+  <li>Storage</li>
+  <li>Authentication</li>
+  <li>Firestore Database</li>
+</ul>
+<h3>Open API</h3>
+<ul>
+  <li>Kakao Map</li>
+</ul>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<br/>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<h2>🎨아키텍처</h2>
+<a 
+  href='https://lucid.app/lucidspark/d237b803-7886-4a04-b8db-048a460c1f64/edit?viewport_loc=-1662%2C-2150%2C5988%2C5794%2C0_0&invitationId=inv_f5c7878b-dc4e-4cf7-bcae-8e8470a05d0a' target='_blank'
+>아키텍처 링크</a>
 
-### `npm test`
+<br />
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<h2>🎇트러블 슈팅</h2>
