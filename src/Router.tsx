@@ -10,6 +10,8 @@ import Pastors from "./components/Introductoin/Pastors";
 import Elder from "./components/Introductoin/Elder";
 import SketchMap from "./components/Introductoin/SketchMap";
 import Schedule from './pages/Schedule';
+import YearSchedule from "./components/Schedule/YearSchedule";
+import WorshipTime from "./components/Schedule/WorshipTime";
 import Youtube from './pages/Youtube';
 import YoutubePosts from "./components/Youtube/YoutubePosts";
 import PostDetail from "./components/Youtube/PostDetail";
@@ -17,6 +19,7 @@ import WritinPost from "./components/Youtube/WritinPost";
 import Ministry from './pages/Ministry';
 import Mission from './pages/Mission';
 import NotFound from "./pages/NotFound";
+
 
 const router = createBrowserRouter([
     {
@@ -64,6 +67,16 @@ const router = createBrowserRouter([
             {
                 path: `schedule`,
                 element: <Schedule />,
+                children: [
+                    {
+                        path: 'worship-time',
+                        element: <WorshipTime />,
+                    },
+                    {
+                        path: 'year',
+                        element: <YearSchedule />,
+                    },
+                ],
             },
             {
                 path: `youtube`,

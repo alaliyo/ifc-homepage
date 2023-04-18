@@ -53,7 +53,7 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
                     <Link to={'/introduction/vision'} >
                         {WindowSize <= 825 ? '소개' : '교회소개' }
                     </Link>
-                    <Link to={'/schedule'}>
+                    <Link to={'/schedule/worship-time'}>
                         {WindowSize <= 825 ? '일정' : '교회일정' }
                     </Link>
                     

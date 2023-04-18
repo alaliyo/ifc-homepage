@@ -1,20 +1,21 @@
-import styled from 'styled-components';
+import { Outlet } from 'react-router-dom';
+import { PageBody, ChildBox, OutletBox } from './PageStyled';
 import CrossFades from "../components/generally/CrossFades";
-import { PageBody } from './PageStyled';
+import NavSchedule from '../components/Schedule/NavSchedule';
+
 
 function Schedule() {
     return(
         <PageBody>
             <CrossFades />
-            <Title>일정 페이지 제작중입니다...</Title>
+            <ChildBox>
+                <NavSchedule />
+                    <OutletBox> 
+                        <Outlet/>
+                    </OutletBox>
+            </ChildBox>
         </PageBody>
     );
 }
 
 export default Schedule;
-
-const Title = styled.h2`
-    margin-top: 20px;
-    color: gray;
-    text-align: center;
-`;
