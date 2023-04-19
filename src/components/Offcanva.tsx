@@ -39,7 +39,7 @@ function Offcanva({ loggedIn }: OffcanvaProps) {
                 <LinkStyle to={'/introduction/vision'} onClick={onClick}>
                     교회소개
                 </LinkStyle>
-                <LinkStyle to={'/schedule'} onClick={onClick}>
+                <LinkStyle to={'/schedule/worship-time'} onClick={onClick}>
                     교회일정
                 </LinkStyle>
                 <LinkStyle to={'/youtube/posts'} onClick={onClick}>
@@ -88,15 +88,12 @@ const OffcanvaBox = styled(Offcanvas)`
 
 const LinkStyle = styled(Link)`
     color: white;
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 10px;
     display: block;
     text-decoration: none;
     :hover {
         color: white;
         font-weight: 900;
-    }
-    @media screen and (max-width: 400px) {
-        font-size: 13px;
     }
 `

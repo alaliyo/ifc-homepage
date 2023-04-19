@@ -34,10 +34,10 @@ function Root() {
       {init ? (<>
         <GlobalStyle />
         <Header WindowSize={windowWidth} loggedIn={loggedIn} />
-        <Outlet context={{
-          windowWidth: windowWidth,
-          loggedIn: loggedIn,
-        }} />
+          <Outlet context={{
+            windowWidth: windowWidth,
+            loggedIn: loggedIn,
+          }} />
         <Footer />
       </>) : (
         <SpinnerStyled animation="border" role="status">

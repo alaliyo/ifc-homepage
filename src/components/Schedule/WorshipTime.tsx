@@ -54,7 +54,8 @@ function WorshipTime() {
                         <td>10:30</td>
                     </tr>
                 </tbody>
-                <br />
+            </TableStyled>
+            <TableStyled bordered>
                 <tbody>
                     <tr>
                         <td rowSpan={2}>SUNDAY <br /> SERVICE</td>
