@@ -17,7 +17,7 @@ function NavIntroductoin() {
                 시간
             </Link>
             <Link to={'year'}>
-                년중
+                연중
                 {windowWidth > 650 && <br />}
                 계획
             </Link>

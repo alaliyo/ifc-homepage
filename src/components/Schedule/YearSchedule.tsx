@@ -5,7 +5,7 @@ import { dbService } from '../../firebase';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import localesKo from '@fullcalendar/core/locales/ko'
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
 import { useOutletContext } from 'react-router-dom';
 import './YearSchedule.css'
 
@@ -24,6 +24,8 @@ function YearSchedule() {
     const [scheduleDatas, setScheduleDatas] = useState<Array<ScheduleData>>([]);
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const [eventData, setEventData] = useState<ScheduleData | null>(null);
 
     // 데이터 받기
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,8 +75,6 @@ function YearSchedule() {
             return;
         }
         setTitle('');
-        setDate('');
-        alert('작성 완료되었습니다.')
     };
 
     // delete
@@ -83,6 +83,16 @@ function YearSchedule() {
         if (window.confirm("정말 삭제하시겠습니까?")) {
             await deleteDoc(doc(dbService, "schedules", event_id));
             setScheduleDatas(scheduleDatas.filter(schedule => schedule.id !== event_id)); // 삭제 후 state에서 제거
+        }
+    };
+
+    // 글 클릭 시 핸들러 (상세 Modal)
+    const handleEventClick = (e: any) => {
+        const eventId = e.event.id;
+        const scheduleData = scheduleDatas.find(schedule => schedule.id === eventId);
+        if (scheduleData) {
+            setEventData(scheduleData);
+            setShowModal(true);
         }
     };
 
@@ -113,28 +123,30 @@ function YearSchedule() {
                 <br />
             </>
         )}
-            {loggedIn ? (
-                <FullCalendar
-                    plugins={[dayGridPlugin]}
-                    initialView="dayGridMonth"
-                    locale={localesKo}
-                    events={scheduleDatas}
-                    eventTextColor="black"
-                    eventDisplay="block"
-                    eventBackgroundColor="transparent"
-                    eventClick={handleDelete}
-                />
-            ) : (
-                <FullCalendar
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>상세 조회</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <h4>{eventData?.title}</h4>
+                    <h4>{eventData?.date}</h4>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowModal(false)}>
+                        닫기
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <FullCalendar
                 plugins={[dayGridPlugin]}
                 initialView="dayGridMonth"
+                height='auto'
                 locale={localesKo}
                 events={scheduleDatas}
-                eventTextColor="black"
                 eventDisplay="block"
-                eventBackgroundColor="transparent"
+                eventClick={loggedIn ? handleDelete : handleEventClick}
             />
-            )}
         </>
     );
 }

@@ -38,11 +38,11 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
                     ) : (
                         loggedIn ? (
                             <Link to={'/'} onClick={onLogOutClick}>
-                                logout
+                                aminout
                             </Link>
                         ) : (
                             <Link to={'/login'}>
-                                login
+                                aminIn
                             </Link>
                         )
                     )}
@@ -132,7 +132,7 @@ const LinkBox = styled.div`
     display: flex;
     align-items: center;
     a {
-        font-size: 16px;
+        font-size: 11px;
         color: #ffffff;
         text-shadow: 1px 1px 4px #808080, -1px -1px 4px #808080;
         display: block;
