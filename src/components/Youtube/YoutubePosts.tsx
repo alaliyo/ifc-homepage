@@ -47,6 +47,13 @@ function YoutubePosts() {
         setSearchResult({ postsDate: filteredData }); // 검색 결과를 searchResult 상태값에 저장
     };
 
+    // Enter key를 누르면 여기에서 원하는 작업을 수행할 수 있습니다.
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            handleSearchButtonClick()
+        }
+    };
+
     // 페이지 변경 시 호출되는 함수
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
@@ -87,6 +94,7 @@ function YoutubePosts() {
                     }
                     <Form.Control
                         onChange={handleSearchInputChange}
+                        onKeyDown={handleKeyDown}
                         placeholder="검색"
                         aria-describedby="basic-addon2"
                     />
