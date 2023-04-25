@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Link, useOutletContext } from 'react-router-dom';
-// import { Button, Form, InputGroup } from 'react-bootstrap';
+import { Button, Form, InputGroup } from 'react-bootstrap';
 
 interface postsData { //객체 타입
     postId: number,
@@ -27,6 +27,25 @@ function YoutubePosts() {
     const [totalPages] = useState(Math.max(1, Math.ceil(postsDate.length / postsPerPage))); // 총 페이지 수
     const { windowWidth } = useOutletContext<YoutubePostsProps>();
     const { loggedIn } = useOutletContext<YoutubePostsProps>();
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResult, setSearchResult] = useState<Props>(); // 검색 결과를 저장할 배열
+
+    // 검색어 상태 갱신
+    const handleSearchInputChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setSearchQuery(e.target.value);
+    }; 
+
+    // 검색 버튼 클릭 이벤트 핸들러
+    const handleSearchButtonClick = () => {
+        // 검색어를 포함하는 데이터 필터링
+        const filteredData = postsDate.filter((item) =>
+            item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.date.toLowerCase().includes(searchQuery)
+        );
+        setSearchResult({ postsDate: filteredData }); // 검색 결과를 searchResult 상태값에 저장
+    };
 
     // 페이지 변경 시 호출되는 함수
     const handlePageChange = (pageNumber: number) => {
@@ -37,7 +56,9 @@ function YoutubePosts() {
     const getPostsForCurrentPage = () => {
         const startIndex = (currentPage - 1) * postsPerPage;
         const endIndex = startIndex + postsPerPage;
-        return postsDate.slice(startIndex, endIndex);
+        // 검색 결과가 있다면 검색 결과를 사용하고, 없다면 postsDate를 사용
+        const targetPosts = searchResult ? searchResult.postsDate : postsDate;
+        return targetPosts.slice(startIndex, endIndex);
     };
     
     const PostsPageDowon = () => {
@@ -54,26 +75,50 @@ function YoutubePosts() {
             
             <PostsHeader>
                 {windowWidth > 650 && <Title>목록</Title>}
-                {/*
+                
                 <InputBox className="mb-3">
+                    {searchResult && 
+                        <Button
+                            onClick={() => setSearchResult(undefined)}
+                            variant="outline-secondary"
+                            id="button-addon2"
+                            size="sm"
+                        >전체 조회</Button>
+                    }
                     <Form.Control
-                    placeholder="검색"
-                    aria-describedby="basic-addon2"
+                        onChange={handleSearchInputChange}
+                        placeholder="검색"
+                        aria-describedby="basic-addon2"
                     />
-                    <Button variant="outline-secondary" id="button-addon2" size="sm">
+                    <Button 
+                        onClick={handleSearchButtonClick}
+                        variant="outline-secondary"
+                        id="button-addon2"
+                        size="sm"
+                    >
                         ⚲
                     </Button>
                 </InputBox>
-                */}
+                
             </PostsHeader>
             <PostsBody>
-                {getPostsForCurrentPage().map((obj, i) => (
-                    <Link key={obj.postId} to={`/youtube/detail/${obj.postId}`}>
+                {searchResult ? (
+                    searchResult.postsDate.map((obj, i) => (
+                        <Link key={obj.postId} to={`/youtube/detail/${obj.postId}`}>
                         <div>{i + 1}</div>
                         <div>{obj.date}</div>
                         <div>{obj.title}</div>
-                    </Link>
-                ))}
+                        </Link>
+                    ))
+                ) : (
+                    getPostsForCurrentPage().map((obj, i) => (
+                        <Link key={obj.postId} to={`/youtube/detail/${obj.postId}`}>
+                        <div>{i + 1}</div>
+                        <div>{obj.date}</div>
+                        <div>{obj.title}</div>
+                        </Link>
+                    ))
+                )}
             </PostsBody>
             <Pagination>
                 {/* 총 페이지 수 계산 */}
@@ -118,7 +163,7 @@ const Title = styled.h3`
     }
 `;
 
-/* const InputBox = styled(InputGroup)`
+const InputBox = styled(InputGroup)`
     width: 300px;
     input {
         height: 30px;
@@ -129,7 +174,7 @@ const Title = styled.h3`
         height: 30px;
         padding: 0 15px;
     }
-`; */
+`;
 
 const PostsBody = styled.div`
     border-top: 2px solid gray;

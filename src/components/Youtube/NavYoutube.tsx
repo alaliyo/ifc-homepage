@@ -1,12 +1,12 @@
 import { Link, useOutletContext } from 'react-router-dom';
 import { NavBox, Title } from '../generally/NavStyled';
 
-interface WindowSize {
+interface NavigatorProps { // props 타입
     windowWidth: number
 }
 
 function Navigator() {
-    const { windowWidth } = useOutletContext<WindowSize>();
+    const { windowWidth } = useOutletContext<NavigatorProps>();
 
     return(
         <NavBox>

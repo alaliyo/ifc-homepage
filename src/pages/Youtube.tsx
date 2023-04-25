@@ -7,7 +7,7 @@ import NavYoutube from '../components/Youtube/NavYoutube';
 import { dbService } from '../firebase';
 import { PageBody } from './PageStyled';
 
-interface PostsData {
+interface PostsData { // post 타입
     postId: number,
     title: string,
     url: string,
@@ -15,21 +15,21 @@ interface PostsData {
     bibleVerse:string,
 }
 
-interface YoutubeProps {
+interface YoutubeProps { // props 타입
     windowWidth: number;
     loggedIn: boolean;
 }
 
 function Youtube() {
-    const [postsDate, setpostsDate] = useState<Array<PostsData>>([]);
-    const { windowWidth } = useOutletContext<YoutubeProps>();
-    const { loggedIn } = useOutletContext<YoutubeProps>();
+    const [postsDate, setpostsDate] = useState<Array<PostsData>>([]); //게시물
+    const { windowWidth } = useOutletContext<YoutubeProps>(); // 웹 width 크기
+    const { loggedIn } = useOutletContext<YoutubeProps>(); // 로드인 여부
 
     // Get 게시물
     useEffect(() => {
         const q = query(
             collection(dbService, "youtobe-posts"),
-            orderBy("postId", "desc")
+            orderBy("date", "desc")
         );
         onSnapshot(q, (snapshot) => {
             const postsArr: any = snapshot.docs.map((doc) => ({

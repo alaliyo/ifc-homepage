@@ -3,12 +3,12 @@ import { PageBody, ChildBox, OutletBox } from './PageStyled';
 import CrossFades from "../components/generally/CrossFades";
 import NavSchedule from '../components/Schedule/NavSchedule';
 
-interface ScheduleProps {
+interface ScheduleProps { // props 타입
     loggedIn: boolean;
 }
 
 function Schedule() {
-    const { loggedIn } = useOutletContext<ScheduleProps>();
+    const { loggedIn } = useOutletContext<ScheduleProps>(); // 로그인 여부
 
     return(
         <PageBody>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useOutletContext, useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-interface PostsData {
+interface PostsData { // 데이터 타입
     postId: number,
     title: string,
     url: string,
@@ -10,15 +10,16 @@ interface PostsData {
     bibleVerse:string,
 }
 
-interface Props {
+interface Props { //props 타입
     postsDate: Array<PostsData>
 }
 
 function PostDetail() {
-    const { postsDate } = useOutletContext<Props>();
-    const { postsId } = useParams();
-    const [post, setPost] = useState<PostsData>();
-
+    const { postsDate } = useOutletContext<Props>(); // 데이터 배열
+    const { postsId } = useParams(); // url의 post id 값
+    const [post, setPost] = useState<PostsData>(); // id 값 비교 상세 데이터 들고옴
+    
+    // 데이터 조회 hook
     useEffect(() => {
         const postObj = postsDate.find(obj => obj.postId === Number(postsId))
         setPost(postObj)

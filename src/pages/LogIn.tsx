@@ -8,7 +8,7 @@ import { Button, Form, Stack, Alert } from 'react-bootstrap';
 import CrossFades from "../components/generally/CrossFades";
 import { PageBody } from './PageStyled';
 
-interface LogInProps {
+interface LogInProps { //props 타입
     loggedIn: boolean
 }
 
@@ -20,7 +20,8 @@ function LogIn() {
     const { loggedIn } = useOutletContext<LogInProps>(); //로그인 확인 여부
     const [chack, setChack] = useState(false); //페이지 이동 인증 
 
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => { //이이디, 비말번호 받음 
+    //admin 이이디, 비말번호 받음 
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
         const {
             target: { name, value },
         } = e;
@@ -32,7 +33,8 @@ function LogIn() {
         }
     };
 
-    const onSubmit = async(e: React.FormEvent) => { //로그인 시도
+    // 로그인 시도
+    const onSubmit = async(e: React.FormEvent) => { 
         e.preventDefault();
         try {
             const auth = getAuth();
@@ -54,7 +56,8 @@ function LogIn() {
         }
     };
     
-    useEffect(() => { //로그인 페이지 접속 시 인증 및 중복 로그인 막기
+    // 로그인 페이지 접속 시 인증 및 중복 로그인 막기
+    useEffect(() => { 
         if (loggedIn) {
             alert('이미 로그인 되어 있습니다.')
             navigate('/');
@@ -67,7 +70,8 @@ function LogIn() {
     
         const answer = prompt('관리자 로그인입니다. 인증번호를 입력해주세요', "");
         
-        const checkCertification = async () => { //DB 인증 값 가져오기
+        //DB 인증 값 가져오기
+        const checkCertification = async () => { 
             const q = query(
                 collection(dbService, "admin"),
             );

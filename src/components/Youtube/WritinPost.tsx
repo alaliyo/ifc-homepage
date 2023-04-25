@@ -6,7 +6,7 @@ import { Col, Form, Row, Stack, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import { useEffect } from 'react';
 
-interface postsData { //객체 타입
+interface postsData { // 객체 타입
     postId: number,
     title: string,
     url: string,
@@ -14,19 +14,19 @@ interface postsData { //객체 타입
     bibleVerse: string,
 }
 
-interface WritinProps {//객체를 배열로 감쌈
+interface WritinProps { // 객체를 배열로 감쌈
     postsDate: Array<postsData>
     loggedIn: boolean;
 }
 
 function WritinPost() {
-    const { postsDate } = useOutletContext<WritinProps>();
-    const [postLen, setPostLen] = useState(0);
-    const [title, setTitle] = useState('');
-    const [date, setDate] = useState('');
-    const [bible, setBible] = useState('');
-    const [videoUrl, setVideoUrl] = useState('');
-    const { loggedIn } = useOutletContext<WritinProps>();
+    const { postsDate } = useOutletContext<WritinProps>(); // 데이터 배열
+    const [postLen, setPostLen] = useState(0); // 데이터 길이
+    const [title, setTitle] = useState(''); // 데이터 제목
+    const [date, setDate] = useState(''); // 데이터 날짜 (작성X, 설교 날짜)
+    const [bible, setBible] = useState(''); // 성경 구절
+    const [videoUrl, setVideoUrl] = useState(''); // 유튜브 url
+    const { loggedIn } = useOutletContext<WritinProps>(); //admin 로그인 여부
     const navigate = useNavigate();
 
     // 데이터 받기
@@ -46,7 +46,7 @@ function WritinPost() {
         }
     };
 
-    //post
+    //post 추가
     const dataPost = async (e: any) => {
         e.preventDefault();
         try {
@@ -69,6 +69,7 @@ function WritinPost() {
         navigate('/youtube/posts')
     }
 
+    // 작성 접근 시 로그인 여부로 막음
     useEffect(() => {
         if (loggedIn === false) {
             alert('관리자 권한 페이지입니다. 권한 관련은 제작자에게 문의하세요');
@@ -76,6 +77,7 @@ function WritinPost() {
         }
     }, [loggedIn, navigate])
 
+    // 작성글 추가 시 길이 변경
     useEffect(() => {
         setPostLen(postsDate.length)
     }, [postsDate]);
