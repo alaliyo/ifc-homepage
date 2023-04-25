@@ -84,14 +84,6 @@ function YoutubePosts() {
                 {windowWidth > 650 && <Title>목록</Title>}
                 
                 <InputBox className="mb-3">
-                    {searchResult && 
-                        <Button
-                            onClick={() => setSearchResult(undefined)}
-                            variant="outline-secondary"
-                            id="button-addon2"
-                            size="sm"
-                        >전체 조회</Button>
-                    }
                     <Form.Control
                         onChange={handleSearchInputChange}
                         onKeyDown={handleKeyDown}
@@ -106,6 +98,14 @@ function YoutubePosts() {
                     >
                         ⚲
                     </Button>
+                    {searchResult && 
+                        <Button
+                            onClick={() => setSearchResult(undefined)}
+                            variant="outline-secondary"
+                            id="button-addon2"
+                            size="sm"
+                        >전체</Button>
+                    }
                 </InputBox>
                 
             </PostsHeader>
@@ -172,15 +172,23 @@ const Title = styled.h3`
 `;
 
 const InputBox = styled(InputGroup)`
-    width: 300px;
+    width: 350px;
     input {
         height: 30px;
     }
     button {
-        font-size: 15px;
+        font-size: 13px;
         font-weight: 900;
         height: 30px;
         padding: 0 15px;
+        @media screen and (max-width: 650px) {
+            padding: 0 10px;
+            font-size: 11px;
+        }
+    }
+    @media screen and (max-width: 650px) {
+        padding: 5px 10%;
+        width: 100%;
     }
 `;
 
