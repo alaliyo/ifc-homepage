@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { addDoc, collection } from "firebase/firestore";
 import { dbService } from '../../firebase';
 import { Col, Form, Row, Stack, Button } from 'react-bootstrap';
@@ -21,52 +22,25 @@ interface WritinProps { // 객체를 배열로 감쌈
 
 function WritinPost() {
     const { postsDate } = useOutletContext<WritinProps>(); // 데이터 배열
-    const [postLen, setPostLen] = useState(0); // 데이터 길이
-    const [title, setTitle] = useState(''); // 데이터 제목
-    const [date, setDate] = useState(''); // 데이터 날짜 (작성X, 설교 날짜)
-    const [bible, setBible] = useState(''); // 성경 구절
-    const [videoUrl, setVideoUrl] = useState(''); // 유튜브 url
+    const [postMaxId, setPostMaxId] = useState(0); // 데이터 길이
+    const { register, handleSubmit, reset } = useForm<postsData>(); // useForm 사용
     const { loggedIn } = useOutletContext<WritinProps>(); //admin 로그인 여부
     const navigate = useNavigate();
-
-    // 데이터 받기
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {
-            target: { name, value },
-        } = e;
-        
-        if (name === "title") {
-            setTitle(value);
-        } else if (name === "date") {
-            setDate(value);
-        } else if (name === "bible") {
-            setBible(value);
-        } else if (name === "video-url") {
-            setVideoUrl(value);
-        }
-    };
-
+    console.log(postMaxId);
     //post 추가
-    const dataPost = async (e: any) => {
-        e.preventDefault();
+    const onSubmit  = async (data: postsData) => {
         try {
             await addDoc(collection(dbService, 'youtobe-posts'), {
-            postId: postLen,
-            title: title,
-            date: date,
-            bibleVerse: bible,
-            url: videoUrl,
-        });
+                ...data,
+                postId: postMaxId,
+            });
         } catch (error) {
             alert(error);
             return;
         }
-        setTitle('');
-        setDate('');
-        setBible('');
-        setVideoUrl('');
-        alert('작성 완료되었습니다.')
-        navigate('/youtube/posts')
+        reset(); // form reset
+        alert('작성 완료되었습니다.');
+        navigate('/youtube/posts');
     }
 
     // 작성 접근 시 로그인 여부로 막음
@@ -79,18 +53,18 @@ function WritinPost() {
 
     // 작성글 추가 시 길이 변경
     useEffect(() => {
-        setPostLen(postsDate.length)
+        setPostMaxId(Math.max(...postsDate.map(e => e.postId))+1)
     }, [postsDate]);
-
     return(
         <WritinPostBody>
-            <Form onSubmit={dataPost}>
+            <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="1">
                     제목
                     </Form.Label>
                     <Col sm="8">
-                    <Form.Control type="text" name="title" placeholder="영상 제목" onChange={onChange} />
+                    <Form.Control type="text" placeholder="영상 제목" {...register('title')}
+                    />
                     </Col>
                 </Form.Group>
 
@@ -99,7 +73,7 @@ function WritinPost() {
                     날짜
                     </Form.Label>
                     <Col sm="8">
-                    <Form.Control type="text" name="date" placeholder="예)23.01.01" onChange={onChange} />
+                    <Form.Control type="text" placeholder="예)23.01.01" {...register('date')} />
                     </Col>
                 </Form.Group>
 
@@ -108,7 +82,7 @@ function WritinPost() {
                     말씀
                     </Form.Label>
                     <Col sm="8">
-                    <Form.Control type="text" name="bible" placeholder="예) 요 1:1; 마 1:1" onChange={onChange} />
+                    <Form.Control type="text" placeholder="예) 요 1:1; 마 1:1" {...register('bibleVerse')} />
                     </Col>
                 </Form.Group>
 
@@ -117,7 +91,7 @@ function WritinPost() {
                     url
                     </Form.Label>
                     <Col sm="8">
-                    <Form.Control type="text" name="video-url" placeholder="영상 url 퍼가기에 있음" onChange={onChange} />
+                    <Form.Control type="text" placeholder="영상 url 퍼가기에 있음" {...register('url')} />
                     </Col>
                 </Form.Group>
 
