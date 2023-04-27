@@ -26,7 +26,7 @@ function WritinPost() {
     const { register, handleSubmit, reset } = useForm<postsData>(); // useForm 사용
     const { loggedIn } = useOutletContext<WritinProps>(); //admin 로그인 여부
     const navigate = useNavigate();
-    console.log(postMaxId);
+    
     //post 추가
     const onSubmit  = async (data: postsData) => {
         try {

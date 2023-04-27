@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc, getDoc } from "firebase/firestore";
 import { dbService } from '../../firebase';
+import { useForm } from 'react-hook-form';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import localesKo from '@fullcalendar/core/locales/ko'
@@ -22,24 +23,11 @@ interface ScheduleData {
 function YearSchedule() {
     const { loggedIn } = useOutletContext<ScheduleProps>();
     const [scheduleDatas, setScheduleDatas] = useState<Array<ScheduleData>>([]);
-    const [title, setTitle] = useState('');
-    const [date, setDate] = useState('');
+    const { register, handleSubmit, reset } = useForm<ScheduleData>(); // useForm 사용
     const [showModal, setShowModal] = useState(false);
     const [eventData, setEventData] = useState<ScheduleData | null>(null);
 
-    // 데이터 받기
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {
-            target: { name, value },
-        } = e;
-        if (name === "title") {
-            setTitle(value);
-        } else if (name === "date") {
-            setDate(value);
-        } 
-    };
-
-    // Get 게시물
+    // 게시물 Get
     useEffect(() => {
         const q = query(
             collection(dbService, "schedules"),
@@ -54,13 +42,11 @@ function YearSchedule() {
         });
     }, [scheduleDatas])
 
-    // post 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    // 게시물 post 
+    const onSubmit = async (data: ScheduleData) => {
         try {
             const newDocRef = await addDoc(collection(dbService, 'schedules'), {
-            title: title,
-            date: date,
+                ...data
             });
             const newDoc = await getDoc(newDocRef);
             const newData: ScheduleData = {
@@ -74,7 +60,7 @@ function YearSchedule() {
             alert(error);
             return;
         }
-        setTitle('');
+        reset(); // form reset
     };
 
     // delete
@@ -101,21 +87,19 @@ function YearSchedule() {
         {loggedIn && (
             <>
                 <br />
-                <FormStyled onSubmit={handleSubmit}>
+                <FormStyled onSubmit={handleSubmit(onSubmit)}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Control 
                             type="text"
-                            name="title"
-                            value={title}
-                            onChange={handleChange}
+                            placeholder="제목"
+                            {...register('title')}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Control 
                             type="date"
-                            name="date"
-                            value={date}
-                            onChange={handleChange}
+                            placeholder="날짜"
+                            {...register('date')}
                         />
                     </Form.Group>
                     <Button type="submit" variant="outline-secondary" size="sm">완료</Button>
