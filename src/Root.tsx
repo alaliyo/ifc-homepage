@@ -8,7 +8,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 function Root() {
   const [windowWidth, setwindowWidth] = useState(window.innerWidth); //웹 넓이 
-  const [init, setInit] = useState(false); // 로그인 되어 있는지 확인
+  const [init, setInit] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => { //웹 얿이에 반응
@@ -18,6 +18,15 @@ function Root() {
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
   }, [])
+
+  // 모든 컴포넌트들이 로딩되었는지 확인하는 이벤트
+  useEffect(() => {
+    const handleLoad = () => {
+      setInit(true);
+    };
+    window.addEventListener("load", handleLoad);
+    return () => window.removeEventListener("load", handleLoad);
+  }, []);
 
   // 로그인 확인
   useEffect(() => {
