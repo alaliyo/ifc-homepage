@@ -12,7 +12,7 @@ function History() {
                   1.교회 설립 <br /> 2010.02.21 
                 </LeftText>
                 <LeftText>
-                  3. 건축 시장 <br /> 2014.02
+                  3. 건축 시작 <br /> 2014.02
                 </LeftText>
                 <LeftText>
                   5. 새 예배당 입당 예배 <br /> 2014.09.21
