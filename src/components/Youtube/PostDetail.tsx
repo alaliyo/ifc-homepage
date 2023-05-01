@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useOutletContext, useParams, Link } from 'react-router-dom';
+import { useOutletContext, useParams, Link, useMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface PostsData { // 데이터 타입
@@ -11,19 +11,31 @@ interface PostsData { // 데이터 타입
 }
 
 interface Props { //props 타입
-    postsDate: Array<PostsData>
+    krData: Array<PostsData>;
+    enData: Array<PostsData>;
 }
 
 function PostDetail() {
-    const { postsDate } = useOutletContext<Props>(); // 데이터 배열
+    const { krData, enData } = useOutletContext<Props>();
     const { postsId } = useParams(); // url의 post id 값
     const [post, setPost] = useState<PostsData>(); // id 값 비교 상세 데이터 들고옴
-    
+    const match = useMatch('/youtube/kr');
+    const currentUrl = match?.pathname || '/youtube/en';
+    const [flexibleData, setFlexibleData] = useState<PostsData[]>();
+
     // 데이터 조회 hook
     useEffect(() => {
-        const postObj = postsDate.find(obj => obj.postId === Number(postsId))
+        const postObj = flexibleData?.find(obj => obj.postId === Number(postsId))
         setPost(postObj)
-    }, [postsId, postsDate])
+    }, [flexibleData, postsId])
+
+    useEffect(() => {
+        if (currentUrl === '/youtube/kr') {
+            setFlexibleData(krData);
+        } else {
+            setFlexibleData(enData);
+        }
+    }, [currentUrl, enData, krData])
 
     return(
         <PostDetailBox>

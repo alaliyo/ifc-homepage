@@ -1,7 +1,23 @@
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import styled from 'styled-components';
 
-function Search({postsDate, searchQuery, searchResult, setSearchQuery, setSearchResult} : any) {
+interface postsData { //객체 타입
+    postId: number;
+    title: string;
+    url: string;
+    date: string;
+    bibleVerse: string;
+}
+
+interface SearchProps {
+    postsData: Array<postsData>;
+    searchQuery: string;
+    searchResult: any;
+    setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+    setSearchResult: any;
+};
+
+function Search({postsData, searchQuery, searchResult, setSearchQuery, setSearchResult}: SearchProps) {
     
     // 검색어 상태 갱신
     const handleSearchInputChange = (
@@ -13,7 +29,7 @@ function Search({postsDate, searchQuery, searchResult, setSearchQuery, setSearch
     // 검색 버튼 클릭 이벤트 핸들러
     const handleSearchButtonClick = () => {
         // 검색어를 포함하는 데이터 필터링
-        const filteredData = postsDate.filter((item: { title: string; date: string; }) =>
+        const filteredData = postsData.filter((item: { title: string; date: string; }) =>
             item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             item.date.toLowerCase().includes(searchQuery)
         );
@@ -73,7 +89,7 @@ const InputBox = styled(InputGroup)`
         }
     }
     @media screen and (max-width: 650px) {
-        padding: 5px 10%;
-        width: 100%;
+        padding-right: 10px;
+        width: 60%;
     }
 `;
