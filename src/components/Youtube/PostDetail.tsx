@@ -19,10 +19,10 @@ function PostDetail() {
     const { krData, enData } = useOutletContext<Props>();
     const { postsId } = useParams(); // url의 post id 값
     const [post, setPost] = useState<PostsData>(); // id 값 비교 상세 데이터 들고옴
-    const match = useMatch('/youtube/kr');
-    const currentUrl = match?.pathname || '/youtube/en';
+    const match = useMatch('/youtube/detail/kr/:postsId');
+    const currentUrl = match?.pathname || '/youtube/detail/en/';
     const [flexibleData, setFlexibleData] = useState<PostsData[]>();
-
+    console.log(currentUrl);
     // 데이터 조회 hook
     useEffect(() => {
         const postObj = flexibleData?.find(obj => obj.postId === Number(postsId))
@@ -30,10 +30,10 @@ function PostDetail() {
     }, [flexibleData, postsId])
 
     useEffect(() => {
-        if (currentUrl === '/youtube/kr') {
-            setFlexibleData(krData);
-        } else {
+        if (currentUrl === '/youtube/detail/en/') {
             setFlexibleData(enData);
+        } else {
+            setFlexibleData(krData);
         }
     }, [currentUrl, enData, krData])
 
