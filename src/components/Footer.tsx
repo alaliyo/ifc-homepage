@@ -9,13 +9,15 @@ function Footer() {
                 <p>전화번호: 055-386-1080</p>
                 <p>주소: 경남 양산시 삼호동부6길 18</p>
                 <p>이메일: fellowshipic2010@gmail.com</p>
+                <p>제작자: 김성원</p>
             </FooterTextBox>
             <FooterTextBox>
-                <p>제작자: 김성원</p>
                 <p>버전: v1.3.2</p>
+                <p>홈페이지 저작권: 도용을 금합니다.</p>
                 <p>이미지 저작권: 미리캠퍼스</p>
                 <p>폰트 저작권: NAVER</p>
-                <p>홈페이지 저작권: 도용을 금합니다.</p>
+                <p>CCLI License #733821</p>
+                <p>CCLI Streaming License #2301412</p>
             </FooterTextBox>
         </FooterBox>
     );
@@ -29,7 +31,7 @@ const FooterBox = styled.footer`
     background-color: #8a8a8a;
     padding: 20px;
     display: grid;
-    grid-template-columns: 5fr 4fr;
+    grid-template-columns: 5fr 5fr;
     @media screen and (max-width: 650px) {
         padding: 15px;
     }
@@ -50,14 +52,11 @@ const FooterTextBox = styled.div`
             font-size: 15px;
             margin-bottom: 3px;
         }
-        @media screen and (max-width: 510px) {
+        @media screen and (max-width: 560px) {
             font-size: 12px;
             margin-bottom: 2px;
         }
-        @media screen and (max-width: 410px) {
-            font-size: 11px;
-        }
-        @media screen and (max-width: 370px) {
+        @media screen and (max-width: 440px) {
             font-size: 10px;
         }
     }
