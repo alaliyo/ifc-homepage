@@ -6,7 +6,7 @@ import {
 } from './YoutubeStyled';
 import Search from "./Search";
 
-interface krData { // post 타입
+interface enData { // post 타입
     postId: number,
     title: string,
     url: string,
@@ -14,8 +14,8 @@ interface krData { // post 타입
     bibleVerse:string,
 }
 
-interface Props { //객체를 배열로 감쌈
-    krData: Array<krData>
+interface Props {//객체를 배열로 감쌈
+    enData: Array<enData>
 }
 
 interface YoutubePostsProps {
@@ -24,11 +24,11 @@ interface YoutubePostsProps {
 }
 
 
-function KrPosts() {
-    const { krData } = useOutletContext<Props>();
+function EnPosts() {
+    const { enData } = useOutletContext<Props>();
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [postsPerPage] = useState(15); // 한 페이지당 보여질 게시물 수
-    const [totalPages] = useState(Math.max(1, Math.ceil(krData.length / postsPerPage))); // 총 페이지 수
+    const [totalPages] = useState(Math.max(1, Math.ceil(enData.length / postsPerPage))); // 총 페이지 수
     //const { windowWidth } = useOutletContext<YoutubePostsProps>();
     const { loggedIn } = useOutletContext<YoutubePostsProps>();
     const [searchQuery, setSearchQuery] = useState('');
@@ -44,7 +44,7 @@ function KrPosts() {
         const startIndex = (currentPage - 1) * postsPerPage;
         const endIndex = startIndex + postsPerPage;
         // 검색 결과가 있다면 검색 결과를 사용하고, 없다면 postsDate를 사용
-        const targetPosts = searchResult ? searchResult.krData : krData;
+        const targetPosts = searchResult ? searchResult.enData : enData;
         return targetPosts.slice(startIndex, endIndex);
     };
     
@@ -58,11 +58,12 @@ function KrPosts() {
     
     return(
         <PostsBox>
-            {loggedIn && <Writin to="/youtube/kr-post/writin" >글 작성</Writin> }
+            {loggedIn && <Writin to="/youtube/en-post/writin" >글 작성</Writin> }
+            
             <PostsHeader>
-                <Title>한국</Title>
+                <Title>영어</Title>
                 <Search
-                    postsData={krData}
+                    postsData={enData}
                     searchQuery={searchQuery}
                     searchResult={searchResult}
                     setSearchQuery={setSearchQuery}
@@ -71,8 +72,8 @@ function KrPosts() {
             </PostsHeader>
             <PostsBody>
                 {searchResult ? (
-                    searchResult.krData.map((obj, i) => (
-                        <Link key={obj.postId} to={`/youtube/detail/kr/${obj.postId}`}>
+                    searchResult.enData.map((obj, i) => (
+                        <Link key={obj.postId} to={`/youtube/detail/en/${obj.postId}`}>
                         <div>{i + 1}</div>
                         <div>{obj.date}</div>
                         <div>{obj.title}</div>
@@ -80,7 +81,7 @@ function KrPosts() {
                     ))
                 ) : (
                     getPostsForCurrentPage().map((obj, i) => (
-                        <Link key={obj.postId} to={`/youtube/detail/kr/${obj.postId}`}>
+                        <Link key={obj.postId} to={`/youtube/detail/en/${obj.postId}`}>
                         <div>{i + 1}</div>
                         <div>{obj.date}</div>
                         <div>{obj.title}</div>
@@ -102,4 +103,4 @@ function KrPosts() {
     );
 }
 
-export default KrPosts;
+export default EnPosts;

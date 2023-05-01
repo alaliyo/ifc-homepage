@@ -14,12 +14,12 @@ import YearSchedule from "./components/Schedule/YearSchedule";
 import WorshipTime from "./components/Schedule/WorshipTime";
 import Youtube from './pages/Youtube';
 import KrPosts from "./components/Youtube/KrPosts";
+import EnPosts from "./components/Youtube/EnPosts";
 import PostDetail from "./components/Youtube/PostDetail";
 import WritinPost from "./components/Youtube/WritinPost";
 import Ministry from './pages/Ministry';
 import Mission from './pages/Mission';
 import NotFound from "./pages/NotFound";
-
 
 const router = createBrowserRouter([
     {
@@ -87,7 +87,11 @@ const router = createBrowserRouter([
                         element: <KrPosts />,
                     },
                     {
-                        path: 'kr-detail/:postsId',
+                        path: 'En-posts',
+                        element: <EnPosts />,
+                    },
+                    {
+                        path: 'detail/:category/:postsId',
                         element: <PostDetail />,
                     },
                     {

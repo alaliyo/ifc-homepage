@@ -21,7 +21,8 @@ interface YoutubeProps { // props 타입
 }
 
 function Youtube() {
-    const [postsDate, setpostsDate] = useState<Array<PostsData>>([]); //게시물
+    const [krData, setkrDate] = useState<Array<PostsData>>([]); //게시물
+    const [enData, setEnDate] = useState<Array<PostsData>>([]); //게시물
     const { windowWidth } = useOutletContext<YoutubeProps>(); // 웹 width 크기
     const { loggedIn } = useOutletContext<YoutubeProps>(); // 로드인 여부
     
@@ -35,17 +36,32 @@ function Youtube() {
             const postsArr: any = snapshot.docs.map((doc) => ({
                 ...doc.data(),
             }));
-            setpostsDate(postsArr);
+            setkrDate(postsArr);
         });
     }, [])
-    console.log(postsDate);
+
+    // Get 게시물
+    useEffect(() => {
+        const q = query(
+            collection(dbService, "youtobe-en-posts"),
+            orderBy("date", "desc")
+        );
+        onSnapshot(q, (snapshot) => {
+            const postsArr: any = snapshot.docs.map((doc) => ({
+                ...doc.data(),
+            }));
+            setEnDate(postsArr);
+        });
+    }, [])
+    
     return(
         <PageBody>
             <CrossFades />
             <YoutubeBox>
                 <NavYoutube />
                 <Outlet context={{
-                    postsDate: postsDate,
+                    krData: krData,
+                    enData: enData,
                     windowWidth: windowWidth,
                     loggedIn: loggedIn,
                 }} />
