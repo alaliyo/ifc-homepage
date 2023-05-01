@@ -24,11 +24,11 @@ function Youtube() {
     const [postsDate, setpostsDate] = useState<Array<PostsData>>([]); //게시물
     const { windowWidth } = useOutletContext<YoutubeProps>(); // 웹 width 크기
     const { loggedIn } = useOutletContext<YoutubeProps>(); // 로드인 여부
-
+    
     // Get 게시물
     useEffect(() => {
         const q = query(
-            collection(dbService, "youtobe-posts"),
+            collection(dbService, "youtobe-kr-posts"),
             orderBy("date", "desc")
         );
         onSnapshot(q, (snapshot) => {
@@ -38,7 +38,7 @@ function Youtube() {
             setpostsDate(postsArr);
         });
     }, [])
-
+    console.log(postsDate);
     return(
         <PageBody>
             <CrossFades />

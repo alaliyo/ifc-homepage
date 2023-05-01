@@ -11,7 +11,8 @@ function Root() {
   const [init, setInit] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect(() => { //웹 얿이에 반응
+  //웹 넓이에 반응
+  useEffect(() => { 
       const handleResize = () => {
           setwindowWidth(window.innerWidth);
       }

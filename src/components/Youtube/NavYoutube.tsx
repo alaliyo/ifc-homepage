@@ -11,8 +11,11 @@ function Navigator() {
     return(
         <NavBox>
             {windowWidth > 650 && <Title>유튜브</Title>}
-            <Link to={'posts'}>
-                2023
+            <Link to={'kr-posts'}>
+                한국
+            </Link>
+            <Link to={'en-posts'}>
+                영어
             </Link>
         </NavBox>
     );

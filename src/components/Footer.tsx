@@ -12,7 +12,7 @@ function Footer() {
             </FooterTextBox>
             <FooterTextBox>
                 <p>제작자: 김성원</p>
-                <p>버전: v1.1.1</p>
+                <p>버전: v1.2.1</p>
                 <p>이미지 저작권: 미리캠퍼스</p>
                 <p>폰트 저작권: NAVER</p>
                 <p>홈페이지 저작권: 도용을 금합니다.</p>

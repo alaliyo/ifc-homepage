@@ -30,7 +30,7 @@ function WritinPost() {
     //post 추가
     const onSubmit  = async (data: postsData) => {
         try {
-            await addDoc(collection(dbService, 'youtobe-posts'), {
+            await addDoc(collection(dbService, 'youtobe-kr-posts'), {
                 ...data,
                 postId: postMaxId,
             });

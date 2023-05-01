@@ -13,7 +13,7 @@ import Schedule from './pages/Schedule';
 import YearSchedule from "./components/Schedule/YearSchedule";
 import WorshipTime from "./components/Schedule/WorshipTime";
 import Youtube from './pages/Youtube';
-import YoutubePosts from "./components/Youtube/YoutubePosts";
+import KrPosts from "./components/Youtube/KrPosts";
 import PostDetail from "./components/Youtube/PostDetail";
 import WritinPost from "./components/Youtube/WritinPost";
 import Ministry from './pages/Ministry';
@@ -83,15 +83,15 @@ const router = createBrowserRouter([
                 element: <Youtube />,
                 children: [
                     {
-                        path: 'posts',
-                        element: <YoutubePosts />,
+                        path: 'kr-posts',
+                        element: <KrPosts />,
                     },
                     {
-                        path: 'detail/:postsId',
+                        path: 'kr-detail/:postsId',
                         element: <PostDetail />,
                     },
                     {
-                        path: 'writin-post',
+                        path: ':category/writin',
                         element: <WritinPost />
                     },
                 ],

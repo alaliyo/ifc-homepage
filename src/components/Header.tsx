@@ -57,7 +57,7 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
                         {WindowSize <= 825 ? '일정' : '교회일정' }
                     </Link>
                     
-                    <Link to={'/youtube/posts'}>
+                    <Link to={'/youtube/kr-posts'}>
                         {WindowSize <= 825 ? '유튜브' : '교회 유튜브' }
                     </Link>
                     
