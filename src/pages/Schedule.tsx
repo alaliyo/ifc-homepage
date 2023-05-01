@@ -5,10 +5,12 @@ import NavSchedule from '../components/Schedule/NavSchedule';
 
 interface ScheduleProps { // props 타입
     loggedIn: boolean;
+    windowWidth: number;
 }
 
 function Schedule() {
     const { loggedIn } = useOutletContext<ScheduleProps>(); // 로그인 여부
+    const { windowWidth } = useOutletContext<ScheduleProps>(); // 웹 width 크기
 
     return(
         <PageBody>
@@ -18,6 +20,7 @@ function Schedule() {
                     <OutletBox> 
                         <Outlet context={{
                             loggedIn: loggedIn,
+                            windowWidth: windowWidth,
                         }} />
                     </OutletBox>
             </ChildBox>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Link, useOutletContext } from 'react-router-dom';
-import { Button, Form, InputGroup } from 'react-bootstrap';
+import Search from "./Search";
 
 interface postsData { //객체 타입
     postId: number,
@@ -30,30 +30,6 @@ function YoutubePosts() {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResult, setSearchResult] = useState<Props>(); // 검색 결과를 저장할 배열
 
-    // 검색어 상태 갱신
-    const handleSearchInputChange = (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        setSearchQuery(e.target.value);
-    }; 
-
-    // 검색 버튼 클릭 이벤트 핸들러
-    const handleSearchButtonClick = () => {
-        // 검색어를 포함하는 데이터 필터링
-        const filteredData = postsDate.filter((item) =>
-            item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.date.toLowerCase().includes(searchQuery)
-        );
-        setSearchResult({ postsDate: filteredData }); // 검색 결과를 searchResult 상태값에 저장
-    };
-
-    // Enter key를 누르면 여기에서 원하는 작업을 수행할 수 있습니다.
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") {
-            handleSearchButtonClick()
-        }
-    };
-
     // 페이지 변경 시 호출되는 함수
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
@@ -78,36 +54,17 @@ function YoutubePosts() {
 
     return(
         <PostsBox>
-            {loggedIn && <Writin to="/youtube/writin-post" >글 작성</Writin> }
+            {loggedIn && <Writin to="/youtube/kr-post/writin" >글 작성</Writin> }
             
             <PostsHeader>
                 {windowWidth > 650 && <Title>목록</Title>}
-                
-                <InputBox className="mb-3">
-                    <Form.Control
-                        onChange={handleSearchInputChange}
-                        onKeyDown={handleKeyDown}
-                        placeholder="검색"
-                        aria-describedby="basic-addon2"
-                    />
-                    <Button 
-                        onClick={handleSearchButtonClick}
-                        variant="outline-secondary"
-                        id="button-addon2"
-                        size="sm"
-                    >
-                        ⚲
-                    </Button>
-                    {searchResult && 
-                        <Button
-                            onClick={() => setSearchResult(undefined)}
-                            variant="outline-secondary"
-                            id="button-addon2"
-                            size="sm"
-                        >전체</Button>
-                    }
-                </InputBox>
-                
+                <Search
+                    postsDate={postsDate}
+                    searchQuery={searchQuery}
+                    searchResult={searchResult}
+                    setSearchQuery={setSearchQuery}
+                    setSearchResult={setSearchResult}
+                 />
             </PostsHeader>
             <PostsBody>
                 {searchResult ? (
@@ -168,27 +125,6 @@ const Title = styled.h3`
     width: 100px;
     @media screen and (max-width: 650px) {
         font-size: 15px;
-    }
-`;
-
-const InputBox = styled(InputGroup)`
-    width: 350px;
-    input {
-        height: 30px;
-    }
-    button {
-        font-size: 13px;
-        font-weight: 900;
-        height: 30px;
-        padding: 0 15px;
-        @media screen and (max-width: 650px) {
-            padding: 0 10px;
-            font-size: 11px;
-        }
-    }
-    @media screen and (max-width: 650px) {
-        padding: 5px 10%;
-        width: 100%;
     }
 `;
 

@@ -28,11 +28,15 @@
     color: #000;
 }
 
+.fc-event-title-container {
+    text-align: center;
+}
+
 .fc-event-title {
     white-space: pre-line;
     font-size: 15px;
     font-weight: 900;
-    @media screen and (max-width: 550px) {
+    @media screen and (max-width: 800px) {
         font-size: 12px;
         font-weight: 900;
     }

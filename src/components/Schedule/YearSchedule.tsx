@@ -11,7 +11,8 @@ import { useOutletContext } from 'react-router-dom';
 import './YearSchedule.css'
 
 interface ScheduleProps {
-    loggedIn: boolean
+    loggedIn: boolean,
+    windowWidth: number,
 }
 
 interface ScheduleData {
@@ -22,10 +23,12 @@ interface ScheduleData {
 
 function YearSchedule() {
     const { loggedIn } = useOutletContext<ScheduleProps>();
+    const { windowWidth } = useOutletContext<ScheduleProps>(); // 웹 width 크기
     const [scheduleDatas, setScheduleDatas] = useState<Array<ScheduleData>>([]);
     const { register, handleSubmit, reset } = useForm<ScheduleData>(); // useForm 사용
     const [showModal, setShowModal] = useState(false);
     const [eventData, setEventData] = useState<ScheduleData | null>(null);
+    const [widthBoolean, setWidthBoolean] = useState(false);
 
     // 게시물 Get
     useEffect(() => {
@@ -40,7 +43,7 @@ function YearSchedule() {
             }));
             setScheduleDatas(ScheduleArr);
         });
-    }, [scheduleDatas])
+    }, [])
 
     // 게시물 post 
     const onSubmit = async (data: ScheduleData) => {
@@ -82,6 +85,14 @@ function YearSchedule() {
         }
     };
 
+    useEffect(() => {
+        setWidthBoolean(windowWidth <= 550 && true)
+    }, [windowWidth])
+
+    function handleEventClickWrapper(e: any) {
+        if (widthBoolean) handleEventClick(e);
+    }
+    
     return (
         <>
         {loggedIn && (
@@ -101,7 +112,7 @@ function YearSchedule() {
                             placeholder="날짜"
                             {...register('date')}
                         />
-                    </Form.Group>
+                        </Form.Group>
                     <Button type="submit" variant="outline-secondary" size="sm">완료</Button>
                 </FormStyled>
                 <br />
@@ -109,11 +120,11 @@ function YearSchedule() {
         )}
             <Modal show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title>상세 조회</Modal.Title>
+                    <Modal.Title>조회</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>{eventData?.title}</h4>
-                    <h4>{eventData?.date}</h4>
+                    <ModalData>{eventData?.title}</ModalData>
+                    <ModalData>{eventData?.date}</ModalData>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => setShowModal(false)}>
@@ -127,9 +138,17 @@ function YearSchedule() {
                 initialView="dayGridMonth"
                 height='auto'
                 locale={localesKo}
-                events={scheduleDatas}
+                events={
+                    scheduleDatas.map(obj => (
+                        {
+                            id: obj.id,
+                            title: (widthBoolean ? '확인' : obj.title),
+                            date: obj.date,
+                        }
+                    ))
+                }
                 eventDisplay="block"
-                eventClick={loggedIn ? handleDelete : handleEventClick}
+                eventClick={loggedIn ? handleDelete : handleEventClickWrapper}
             />
         </>
     );
@@ -140,4 +159,8 @@ export default YearSchedule;
 const FormStyled = styled(Form)`
     width: 300px;
     margin: 0 auto;
+`;
+
+const ModalData = styled.p`
+    font-size: 18px;
 `;
