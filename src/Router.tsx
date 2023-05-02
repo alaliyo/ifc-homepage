@@ -20,6 +20,8 @@ import WritinPost from "./components/Youtube/WritinPost";
 import Ministry from './pages/Ministry';
 import Mission from './pages/Mission';
 import NotFound from "./pages/NotFound";
+import Overseas from "./components/Mission/Overseas";
+import Domestic from "./components/Mission/Domestic";
 
 const router = createBrowserRouter([
     {
@@ -101,12 +103,22 @@ const router = createBrowserRouter([
                 ],
             },
             {
-                path: `ministry`,
-                element: <Ministry />,
-            },
-            {
                 path: `mission`,
                 element: <Mission />,
+                children:[
+                    {
+                        path: 'overseas',
+                        element: <Overseas />,
+                    },
+                    {
+                        path: 'domestic',
+                        element: <Domestic />,
+                    },
+                ]
+            },
+            {
+                path: `ministry`,
+                element: <Ministry />,
             },
         ],
         errorElement: <NotFound />

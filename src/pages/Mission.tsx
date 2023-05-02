@@ -1,20 +1,32 @@
-import styled from "styled-components";
+import { ChildBox, OutletBox, PageBody } from './PageStyled';
+import { Outlet, useOutletContext } from "react-router-dom";
 import CrossFades from "../components/generally/CrossFades";
-import { PageBody } from './PageStyled';
+import NavMission from "../components/Mission/NavMission";
+
+interface MissionProps { // props 타입
+    loggedIn: boolean;
+    windowWidth: number;
+}
 
 function Mission() {
+    const { windowWidth } = useOutletContext<MissionProps>(); // 웹 width 크기
+    const { loggedIn } = useOutletContext<MissionProps>(); // 로드인 여부
+
+
     return(
         <PageBody>
             <CrossFades />
-            <Title>선교 페이지 제작중입니다...</Title>
+            <ChildBox>
+                <NavMission />
+                <OutletBox> 
+                    <Outlet context={{
+                        loggedIn: loggedIn,
+                        windowWidth: windowWidth,
+                    }} />
+                </OutletBox>
+            </ChildBox>
         </PageBody>
     );
 }
 
 export default Mission;
-
-const Title = styled.h2`
-    margin-top: 20px;
-    color: gray;
-    text-align: center;
-`;
