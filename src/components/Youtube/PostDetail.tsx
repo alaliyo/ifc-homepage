@@ -22,13 +22,14 @@ function PostDetail() {
     const match = useMatch('/youtube/detail/kr/:postsId');
     const currentUrl = match?.pathname || '/youtube/detail/en/';
     const [flexibleData, setFlexibleData] = useState<PostsData[]>();
-    console.log(currentUrl);
+    
     // 데이터 조회 hook
     useEffect(() => {
         const postObj = flexibleData?.find(obj => obj.postId === Number(postsId))
         setPost(postObj)
     }, [flexibleData, postsId])
 
+    // 한국 또는 영어 date 조회
     useEffect(() => {
         if (currentUrl === '/youtube/detail/en/') {
             setFlexibleData(enData);
@@ -40,7 +41,7 @@ function PostDetail() {
     return(
         <PostDetailBox>
             <LinkBox>
-                <Link to="/youtube/posts">←목록으로</Link>
+                <Link to={currentUrl === '/youtube/detail/en/' ? '/youtube/en-posts' : '/youtube/kr-posts'}>←목록으로</Link>
             </LinkBox>
             <PostBox>
                 <PostIframe

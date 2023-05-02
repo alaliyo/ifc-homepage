@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Offcanva from "./Offcanva";
 import Logo from '../imgs/IFC-Logo.png';
 import { authService } from '../firebase';
+import HeaderWrapper from "./HeaderWrapper";
 
 interface HeaderProps {
     WindowSize: number;
@@ -50,24 +51,45 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
             </LinkBoxs>
             {WindowSize > 650 && (
                 <NavBox>
-                    <Link to={'/introduction/vision'} >
-                        {WindowSize <= 825 ? '소개' : '교회소개' }
-                    </Link>
-                    <Link to={'/schedule/worship-time'}>
-                        {WindowSize <= 825 ? '일정' : '교회일정' }
-                    </Link>
+                    <HeaderWrapper
+                        label={WindowSize <= 825 ? '소개' : '교회소개'}
+                        to='/introduction/vision'
+                    >
+                        <li><LinkStyled to='/introduction/vision'>비전</LinkStyled></li>
+                        <li><LinkStyled to='/introduction/history'>소개</LinkStyled></li>
+                        <li><LinkStyled to='/introduction/rev'>담임목사</LinkStyled></li>
+                        <li><LinkStyled to='/introduction/pastors'>교역자</LinkStyled></li>
+                        <li><LinkStyled to='/introduction/elder'>장로</LinkStyled></li>
+                        <li><LinkStyled to='/introduction/sketch-map'>약도</LinkStyled></li>
+                    </HeaderWrapper>
+
+                    <HeaderWrapper
+                        label={WindowSize <= 825 ? '일정' : '교회일정'}
+                        to='/schedule/worship-time'
+                    >
+                        <li><LinkStyled to='/schedule/worship-time'>예배시간</LinkStyled></li>
+                        <li><LinkStyled to='/schedule/year'>연중계획</LinkStyled></li>
+                    </HeaderWrapper>
+
+                    <HeaderWrapper 
+                        label={WindowSize <= 825 ? '유튜브' : '교회 유튜브'}
+                        to='/youtube/kr-posts'
+                    >
+                        <li><LinkStyled to='/youtube/kr-posts'>한국</LinkStyled></li>
+                        <li><LinkStyled to='/youtube/en-posts'>영어</LinkStyled></li>
+                    </HeaderWrapper>
                     
-                    <Link to={'/youtube/kr-posts'}>
-                        {WindowSize <= 825 ? '유튜브' : '교회 유튜브' }
-                    </Link>
-                    
-                    <Link to={'/ministry'}>
-                        {WindowSize <= 825 ? '사역' : '교회학교 및 훈련사역' }
-                    </Link>
-                    
-                    <Link to={'/mission'}>
-                        {WindowSize <= 825 ? '선교' : '전도 및 선교' }
-                    </Link>
+                    <HeaderWrapper 
+                        label={WindowSize <= 825 ? '선교' : '선교 및 전도'}
+                        to='/mission/overseas'
+                    >
+                    </HeaderWrapper>
+
+                    <HeaderWrapper 
+                        label={WindowSize <= 825 ? '사역' : '교회학교 및 훈련사역'}
+                        to='/ministry'
+                    >
+                    </HeaderWrapper>
                 </NavBox>
             )}
         </HeaderBox>
@@ -147,17 +169,18 @@ const NavBox = styled.nav`
     display: flex;
     width: max-content;
     margin: 0 auto;
-    a {
-        padding: 10px 22px;
-        color: #cecece;
-        font-size: 20px;
-        font-weight: 900;
-        text-decoration: none;
-        border-right: 2px solid #575757;
-        &:hover {
-            background-color: #777777c5;
-            color: white;
-            transition: .3s;
-        }
+`;
+
+const LinkStyled = styled(Link)`
+    display: block;
+    padding: 5px 0;
+    text-align: center;
+    font-weight: 900;
+    color: #cecece;
+    text-decoration: none;
+    &:hover {
+        background-color: #777777;
+        color: white;
+        transition: .3s;
     }
 `;

@@ -36,21 +36,27 @@ function Offcanva({ loggedIn }: OffcanvaProps) {
                 </LinkStyle>
             </Offcanvas.Header>
             <Offcanvas.Body>
+                
                 <LinkStyle to={'/introduction/vision'} onClick={onClick}>
                     교회소개
                 </LinkStyle>
+
                 <LinkStyle to={'/schedule/worship-time'} onClick={onClick}>
                     교회일정
                 </LinkStyle>
-                <LinkStyle to={'/youtube/posts'} onClick={onClick}>
+
+                <LinkStyle to={'/youtube/kr-posts'} onClick={onClick}>
                     교회 유튜브
                 </LinkStyle>
-                <LinkStyle to={'/ministry'} onClick={onClick}>
-                    교회 사역
-                </LinkStyle>
+
                 <LinkStyle to={'/mission'} onClick={onClick}>
                     전도 및 선교
                 </LinkStyle>
+
+                <LinkStyle to={'/ministry'} onClick={onClick}>
+                    교회 사역
+                </LinkStyle>
+                
                 {loggedIn ? (
                     <LinkStyle to={'/'} onClick={onLogOutClick}>
                         로그아웃

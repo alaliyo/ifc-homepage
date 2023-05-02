@@ -9,6 +9,7 @@ import localesKo from '@fullcalendar/core/locales/ko'
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useOutletContext } from 'react-router-dom';
 import './YearSchedule.css'
+import { Body } from './IntroStyled';
 
 interface ScheduleProps {
     loggedIn: boolean,
@@ -94,7 +95,7 @@ function YearSchedule() {
     }
     
     return (
-        <>
+        <Body>
         {loggedIn && (
             <>
                 <br />
@@ -150,7 +151,7 @@ function YearSchedule() {
                 eventDisplay="block"
                 eventClick={loggedIn ? handleDelete : handleEventClickWrapper}
             />
-        </>
+        </Body>
     );
 }
 
