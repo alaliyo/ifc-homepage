@@ -14,7 +14,7 @@ interface SearchProps {
     searchQuery: string;
     searchResult: any;
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-    setSearchResult: any;
+    setSearchResult: React.Dispatch<React.SetStateAction<any>>;
 };
 
 function Search({postsData, searchQuery, searchResult, setSearchQuery, setSearchResult}: SearchProps) {

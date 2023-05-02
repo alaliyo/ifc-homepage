@@ -7,15 +7,16 @@ import {
 import Search from "./Search";
 
 interface enData { // post 타입
-    postId: number,
-    title: string,
-    url: string,
-    date: string,
-    bibleVerse:string,
+    postId: number;
+    title: string;
+    url: string;
+    date: string;
+    bibleVerse:string;
 }
 
 interface Props {//객체를 배열로 감쌈
-    enData: Array<enData>
+    enData: Array<enData>;
+    postsDate: Array<enData>;
 }
 
 interface YoutubePostsProps {
@@ -44,7 +45,7 @@ function EnPosts() {
         const startIndex = (currentPage - 1) * postsPerPage;
         const endIndex = startIndex + postsPerPage;
         // 검색 결과가 있다면 검색 결과를 사용하고, 없다면 postsDate를 사용
-        const targetPosts = searchResult ? searchResult.enData : enData;
+        const targetPosts = searchResult ? searchResult.postsDate : enData;
         return targetPosts.slice(startIndex, endIndex);
     };
     
@@ -72,7 +73,7 @@ function EnPosts() {
             </PostsHeader>
             <PostsBody>
                 {searchResult ? (
-                    searchResult.enData.map((obj, i) => (
+                    searchResult.postsDate.map((obj, i) => (
                         <Link key={obj.postId} to={`/youtube/detail/en/${obj.postId}`}>
                         <div>{i + 1}</div>
                         <div>{obj.date}</div>

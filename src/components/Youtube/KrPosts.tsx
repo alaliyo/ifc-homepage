@@ -14,7 +14,8 @@ interface krData { // post 타입
     bibleVerse:string,
 }
 
-interface Props { //객체를 배열로 감쌈
+interface Props {
+    postsDate: Array<krData>; //객체를 배열로 감쌈
     krData: Array<krData>
 }
 
@@ -33,7 +34,7 @@ function KrPosts() {
     const { loggedIn } = useOutletContext<YoutubePostsProps>();
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResult, setSearchResult] = useState<Props>(); // 검색 결과를 저장할 배열
-
+    console.log(searchResult);
     // 페이지 변경 시 호출되는 함수
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
@@ -44,7 +45,8 @@ function KrPosts() {
         const startIndex = (currentPage - 1) * postsPerPage;
         const endIndex = startIndex + postsPerPage;
         // 검색 결과가 있다면 검색 결과를 사용하고, 없다면 postsDate를 사용
-        const targetPosts = searchResult ? searchResult.krData : krData;
+        const targetPosts = searchResult ? searchResult.postsDate : krData;
+        console.log(targetPosts);
         return targetPosts.slice(startIndex, endIndex);
     };
     
@@ -71,7 +73,7 @@ function KrPosts() {
             </PostsHeader>
             <PostsBody>
                 {searchResult ? (
-                    searchResult.krData.map((obj, i) => (
+                    searchResult.postsDate.map((obj, i) => (
                         <Link key={obj.postId} to={`/youtube/detail/kr/${obj.postId}`}>
                         <div>{i + 1}</div>
                         <div>{obj.date}</div>
