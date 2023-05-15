@@ -80,8 +80,8 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
                     </HeaderWrapper>
                     
                     <HeaderWrapper 
-                        label={WindowSize <= 825 ? '선교' : '선교 및 전도'}
-                        to='/mission/overseas'
+                        label='행사'
+                        to='/event-story'
                     >
                     </HeaderWrapper>
 
@@ -90,6 +90,14 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
                         to='/ministry'
                     >
                     </HeaderWrapper>
+
+                    <HeaderWrapper 
+                        label={WindowSize <= 825 ? '선교' : '선교 및 전도'}
+                        to='/mission/overseas'
+                    >
+                    </HeaderWrapper>
+
+                    
                 </NavBox>
             )}
         </HeaderBox>

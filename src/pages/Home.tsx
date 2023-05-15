@@ -18,7 +18,7 @@ function Home() {
                 <ShortcutsBox>
                     <Sermon>
                         <Sermontitle>담임 목사님의 <br />&emsp;오전 설교</Sermontitle>
-                        <BadgeStyled bg="success"><Link to='/youtube/posts'>바로 가기</Link></BadgeStyled>
+                        <BadgeStyled bg="success"><Link to='/youtube/kr-posts'>바로 가기</Link></BadgeStyled>
                     </Sermon>
                     <IntroBox>
                         <div>
@@ -35,7 +35,7 @@ function Home() {
                         </div>
                     </IntroBox>
                     <Construction>
-                        <span>선교 및 사역 <br /> 페이지는 <br /> 준비중입니다.</span>
+                        <span>선교 및 사역, <br /> 행사 페이지는 <br /> 준비중입니다.</span>
                     </Construction>
                 </ShortcutsBox>
             </HomeBody>
@@ -94,6 +94,9 @@ const Sermontitle = styled.span`
     @media screen and (max-width: 460px) {
         font-size: 12px;
     }
+    @media screen and (max-width: 350px) {
+        font-size: 11px;
+    }
 `;
 
 const BadgeStyled = styled(Badge)`
@@ -112,6 +115,9 @@ const BadgeStyled = styled(Badge)`
         @media screen and (max-width: 650px) {
             font-size: 12px;
         }
+        @media screen and (max-width: 350px) {
+        font-size: 11px;
+    }
     }
 `;
 
@@ -162,6 +168,12 @@ const IntroBox = styled.div`
             }
             @media screen and (max-width: 600px) {
                 font-size: 13px;
+            }
+            @media screen and (max-width: 450px) {
+                font-size: 12px;
+            }
+            @media screen and (max-width: 350px) {
+                font-size: 11px;
             }
         }
     }

@@ -22,6 +22,7 @@ import Mission from './pages/Mission';
 import NotFound from "./pages/NotFound";
 import Overseas from "./components/Mission/Overseas";
 import Domestic from "./components/Mission/Domestic";
+import EventStory from "./pages/EventStory";
 
 const router = createBrowserRouter([
     {
@@ -99,6 +100,15 @@ const router = createBrowserRouter([
                     {
                         path: ':category/writin',
                         element: <WritinPost />
+                    },
+                ],
+            },
+            {
+                path: `event-story`,
+                element: <EventStory />,
+                children: [
+                    {
+
                     },
                 ],
             },
