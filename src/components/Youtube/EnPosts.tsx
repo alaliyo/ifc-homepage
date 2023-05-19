@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useOutletContext } from 'react-router-dom';
 import {
     PostsBox, Writin, PostsHeader, Title,
@@ -29,16 +29,26 @@ function EnPosts() {
     const { enData } = useOutletContext<Props>();
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [postsPerPage] = useState(15); // 한 페이지당 보여질 게시물 수
-    const [totalPages] = useState(Math.max(1, Math.ceil(enData.length / postsPerPage))); // 총 페이지 수
+    const [totalPages, setTotalPages] = useState(Math.max(1, Math.ceil(enData.length / postsPerPage))); // 총 페이지 수
     //const { windowWidth } = useOutletContext<YoutubePostsProps>();
     const { loggedIn } = useOutletContext<YoutubePostsProps>();
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResult, setSearchResult] = useState<Props>(); // 검색 결과를 저장할 배열
 
+    // 페이지 수 계산 함수
+    const calculateTotalPages = () => {
+        const totalPages = Math.max(1, Math.ceil(enData.length / postsPerPage));
+        setTotalPages(totalPages);
+    };
+
     // 페이지 변경 시 호출되는 함수
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
     };
+
+    useEffect(() => {
+        calculateTotalPages();
+    }, [enData]);
 
     // 현재 페이지에 해당하는 게시물들을 필터링하여 가져오는 함수
     const getPostsForCurrentPage = () => {
@@ -75,7 +85,7 @@ function EnPosts() {
                 {searchResult ? (
                     searchResult.postsDate.map((obj, i) => (
                         <Link key={obj.postId} to={`/youtube/detail/en/${obj.postId}`}>
-                        <div>{i + 1}</div>
+                        <div>{(currentPage - 1) * 15 + i + 1}</div>
                         <div>{obj.date}</div>
                         <div>{obj.title}</div>
                         </Link>
@@ -83,7 +93,7 @@ function EnPosts() {
                 ) : (
                     getPostsForCurrentPage().map((obj, i) => (
                         <Link key={obj.postId} to={`/youtube/detail/en/${obj.postId}`}>
-                        <div>{i + 1}</div>
+                        <div>{(currentPage - 1) * 15 + i + 1}</div>
                         <div>{obj.date}</div>
                         <div>{obj.title}</div>
                         </Link>
