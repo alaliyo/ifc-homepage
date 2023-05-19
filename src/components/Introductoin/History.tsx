@@ -32,9 +32,9 @@ function History() {
                 <RightText>
                   2. 교회 이전 <br /> 2011.11.30
                 </RightText>
-                <LeftText>
+                <RightText>
                   4. 새 예배당 건축 <br /> 2014.07
-                </LeftText>
+                </RightText>
                 <RightText>
                   6. 제1차 필리핀 선교 <br /> 2015.03.22
                 </RightText>

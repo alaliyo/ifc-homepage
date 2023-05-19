@@ -56,7 +56,7 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
                         to='/introduction/vision'
                     >
                         <li><LinkStyled to='/introduction/vision'>비전</LinkStyled></li>
-                        <li><LinkStyled to='/introduction/history'>소개</LinkStyled></li>
+                        <li><LinkStyled to='/introduction/history'>연혁</LinkStyled></li>
                         <li><LinkStyled to='/introduction/rev'>담임목사</LinkStyled></li>
                         <li><LinkStyled to='/introduction/pastors'>교역자</LinkStyled></li>
                         <li><LinkStyled to='/introduction/elder'>장로</LinkStyled></li>
