@@ -12,10 +12,10 @@ function History() {
                   1.교회 설립 <br /> 2010.02.21 
                 </LeftText>
                 <LeftText>
-                  3. 건축 시작 <br /> 2014.02
+                  3. 담임 목사 안수 <br /> 2014.04.18
                 </LeftText>
                 <LeftText>
-                  5. 새 예배당 입당 예배 <br /> 2014.09.21
+                  5. 타이타이 열방교회 설립 <br/> (필리핀) <br /> 2014.04.18
                 </LeftText>
                 <LeftText>
                   7. 패밀리 캠프 <br /> 2015.08
@@ -30,11 +30,11 @@ function History() {
               </div>
               <RightTextBox>
                 <RightText>
-                  2. 열방교회 1번째 설립 <br /> 2011.11.30
+                  2. 교회 이전 <br /> 2011.11.30
                 </RightText>
-                <RightText>
-                  4. 담임 목사 안수 <br /> 2014.04.18
-                </RightText>
+                <LeftText>
+                  4. 새 예배당 건축 <br /> 2014.07
+                </LeftText>
                 <RightText>
                   6. 제1차 필리핀 선교 <br /> 2015.03.22
                 </RightText>
@@ -42,7 +42,7 @@ function History() {
                   8. 스리랑카 선교 시작 <br /> 2017.06.04
                 </RightText>
                 <RightText>
-                  10. 열방교회 2번째 설립 <br /> 2022.11.
+                  10. 열방교회 2번째 건축 <br /> 2022.11
                 </RightText>
               </RightTextBox>
             </TextBox>
@@ -73,7 +73,7 @@ const Body = styled.div`
 
 const TextBox = styled.div`
   display: grid;
-  grid-template-columns: auto 30px auto;
+  grid-template-columns: 48% 30px 48%;
 `;
 
 const LeftTextBox = styled.div`
@@ -86,6 +86,7 @@ const LeftText = styled.p`
   text-align: right;
   margin-bottom: 150px;
   border-bottom: 2px solid gray;
+  word-break: keep-all;
   @media screen and (max-width: 410px) {
     font-size: 15px;
   }
@@ -120,6 +121,7 @@ const RightText = styled.p`
   text-align: left;
   margin-bottom: 150px;
   border-bottom: 2px solid gray;
+  word-break: keep-all;
   @media screen and (max-width: 410px) {
     font-size: 15px;
   }
