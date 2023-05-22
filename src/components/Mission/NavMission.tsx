@@ -1,5 +1,5 @@
 import { useOutletContext } from 'react-router-dom';
-import { NavBox, Title } from '../generally/NavStyled';
+import { NavBox, Title } from '../Common/NavStyled';
 import LinkWrapperWithState from './LinkWrapperWithState';
 
 interface NavigatorProps {

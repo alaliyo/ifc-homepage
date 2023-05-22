@@ -1,6 +1,6 @@
 import { Outlet, useOutletContext } from 'react-router-dom';
 import { PageBody, ChildBox, OutletBox } from './PageStyled';
-import CrossFades from "../components/generally/CrossFades";
+import CrossFades from "../components/Common/CrossFades";
 import NavSchedule from '../components/Schedule/NavSchedule';
 
 interface ScheduleProps { // props 타입

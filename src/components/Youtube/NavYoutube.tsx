@@ -1,5 +1,5 @@
 import { Link, useOutletContext } from 'react-router-dom';
-import { NavBox, Title } from '../generally/NavStyled';
+import { NavBox, Title } from '../Common/NavStyled';
 
 interface NavigatorProps { // props 타입
     windowWidth: number

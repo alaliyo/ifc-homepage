@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Outlet, useOutletContext } from 'react-router-dom';
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
-import CrossFades from "../components/generally/CrossFades";
+import CrossFades from "../components/Common/CrossFades";
 import NavYoutube from '../components/Youtube/NavYoutube';
 import { dbService } from '../firebase';
 import { PageBody } from './PageStyled';

@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import CrossFades from "../components/generally/CrossFades";
+import CrossFades from "../components/Common/CrossFades";
 import NavIntroductoin from '../components/Introductoin/NavIntroductoin';
 import { PageBody, ChildBox, OutletBox } from './PageStyled';
 

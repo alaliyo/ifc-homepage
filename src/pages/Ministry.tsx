@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import CrossFades from "../components/generally/CrossFades";
+import CrossFades from "../components/Common/CrossFades";
 import { PageBody } from './PageStyled';
 
 function Ministry() {

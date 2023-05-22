@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import Offcanva from "./Offcanva";
-import Logo from '../imgs/IFC-Logo.png';
-import { authService } from '../firebase';
+import Logo from '../../imgs/IFC-Logo.png';
+import { authService } from '../../firebase';
 import HeaderWrapper from "./HeaderWrapper";
 
 interface HeaderProps {

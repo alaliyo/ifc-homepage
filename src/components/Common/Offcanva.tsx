@@ -2,7 +2,7 @@ import { useState  } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Button, Offcanvas } from 'react-bootstrap';
-import { authService } from '../firebase';
+import { authService } from '../../firebase';
 
 interface OffcanvaProps {
     loggedIn: boolean;
@@ -49,12 +49,16 @@ function Offcanva({ loggedIn }: OffcanvaProps) {
                     교회 유튜브
                 </LinkStyle>
 
-                <LinkStyle to={'/mission'} onClick={onClick}>
-                    전도 및 선교
+                <LinkStyle to={'/event-story'} onClick={onClick}>
+                    행사
                 </LinkStyle>
 
                 <LinkStyle to={'/ministry'} onClick={onClick}>
                     교회 사역
+                </LinkStyle>
+
+                <LinkStyle to={'/mission'} onClick={onClick}>
+                    전도 및 선교
                 </LinkStyle>
                 
                 {loggedIn ? (

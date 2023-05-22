@@ -5,7 +5,7 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { collection, getDocs, query } from "firebase/firestore";
 import { dbService } from '../firebase';
 import { Button, Form, Stack, Alert } from 'react-bootstrap';
-import CrossFades from "../components/generally/CrossFades";
+import CrossFades from "../components/Common/CrossFades";
 import { PageBody } from './PageStyled';
 
 interface LogInProps { //props 타입

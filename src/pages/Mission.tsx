@@ -1,6 +1,6 @@
 import { ChildBox, OutletBox, PageBody } from './PageStyled';
 import { Outlet, useOutletContext } from "react-router-dom";
-import CrossFades from "../components/generally/CrossFades";
+import CrossFades from "../components/Common/CrossFades";
 import NavMission from "../components/Mission/NavMission";
 
 interface MissionProps { // props 타입
