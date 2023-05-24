@@ -81,7 +81,7 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
                     
                     <HeaderWrapper 
                         label='행사'
-                        to='/event-story'
+                        to='/event-story/post'
                     >
                     </HeaderWrapper>
 

@@ -4,7 +4,7 @@ import {
     PostsBox, Writin, PostsHeader, Title,
     PostsBody, PaginationBox, PageNumber, GoBun
 } from './YoutubeStyled';
-import Search from "./Search";
+import Search from "../Common/Search";
 
 interface krData { // post 타입
     postId: number,

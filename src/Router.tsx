@@ -23,6 +23,7 @@ import NotFound from "./pages/NotFound";
 import Overseas from "./components/Mission/Overseas";
 import Domestic from "./components/Mission/Domestic";
 import EventStory from "./pages/EventStory";
+import EventPost from "./components/EventStory/EventPost";
 
 const router = createBrowserRouter([
     {
@@ -108,7 +109,8 @@ const router = createBrowserRouter([
                 element: <EventStory />,
                 children: [
                     {
-
+                        path: 'post',
+                        element: <EventPost />,
                     },
                 ],
             },

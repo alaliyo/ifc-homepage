@@ -43,6 +43,11 @@ function Search({postsData, searchQuery, searchResult, setSearchQuery, setSearch
         }
     };
 
+    const searchReset = () => {
+        setSearchResult(undefined);
+        setSearchQuery('');
+    };
+
     return(
         <InputBox className="mb-3">
             <Form.Control
@@ -50,6 +55,7 @@ function Search({postsData, searchQuery, searchResult, setSearchQuery, setSearch
                 onKeyDown={handleKeyDown}
                 placeholder="검색"
                 aria-describedby="basic-addon2"
+                value={searchQuery}
             />
             <Button 
                 onClick={handleSearchButtonClick}
@@ -61,7 +67,7 @@ function Search({postsData, searchQuery, searchResult, setSearchQuery, setSearch
             </Button>
             {searchResult && 
                 <Button
-                    onClick={() => setSearchResult(undefined)}
+                    onClick={searchReset}
                     variant="outline-secondary"
                     id="button-addon2"
                     size="sm"

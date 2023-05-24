@@ -49,7 +49,7 @@ function Offcanva({ loggedIn }: OffcanvaProps) {
                     교회 유튜브
                 </LinkStyle>
 
-                <LinkStyle to={'/event-story'} onClick={onClick}>
+                <LinkStyle to={'/event-story/post'} onClick={onClick}>
                     행사
                 </LinkStyle>
 

@@ -4,7 +4,7 @@ import {
     PostsBox, Writin, PostsHeader, Title,
     PostsBody, PaginationBox, PageNumber, GoBun
 } from './YoutubeStyled';
-import Search from "./Search";
+import Search from "../Common/Search";
 
 interface enData { // post 타입
     postId: number;
@@ -85,17 +85,17 @@ function EnPosts() {
                 {searchResult ? (
                     searchResult.postsDate.map((obj, i) => (
                         <Link key={obj.postId} to={`/youtube/detail/en/${obj.postId}`}>
-                        <div>{(currentPage - 1) * 15 + i + 1}</div>
-                        <div>{obj.date}</div>
-                        <div>{obj.title}</div>
+                            <div>{(currentPage - 1) * 15 + i + 1}</div>
+                            <div>{obj.date}</div>
+                            <div>{obj.title}</div>
                         </Link>
                     ))
                 ) : (
                     getPostsForCurrentPage().map((obj, i) => (
                         <Link key={obj.postId} to={`/youtube/detail/en/${obj.postId}`}>
-                        <div>{(currentPage - 1) * 15 + i + 1}</div>
-                        <div>{obj.date}</div>
-                        <div>{obj.title}</div>
+                            <div>{(currentPage - 1) * 15 + i + 1}</div>
+                            <div>{obj.date}</div>
+                            <div>{obj.title}</div>
                         </Link>
                     ))
                 )}
