@@ -8,25 +8,19 @@ function EventStory() {
     return(
         <div>
             <CrossFades />
-            <Title>행사 페이지 준비중입니다.</Title>
             <ChildBox>
                 <PageNav
                     title="행사"
                     LinkInfo={[
                         {
-                            title1: '시험',
-                            title2: '이다',
-                            LinkUrl: '/',
-                        },
-                        {
-                            title1: '시험',
-                            LinkUrl: '/',
+                            title1: '행사',
+                            LinkUrl: '/event-story',
                         },
                     ]}
                 />
-                    <OutletBox> 
-                        <Outlet/>
-                    </OutletBox>
+                <OutletBox> 
+                    <Outlet/>
+                </OutletBox>
             </ChildBox>
         </div>
     );

@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { Outlet, useOutletContext } from 'react-router-dom';
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import CrossFades from "../components/Common/CrossFades";
-import NavYoutube from '../components/Youtube/NavYoutube';
 import { dbService } from '../firebase';
 import { PageBody } from './PageStyled';
+import PageNav from "../components/Common/PageNav";
 
 interface PostsData { // post 타입
     postId: number,
@@ -25,6 +25,10 @@ function Youtube() {
     const [enData, setEnDate] = useState<Array<PostsData>>([]); //게시물
     const { windowWidth } = useOutletContext<YoutubeProps>(); // 웹 width 크기
     const { loggedIn } = useOutletContext<YoutubeProps>(); // 로드인 여부
+    const linkInfoArr = [
+        {title1: '한국', LinkUrl: 'kr-posts'},
+        {title1: '영어', LinkUrl: 'en-posts'},
+    ]
     
     // Get 게시물
     useEffect(() => {
@@ -58,7 +62,10 @@ function Youtube() {
         <PageBody>
             <CrossFades />
             <YoutubeBox>
-                <NavYoutube />
+                <PageNav
+                    title='유튜브'
+                    LinkInfo={linkInfoArr}
+                />
                 <Outlet context={{
                     krData: krData,
                     enData: enData,
