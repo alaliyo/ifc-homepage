@@ -24,6 +24,7 @@ import Overseas from "./components/Mission/Overseas";
 import Domestic from "./components/Mission/Domestic";
 import EventStory from "./pages/EventStory";
 import EventPost from "./components/EventStory/EventPost";
+import EventPostDetail from "./components/EventStory/EventPostDetail";
 
 const router = createBrowserRouter([
     {
@@ -111,6 +112,10 @@ const router = createBrowserRouter([
                     {
                         path: 'post',
                         element: <EventPost />,
+                    },
+                    {
+                        path: 'post/:postId',
+                        element: <EventPostDetail />,
                     },
                 ],
             },
