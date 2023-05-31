@@ -1,7 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { Card, Button} from 'react-bootstrap';
-import Black from '../../imgs/Black.jpg'
+import PostCard from "./PostCard";
 
 function EventPost() {
     return(
@@ -10,19 +8,7 @@ function EventPost() {
                 <Title>게시물</Title>
             </PostsHeader>
             <CardsBox>
-                <Card style={{ width: '18rem' }}>
-                    <Link to={'1'}>
-                    <Card.Img variant="top" src={Black} />
-                    <Card.Body>
-                        <Card.Title>1. 제목</Card.Title>
-                        <Card.Text>
-                        Some quick example text to build on the card title and make up the
-                        bulk of the card's content.
-                        </Card.Text>
-                        <div>23.05.25</div>
-                    </Card.Body>
-                    </Link>
-                </Card>
+                <PostCard />
             </CardsBox>
         </div>
     );
@@ -46,26 +32,5 @@ const Title = styled.p`
 
 const CardsBox = styled.div`
     border-top: 2px solid gray;
-`;
-
-const LinkStyle = styled(Link)`
-    color: black;
-    font-size: 18px;
-    text-decoration: none;
-    display: flex;
-    justify-content: space-between;
-    padding: 5px;
-    border-radius: 5px;
-    &:hover {
-        color: white;
-        background-color: gray;
-        transition: .3s;
-    }
-`;
-
-const PostInfo = styled.div`
-    display: flex;
-    div {
-        margin-left: 5px;
-    }
+    padding: 10px;
 `;
