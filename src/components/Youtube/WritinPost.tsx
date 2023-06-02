@@ -57,9 +57,9 @@ function WritinPost() {
 
     // 작성글 추가 시 길이 변경
     useEffect(() => {
-        setPostMaxId(urlChank === 'youtobe-kr-posts' ?
-            Math.max(...krData.map(e => e.postId)) + 1 : 
-            Math.max(...enData.map(e => e.postId)) + 1
+        setPostMaxId(urlChank === 'youtobe-kr-posts'
+            ? Math.max(...krData.map(e => e.postId)) + 1
+            : Math.max(...enData.map(e => e.postId)) + 1
         )
     }, [enData, krData, urlChank]);
 
