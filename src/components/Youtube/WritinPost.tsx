@@ -72,38 +72,53 @@ function WritinPost() {
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="1">
-                    제목
+                        제목
                     </Form.Label>
                     <Col sm="8">
-                    <Form.Control type="text" placeholder="영상 제목" {...register('title')}
+                        <Form.Control
+                            type="text"
+                            placeholder="영상 제목"
+                            {...register('title')}
+                        />
+                    </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} className="mb-3">
+                    <Form.Label column sm="1">
+                        날짜
+                    </Form.Label>
+                    <Col sm="8">
+                        <Form.Control
+                            type="text"
+                            placeholder="예)23.01.01"
+                            {...register('date')}
+                        />
+                    </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} className="mb-3">
+                    <Form.Label column sm="1">
+                        말씀
+                    </Form.Label>
+                    <Col sm="8">
+                        <Form.Control
+                        type="text"
+                        placeholder="예) 요 1:1; 마 1:1"
+                        {...register('bibleVerse')}
                     />
                     </Col>
                 </Form.Group>
 
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="1">
-                    날짜
+                        url
                     </Form.Label>
                     <Col sm="8">
-                    <Form.Control type="text" placeholder="예)23.01.01" {...register('date')} />
-                    </Col>
-                </Form.Group>
-
-                <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm="1">
-                    말씀
-                    </Form.Label>
-                    <Col sm="8">
-                    <Form.Control type="text" placeholder="예) 요 1:1; 마 1:1" {...register('bibleVerse')} />
-                    </Col>
-                </Form.Group>
-
-                <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm="1">
-                    url
-                    </Form.Label>
-                    <Col sm="8">
-                    <Form.Control type="text" placeholder="영상 url 퍼가기에 있음" {...register('url')} />
+                        <Form.Control
+                            type="text"
+                            placeholder="영상 url 퍼가기에 있음"
+                            {...register('url')}
+                        />
                     </Col>
                 </Form.Group>
 

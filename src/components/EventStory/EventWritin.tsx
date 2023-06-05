@@ -19,8 +19,7 @@ function EventWritin() {
     const onSubmit  = async (data: postsData) => {
         try {
             await addDoc(collection(dbService, 'eventData'), {
-                
-                
+                ...data
             });
         } catch (error) {
             alert(error);
@@ -34,7 +33,7 @@ function EventWritin() {
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="1">
-                    제목
+                        제목
                     </Form.Label>
                     <Col sm="8">
                     <Form.Control type="text" placeholder="영상 제목" {...register('title')}

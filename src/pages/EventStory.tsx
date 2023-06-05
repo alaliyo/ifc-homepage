@@ -1,11 +1,17 @@
 import styled from "styled-components";
 import CrossFades from "../components/Common/CrossFades";
 import { ChildBox, OutletBox } from "./PageStyled";
-import { Outlet } from "react-router-dom";
+import { Outlet, useOutletContext } from "react-router-dom";
 import PageNav from "../components/Common/PageNav";
 import Search from "../components/Common/Search";
 
+interface EventProps {
+    loggedIn: boolean;
+}
+
 function EventStory() {
+    const { loggedIn } = useOutletContext<EventProps>();
+
     return(
         <div>
             <CrossFades />
@@ -20,7 +26,9 @@ function EventStory() {
                     ]}
                 />
                 <OutletBox>
-                    <Outlet/>
+                    <Outlet context={{
+                        loggedIn: loggedIn,
+                    }} />
                 </OutletBox>
             </ChildBox>
         </div>
