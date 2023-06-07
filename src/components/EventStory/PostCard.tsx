@@ -5,25 +5,23 @@ import Black from '../../imgs/Black.jpg'
 
 function PostCard() {
     return(
-        <Card style={{ width: '16rem' }}>
+        <CardStyle style={{ width: '14rem' }}>
             <LinkStyle to={'1'}>
                 <Card.Img variant="top" src={Black} />
                 <Card.Body>
                     <CardTitle>1. 제목</CardTitle>
-                    <CardTextBox>
-                        <Card.Text>
-                            content
-                        </Card.Text>
-                    </CardTextBox>
                     <PostDate>23.05.25</PostDate>
                 </Card.Body>
             </LinkStyle>
-        </Card>
+        </CardStyle>
     );
 }
 
 export default PostCard;
 
+const CardStyle = styled(Card)`
+    margin: 12px;
+`;
 
 const LinkStyle = styled(Link)`
     color: black;

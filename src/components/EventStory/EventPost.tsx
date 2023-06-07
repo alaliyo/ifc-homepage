@@ -11,11 +11,14 @@ function EventPost() {
 
     return(
         <div>
-            {loggedIn && <Writin to="writin" >글 작성</Writin> }
+            {loggedIn && <Writin to="writin">글 작성</Writin>}
             <PostsHeader>
                 <Title>게시물</Title>
             </PostsHeader>
             <CardsBox>
+                <PostCard />
+                <PostCard />
+                <PostCard />
                 <PostCard />
             </CardsBox>
         </div>
@@ -45,6 +48,9 @@ const Title = styled.p`
 `;
 
 const CardsBox = styled.div`
+
     border-top: 2px solid gray;
-    padding: 10px;
+    padding: 13px;
+    display: flex;
+    flex-wrap: wrap;
 `;

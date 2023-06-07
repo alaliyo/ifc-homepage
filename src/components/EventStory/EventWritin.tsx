@@ -43,7 +43,7 @@ function EventWritin() {
 
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="1">
-                    날짜
+                        날짜
                     </Form.Label>
                     <Col sm="8">
                     <Form.Control type="text" placeholder="예)23.01.01" {...register('date')} />
@@ -52,7 +52,7 @@ function EventWritin() {
 
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="1">
-                    말씀
+                        내용
                     </Form.Label>
                     <Col sm="8">
                     <Form.Control type="text" placeholder="예) 요 1:1; 마 1:1" {...register('bibleVerse')} />
