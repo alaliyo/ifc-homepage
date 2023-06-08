@@ -7,9 +7,10 @@ import { dbService } from '../../firebase';
 interface postsData { // 객체 타입
     postId: number;
     title: string;
-    url: string;
     date: string;
-    bibleVerse: string;
+    detail: string;
+    url?: string;
+    img?: string;
 }
 
 function EventWritin() {
@@ -36,7 +37,7 @@ function EventWritin() {
                         제목
                     </Form.Label>
                     <Col sm="8">
-                    <Form.Control type="text" placeholder="영상 제목" {...register('title')}
+                    <Form.Control type="text" placeholder="제목" {...register('title')}
                     />
                     </Col>
                 </Form.Group>
@@ -55,19 +56,25 @@ function EventWritin() {
                         내용
                     </Form.Label>
                     <Col sm="8">
-                    <Form.Control type="text" placeholder="예) 요 1:1; 마 1:1" {...register('bibleVerse')} />
+                    <Form.Control type="text" as='textarea' placeholder="내용" {...register('detail')} />
                     </Col>
                 </Form.Group>
 
                 <Form.Group as={Row} className="mb-3">
                     <Form.Label column sm="1">
-                    url
+                        url
                     </Form.Label>
                     <Col sm="8">
-                    <Form.Control type="text" placeholder="영상 url 퍼가기에 있음" {...register('url')} />
+                        <Form.Control type="text" placeholder="영상 url 퍼가기에 있음" {...register('url')} />
                     </Col>
                 </Form.Group>
 
+                <Form.Group as={Row} className="mb-3">
+                    <Form.Label column sm="1">사진</Form.Label>
+                    <Col sm="8">
+                        <Form.Control type="file" {...register('img')} />
+                    </Col>
+                </Form.Group>
                 <br />
 
                 <Stack direction="horizontal">
