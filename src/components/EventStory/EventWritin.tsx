@@ -1,25 +1,71 @@
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { Col, Form, Row, Stack, Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { dbService } from '../../firebase';
+import { dbService, storage } from '../../firebase';
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { useEffect, useState } from 'react';
 
 interface postsData { // 객체 타입
     postId: number;
     title: string;
     date: string;
     detail: string;
-    url?: string;
-    img?: string;
+    url: string | null;
+    img: any;
 }
 
 function EventWritin() {
     const { register, handleSubmit, reset } = useForm<postsData>(); // useForm 사용
+    const [postsLength, setPostsLength] = useState(0);
 
+    // Get 게시물
+    useEffect(() => {
+        const q = query(
+            collection(dbService, "eventData"),
+            orderBy("date", "desc")
+        );
+        onSnapshot(q, (snapshot) => {
+            const postsArr: any = snapshot.docs.map((doc) => ({
+                ...doc.data(),
+            }));
+            setPostsLength(postsArr.length);
+        });
+    }, [])
+
+    const uploadImage = async (image: File): Promise<string> => {
+        const storageRef = ref(storage, `images/${Number(new Date())}.png`);
+        
+        try {
+            await uploadBytes(storageRef, image);
+            const imageUrl = await getDownloadURL(storageRef);
+            return imageUrl;
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            throw new Error('이미지 업로드 중 오류가 발생했습니다.');
+        }
+    };
+
+      
     //post 추가
     const onSubmit  = async (data: postsData) => {
         try {
+            if (!data.title) {
+                alert('제목을 입력해주세요.');
+                return;
+            } else if (!data.date) {
+                alert('날짜를 입력해주세요');
+                return;
+            } else if (!data.detail) {
+                alert('내용을 입력해주세요');
+                return;
+            } else if (data.img) {
+                const imageUrl = await uploadImage(data.img[0]);
+                data.img = imageUrl;
+            }
+            
             await addDoc(collection(dbService, 'eventData'), {
+                id: postsLength,
                 ...data
             });
         } catch (error) {

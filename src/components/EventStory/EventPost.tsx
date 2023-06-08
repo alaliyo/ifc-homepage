@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import PostCard from "./PostCard";
 import { Link, useOutletContext } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { dbService } from "../../firebase";
 
 interface EventPostProps {
     loggedIn: boolean;
@@ -8,6 +11,21 @@ interface EventPostProps {
 
 function EventPost() {
     const { loggedIn } = useOutletContext<EventPostProps>();
+    const [posts, setPosts] = useState([]);
+    
+    // Get 게시물
+    useEffect(() => {
+        const q = query(
+            collection(dbService, "eventData"),
+            orderBy("date", "desc")
+        );
+        onSnapshot(q, (snapshot) => {
+            const postsArr: any = snapshot.docs.map((doc) => ({
+                ...doc.data(),
+            }));
+            setPosts(postsArr);
+        });
+    }, [])
 
     return(
         <div>
@@ -16,10 +34,13 @@ function EventPost() {
                 <Title>게시물</Title>
             </PostsHeader>
             <CardsBox>
-                <PostCard />
-                <PostCard />
-                <PostCard />
-                <PostCard />
+                {posts.map((e, i) => (
+                    <PostCard
+                        key={i}
+                        post={e}
+                    />
+                ))}
+                
             </CardsBox>
         </div>
     );
