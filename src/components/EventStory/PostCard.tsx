@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import Black from '../../imgs/Black.jpg';
 
 interface PostProps {
     id: string;
@@ -15,9 +14,10 @@ interface PostCardProps {
 }
 
 function PostCard({ post }: PostCardProps) {
+    console.log(post.id);
     return(
         <CardStyle style={{ width: '14rem' }}>
-            <LinkStyle to={post.id}>
+            <LinkStyle to={`${post.id}`}>
                 <Card.Img variant="top" src={post.img} />
                 <Card.Body>
                     <CardTitle>{Number(post.id) + 1}. {post.title}</CardTitle>

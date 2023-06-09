@@ -1,31 +1,22 @@
 import styled from "styled-components";
 import PostCard from "./PostCard";
 import { Link, useOutletContext } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { dbService } from "../../firebase";
+
+interface PostProps {
+    id: string;
+    title: string;
+    img: string;
+    date: string;
+}
 
 interface EventPostProps {
     loggedIn: boolean;
+    posts: Array<PostProps>;
 }
 
 function EventPost() {
     const { loggedIn } = useOutletContext<EventPostProps>();
-    const [posts, setPosts] = useState([]);
-    
-    // Get 게시물
-    useEffect(() => {
-        const q = query(
-            collection(dbService, "eventData"),
-            orderBy("date", "desc")
-        );
-        onSnapshot(q, (snapshot) => {
-            const postsArr: any = snapshot.docs.map((doc) => ({
-                ...doc.data(),
-            }));
-            setPosts(postsArr.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id));
-        });
-    }, [])
+    const { posts } = useOutletContext<EventPostProps>();
 
     return(
         <div>

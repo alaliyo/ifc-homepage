@@ -3,7 +3,9 @@ import CrossFades from "../components/Common/CrossFades";
 import { ChildBox, OutletBox } from "./PageStyled";
 import { Outlet, useOutletContext } from "react-router-dom";
 import PageNav from "../components/Common/PageNav";
-import Search from "../components/Common/Search";
+import { useEffect, useState } from "react";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { dbService } from "../firebase";
 
 interface EventProps {
     loggedIn: boolean;
@@ -11,6 +13,21 @@ interface EventProps {
 
 function EventStory() {
     const { loggedIn } = useOutletContext<EventProps>();
+    const [posts, setPosts] = useState([]);
+
+    // Get 게시물
+    useEffect(() => {
+        const q = query(
+            collection(dbService, "eventData"),
+            orderBy("date", "desc")
+        );
+        onSnapshot(q, (snapshot) => {
+            const postsArr: any = snapshot.docs.map((doc) => ({
+                ...doc.data(),
+            }));
+            setPosts(postsArr.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id));
+        });
+    }, [])
 
     return(
         <div>
@@ -28,6 +45,7 @@ function EventStory() {
                 <OutletBox>
                     <Outlet context={{
                         loggedIn: loggedIn,
+                        posts: posts,
                     }} />
                 </OutletBox>
             </ChildBox>
