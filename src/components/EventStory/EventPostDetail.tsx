@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useOutletContext, useParams } from "react-router-dom";
+import { Modal } from 'react-bootstrap';
 import styled from "styled-components";
 
 interface PostProps {
@@ -20,7 +21,18 @@ function EventPostDetail() {
     const { posts } = useOutletContext<EventPostProps>();
     const { postId } = useParams(); // url의 post id 값
     const [post, setPost] = useState<PostProps | undefined>();
+    const [showModal, setShowModal] = useState(false);
+    const [selectedImage, setSelectedImage] = useState<string>('');
     
+    const openModal = (image: string) => {
+        setSelectedImage(image);
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+    };
+
     useEffect(() => {
         console.log(posts, postId)
         const foundPost = posts.find((e) => e.id === Number(postId));
@@ -39,7 +51,8 @@ function EventPostDetail() {
                 </DetailHeader>
                 <hr />
                 <DetailBody>
-                    <DetailImg src={post.img} />
+                    <DetailImg src={post.img} onClick={() => openModal(post.img)} />
+
                     {post.url && (
                         <DetailIframe
                             width="100%"
@@ -56,6 +69,9 @@ function EventPostDetail() {
             </>) : (
                 null
             )}
+            <ModalStyle show={showModal} onHide={closeModal} centered>
+                <img src={selectedImage} alt="이미지 오류 새로고침하세요." />
+            </ModalStyle>
         </EventPostDetailBox>
     );
 }
@@ -118,4 +134,8 @@ const DetailIframe = styled.iframe`
     @media screen and (max-width: 400px) {
         height: 200px;
     }
+`;
+
+const ModalStyle = styled(Modal)`
+    --bs-modal-width: 80%;
 `;

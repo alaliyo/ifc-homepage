@@ -33,16 +33,21 @@ function EventWritin() {
         });
     }, [])
 
-    const uploadImage = async (image: File): Promise<string> => {
-        const storageRef = ref(storage, `images/${Number(new Date())}.png`);
-        
-        try {
-            await uploadBytes(storageRef, image);
-            const imageUrl = await getDownloadURL(storageRef);
-            return imageUrl;
-        } catch (error) {
-            console.error('Error uploading image:', error);
-            throw new Error('이미지 업로드 중 오류가 발생했습니다.');
+    const uploadImage = async (images: FileList): Promise<any> => {
+        const imageUrlPromises: Promise<string>[] = [];
+
+        for (let i = 0; i < images.length; i++) {
+            const image = images[i];
+            const storageRef = ref(storage, `images/${Number(new Date())}_${i}.png`);
+            
+            try {
+                await uploadBytes(storageRef, image);
+                const imageUrlPromise = getDownloadURL(storageRef);
+                imageUrlPromises.push(imageUrlPromise);
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                throw new Error('이미지 업로드 중 오류가 발생했습니다.');
+            }
         }
     };
 
@@ -60,7 +65,7 @@ function EventWritin() {
                 alert('내용을 입력해주세요');
                 return;
             } else if (data.img) {
-                const imageUrl = await uploadImage(data.img[0]);
+                const imageUrl = await uploadImage(data.img);
                 data.img = imageUrl;
             }
             
@@ -72,7 +77,7 @@ function EventWritin() {
             alert(error);
             return;
         }
-        reset(); // form reset
+        reset();
         alert('작성 완료되었습니다.');
     }
     return(
@@ -115,10 +120,10 @@ function EventWritin() {
                     </Col>
                 </Form.Group>
 
-                <Form.Group as={Row} className="mb-3">
+                <Form.Group as={Row} controlId="formFileMultiple" className="mb-3">
                     <Form.Label column sm="1">사진</Form.Label>
                     <Col sm="8">
-                        <Form.Control type="file" {...register('img')} />
+                        <Form.Control type="file" {...register('img')} multiple />
                     </Col>
                 </Form.Group>
                 <br />
