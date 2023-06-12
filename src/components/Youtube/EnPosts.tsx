@@ -16,7 +16,7 @@ interface enData { // post 타입
 
 interface Props {//객체를 배열로 감쌈
     enData: Array<enData>;
-    postsDate: Array<enData>;
+    postsData: Array<enData>;
 }
 
 interface YoutubePostsProps {
@@ -55,7 +55,7 @@ function EnPosts() {
         const startIndex = (currentPage - 1) * postsPerPage;
         const endIndex = startIndex + postsPerPage;
         // 검색 결과가 있다면 검색 결과를 사용하고, 없다면 postsDate를 사용
-        const targetPosts = searchResult ? searchResult.postsDate : enData;
+        const targetPosts = searchResult ? searchResult.postsData : enData;
         return targetPosts.slice(startIndex, endIndex);
     };
     
@@ -83,7 +83,7 @@ function EnPosts() {
             </PostsHeader>
             <PostsBody>
                 {searchResult ? (
-                    searchResult.postsDate.map((obj, i) => (
+                    searchResult.postsData.map((obj, i) => (
                         <Link key={obj.postId} to={`/youtube/detail/en/${obj.postId}`}>
                             <div>{(currentPage - 1) * 15 + i + 1}</div>
                             <div>{obj.date}</div>

@@ -85,17 +85,17 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
                     >
                     </HeaderWrapper>
 
-                    <HeaderWrapper 
+                    {/* <HeaderWrapper 
                         label={WindowSize <= 825 ? '사역' : '교회학교 및 훈련사역'}
                         to='/ministry'
                     >
-                    </HeaderWrapper>
+                    </HeaderWrapper> */}
 
                     <HeaderWrapper 
                         label={WindowSize <= 825 ? '선교' : '선교 및 전도'}
                         to='/mission/overseas'
                     >
-                    </HeaderWrapper>
+                    </HeaderWrapper> 
 
                     
                 </NavBox>

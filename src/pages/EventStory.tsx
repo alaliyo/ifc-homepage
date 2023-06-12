@@ -54,9 +54,3 @@ function EventStory() {
 }
 
 export default EventStory;
-
-const Title = styled.h2`
-    margin-top: 20px;
-    color: gray;
-    text-align: center;
-`;

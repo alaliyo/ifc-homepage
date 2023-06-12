@@ -4,10 +4,10 @@ import { Modal } from 'react-bootstrap';
 import styled from "styled-components";
 
 interface PostProps {
-    id: number;
+    postId: number;
     title: string;
     detail: string;
-    img: string;
+    img: string[];
     date: string;
     url: string;
 }
@@ -34,8 +34,7 @@ function EventPostDetail() {
     };
 
     useEffect(() => {
-        console.log(posts, postId)
-        const foundPost = posts.find((e) => e.id === Number(postId));
+        const foundPost = posts.find((e) => e.postId === Number(postId));
         if (foundPost) {
             setPost(foundPost);
         }
@@ -51,8 +50,8 @@ function EventPostDetail() {
                 </DetailHeader>
                 <hr />
                 <DetailBody>
-                    <DetailImg src={post.img} onClick={() => openModal(post.img)} />
-
+                    <DetailText>{post.detail}</DetailText>
+                    <br />
                     {post.url && (
                         <DetailIframe
                             width="100%"
@@ -63,8 +62,17 @@ function EventPostDetail() {
                             allowFullScreen>
                         </DetailIframe>
                     )}
-                    <br />
-                    <DetailText>{post.detail}</DetailText>
+
+                    {post.img.length > 1 ? (
+                        <ImgBox>
+                            {post.img.map((e, i) => (
+                                <DetailImg key={i} src={e} onClick={() => openModal(e)} />
+                            ))}
+                            
+                        </ImgBox>
+                    ) : (
+                        <OneImg src={post.img[0]} onClick={() => openModal(post.img[0])} />
+                    )}
                 </DetailBody>
             </>) : (
                 null
@@ -98,33 +106,62 @@ const DetailHeader = styled.header`
 `
 
 const PostTitle = styled.p`
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 900;
+    @media screen and (max-width: 650px){
+        font-size: 17px;
+    }
 `;
 
 const PostDate = styled.p`
     font-size: 18px;
     font-weight: 900;
     color: gray;
+    @media screen and (max-width: 650px){
+        font-size: 15px;
+    }
 `;
 
 const DetailBody = styled.div`
     
 `;
 
+const ImgBox = styled.div`
+    display: flex;
+    @media screen and (max-width: 500px){
+        display: block;
+    }
+`;
+
 const DetailImg = styled.img`
-    width: 80%;
+    width: 48%;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    @media screen and (max-width: 500px){
+        width: 95%;
+    }
+`;
+
+const OneImg = styled.img`
+    width: 95%;
     margin: 0 auto;
     display: block;
+    margin-bottom: 10px;
 `;
 
 const DetailText = styled.p`
     margin: 5px 20px;
+    font-size: 20px;
     font-weight: 900;
+    @media screen and (max-width: 650px){
+        font-size: 15px;
+    }
 `
 
 const DetailIframe = styled.iframe`
     width: 100%;
+    height: 400px;
     @media screen and (max-width: 650px) {
         height: 330px;
     }

@@ -53,13 +53,13 @@ function Offcanva({ loggedIn }: OffcanvaProps) {
                     행사
                 </LinkStyle>
 
-                <LinkStyle to={'/ministry'} onClick={onClick}>
+                {/* <LinkStyle to={'/ministry'} onClick={onClick}>
                     교회 사역
                 </LinkStyle>
 
                 <LinkStyle to={'/mission'} onClick={onClick}>
                     전도 및 선교
-                </LinkStyle>
+                </LinkStyle> */}
                 
                 {loggedIn ? (
                     <LinkStyle to={'/'} onClick={onLogOutClick}>

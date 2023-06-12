@@ -4,9 +4,9 @@ import styled from 'styled-components';
 interface postsData { //객체 타입
     postId: number;
     title: string;
-    url: string;
+    url?: string;
     date: string;
-    bibleVerse: string;
+    bibleVerse?: string;
 }
 
 interface SearchProps {
@@ -33,7 +33,7 @@ function Search({postsData, searchQuery, searchResult, setSearchQuery, setSearch
             item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             item.date.toLowerCase().includes(searchQuery)
         );
-        setSearchResult({ postsDate: filteredData }); // 검색 결과를 searchResult 상태값에 저장
+        setSearchResult({ postsData: filteredData }); // 검색 결과를 searchResult 상태값에 저장
     };
 
     // Enter key를 누르면 여기에서 원하는 작업을 수행할 수 있습니다.

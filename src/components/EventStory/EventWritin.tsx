@@ -33,7 +33,7 @@ function EventWritin() {
         });
     }, [])
 
-    const uploadImage = async (images: FileList): Promise<any> => {
+    const uploadImage = async (images: any): Promise<any> => {
         const imageUrlPromises: Promise<string>[] = [];
 
         for (let i = 0; i < images.length; i++) {
@@ -49,11 +49,15 @@ function EventWritin() {
                 throw new Error('이미지 업로드 중 오류가 발생했습니다.');
             }
         }
+
+        const imageUrls = await Promise.all(imageUrlPromises);
+        return imageUrls;
     };
 
       
     //post 추가
     const onSubmit  = async (data: postsData) => {
+        console.log(data)
         try {
             if (!data.title) {
                 alert('제목을 입력해주세요.');
@@ -64,7 +68,7 @@ function EventWritin() {
             } else if (!data.detail) {
                 alert('내용을 입력해주세요');
                 return;
-            } else if (data.img) {
+            } else if (data.img && data.img.length > 0) {
                 const imageUrl = await uploadImage(data.img);
                 data.img = imageUrl;
             }

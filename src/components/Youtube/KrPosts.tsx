@@ -15,7 +15,7 @@ interface krData { // post 타입
 }
 
 interface Props {
-    postsDate: Array<krData>; //객체를 배열로 감쌈
+    postsData: Array<krData>; //객체를 배열로 감쌈
     krData: Array<krData>
 }
 
@@ -55,7 +55,7 @@ function KrPosts() {
         const startIndex = (currentPage - 1) * postsPerPage;
         const endIndex = startIndex + postsPerPage;
         // 검색 결과가 있다면 검색 결과를 사용하고, 없다면 postsDate를 사용
-        const targetPosts = searchResult ? searchResult.postsDate : krData;
+        const targetPosts = searchResult ? searchResult.postsData : krData;
         
         return targetPosts.slice(startIndex, endIndex);
     };
@@ -83,7 +83,7 @@ function KrPosts() {
             </PostsHeader>
             <PostsBody>
                 {searchResult ? (
-                    searchResult.postsDate.map((obj, i) => (
+                    searchResult.postsData.map((obj, i) => (
                         <Link key={obj.postId} to={`/youtube/detail/kr/${obj.postId}`}>
                         <div>{(currentPage - 1) * 15 + i + 1}</div>
                         <div>{obj.date}</div>
