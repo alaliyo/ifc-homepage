@@ -2,12 +2,12 @@ import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firesto
 import { Col, Form, Row, Stack, Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { dbService, storage } from '../../firebase';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useEffect, useState } from 'react';
 
 interface postsData { // 객체 타입
-    postId: number;
     title: string;
     date: string;
     detail: string;
@@ -18,6 +18,7 @@ interface postsData { // 객체 타입
 function EventWritin() {
     const { register, handleSubmit, reset } = useForm<postsData>(); // useForm 사용
     const [postsLength, setPostsLength] = useState(0);
+    const navigate = useNavigate();
 
     // Get 게시물
     useEffect(() => {
@@ -74,9 +75,11 @@ function EventWritin() {
             }
             
             await addDoc(collection(dbService, 'eventData'), {
-                id: postsLength,
+                postId: postsLength,
                 ...data
             });
+
+            navigate('/event-story/post');
         } catch (error) {
             alert(error);
             return;

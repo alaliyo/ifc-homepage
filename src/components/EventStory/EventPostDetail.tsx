@@ -128,6 +128,7 @@ const DetailBody = styled.div`
 
 const ImgBox = styled.div`
     display: flex;
+    flex-wrap: wrap;
     @media screen and (max-width: 500px){
         display: block;
     }
@@ -135,11 +136,20 @@ const ImgBox = styled.div`
 
 const DetailImg = styled.img`
     width: 48%;
+    height: 180px;
     display: block;
     margin: 0 auto;
     margin-bottom: 10px;
+    object-fit: cover;
     @media screen and (max-width: 500px){
         width: 95%;
+        height: 250px;
+    }
+    @media screen and (max-width: 400px){
+        height: 200px;
+    }
+    @media screen and (max-width: 350px){
+        height: 180px;
     }
 `;
 
