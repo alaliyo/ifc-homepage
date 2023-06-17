@@ -78,6 +78,8 @@ function EventPostDetail() {
                 null
             )}
             <ModalStyle show={showModal} onHide={closeModal} centered>
+                <ModalHeader closeButton>
+                </ModalHeader>
                 <img src={selectedImage} alt="이미지 오류 새로고침하세요." />
             </ModalStyle>
         </EventPostDetailBox>
@@ -185,4 +187,11 @@ const DetailIframe = styled.iframe`
 
 const ModalStyle = styled(Modal)`
     --bs-modal-width: 80%;
+`;
+
+const ModalHeader = styled(Modal.Header)`
+    position: absolute;
+    border-bottom: 0;
+    width: 100%;
+    float: right;
 `;

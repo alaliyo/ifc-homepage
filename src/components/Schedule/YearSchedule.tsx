@@ -7,19 +7,20 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import localesKo from '@fullcalendar/core/locales/ko'
 import { Button, Form, Modal } from 'react-bootstrap';
-import { useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import './YearSchedule.css'
 import { Body } from './IntroStyled';
 
 interface ScheduleProps {
-    loggedIn: boolean,
-    windowWidth: number,
+    loggedIn: boolean;
+    windowWidth: number;
 }
 
 interface ScheduleData {
-    id: string
-    title: string
-    date: string
+    id: string;
+    title: string;
+    date: string;
+    url: string;
 }
 
 function YearSchedule() {
@@ -57,7 +58,8 @@ function YearSchedule() {
                 id: newDoc.id,
                 ...newDoc.data(),
                 title: '',
-                date: ''
+                date: '',
+                url: '',
             };
             setScheduleDatas([...scheduleDatas, newData]);
         } catch (error) {
@@ -91,7 +93,7 @@ function YearSchedule() {
     }, [windowWidth])
 
     function handleEventClickWrapper(e: any) {
-        if (widthBoolean) handleEventClick(e);
+        handleEventClick(e);
     }
     
     return (
@@ -113,7 +115,7 @@ function YearSchedule() {
                             placeholder="날짜"
                             {...register('date')}
                         />
-                        </Form.Group>
+                    </Form.Group>
                     <Button type="submit" variant="outline-secondary" size="sm">완료</Button>
                 </FormStyled>
                 <br />
@@ -126,6 +128,12 @@ function YearSchedule() {
                 <Modal.Body>
                     <ModalData>{eventData?.title}</ModalData>
                     <ModalData>{eventData?.date}</ModalData>
+                    {eventData?.url && (
+                        <ModalData>
+                            <Link to={'/event-story/post/' + eventData.url}>게시물보기</Link>
+                        </ModalData>
+                    )}
+                    
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => setShowModal(false)}>

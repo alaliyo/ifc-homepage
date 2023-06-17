@@ -35,7 +35,7 @@ function Home() {
                         </div>
                     </IntroBox>
                     <Construction>
-                        <span>선교 및 사역, <br /> 행사 페이지는 <br /> 준비중입니다.</span>
+                        <span>행사 페이지가 <br /> 업데이트 <br /> 되었습니다.</span>
                     </Construction>
                 </ShortcutsBox>
             </HomeBody>
