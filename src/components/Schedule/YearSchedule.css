@@ -38,6 +38,7 @@
 
 .fc-event-title-container {
     text-align: center;
+    cursor : pointer;
 }
 
 .fc-event-title {
