@@ -88,6 +88,12 @@ function YearSchedule() {
         }
     };
 
+    // 일정 글자 수 표기
+    const letterNum = (text: string) => {
+        const newText = text.slice(0, 3);
+        return `${newText}...`;
+    }
+
     useEffect(() => {
         setWidthBoolean(windowWidth <= 550 && true)
     }, [windowWidth])
@@ -151,7 +157,7 @@ function YearSchedule() {
                     scheduleDatas.map(obj => (
                         {
                             id: obj.id,
-                            title: (widthBoolean ? '확인' : obj.title),
+                            title: (widthBoolean ? letterNum(obj.title) : obj.title),
                             date: obj.date,
                         }
                     ))
