@@ -36,11 +36,11 @@ function CrossFade() {
     return(
         <StyledCarousel fade>
             {imgList.map((e, i) => (
-                <Carousel.Item key={i}>
+                <Carousel.Item key={i} interval={5000}>
                 <img
-                className="d-block w-100"
-                src={e}
-                alt=""
+                    className="d-block w-100"
+                    src={e}
+                    alt=""
                 />
             </Carousel.Item>
             ))}

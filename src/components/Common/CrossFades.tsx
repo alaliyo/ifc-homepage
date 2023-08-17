@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Carousel } from 'react-bootstrap';
-import { ref, listAll, getDownloadURL  } from "firebase/storage";
+import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
 
 function CrossFades() {
@@ -36,11 +36,11 @@ function CrossFades() {
     return(
         <StyledCarousel fade>
             {imgList.map((e, i) => (
-                <Carousel.Item key={i}>
+                <Carousel.Item key={i} interval={5000}>
                 <img
-                className="d-block w-100"
-                src={e}
-                alt=""
+                    className="d-block w-100"
+                    src={e}
+                    alt=""
                 />
             </Carousel.Item>
             ))}
@@ -56,22 +56,27 @@ const StyledCarousel = styled(Carousel)`
     top: 0;
     left: 0;
     z-index: 0;
+
     img {
         width: 100%;
         height: 300px;
         object-fit: cover;
     }
+
     a {
         width: 0;
         height: 0;
     }
+
     .carousel-indicators > button {
         width: 0;
         height: 0;
     }
+
     @media screen and (max-width: 650px) {
         width: 100%;
         height: 200px;
+
         img {
             width: 100%;
             height: 200px;
