@@ -34,12 +34,12 @@ function EventWritin() {
         });
     }, [])
 
-    const uploadImage = async (images: any): Promise<any> => {
+    const uploadImage = async (images: any, title: string): Promise<any> => {
         const imageUrlPromises: Promise<string>[] = [];
 
         for (let i = 0; i < images.length; i++) {
             const image = images[i];
-            const storageRef = ref(storage, `images/${Number(new Date())}_${i}.png`);
+            const storageRef = ref(storage, `images/${title}/${Number(new Date())}_${i}.png`);
             
             try {
                 await uploadBytes(storageRef, image);
@@ -58,7 +58,6 @@ function EventWritin() {
       
     //post 추가
     const onSubmit  = async (data: postsData) => {
-        console.log(data)
         try {
             if (!data.title) {
                 alert('제목을 입력해주세요.');
@@ -69,8 +68,8 @@ function EventWritin() {
             } else if (!data.detail) {
                 alert('내용을 입력해주세요');
                 return;
-            } else if (data.img && data.img.length > 0) {
-                const imageUrl = await uploadImage(data.img);
+            } else if (data.img && data.img.length > 0 && data.title) {
+                const imageUrl = await uploadImage(data.img, data.title);
                 data.img = imageUrl;
             }
             

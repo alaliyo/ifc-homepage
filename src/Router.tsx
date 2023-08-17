@@ -2,6 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import Root from "./Root";
 import Home from "./pages/Home";
 import LogIn from './pages/LogIn';
+import PageLayout from "./pages/PageLayout";
+import NotFound from "./pages/NotFound";
+
 import Introduction from "./pages/Introduction";
 import Vision from "./components/Introductoin/Vision";
 import History from "./components/Introductoin/History";
@@ -9,24 +12,26 @@ import Rev from "./components/Introductoin/Rev";
 import Pastors from "./components/Introductoin/Pastors";
 import Elder from "./components/Introductoin/Elder";
 import SketchMap from "./components/Introductoin/SketchMap";
+
 import Schedule from './pages/Schedule';
 import YearSchedule from "./components/Schedule/YearSchedule";
 import WorshipTime from "./components/Schedule/WorshipTime";
+
 import Youtube from './pages/Youtube';
 import KrPosts from "./components/Youtube/KrPosts";
 import EnPosts from "./components/Youtube/EnPosts";
 import PostDetail from "./components/Youtube/PostDetail";
 import WritinPost from "./components/Youtube/WritinPost";
+
 import Ministry from './pages/Ministry';
 import Mission from './pages/Mission';
-import NotFound from "./pages/NotFound";
 import Overseas from "./components/Mission/Overseas";
 import Domestic from "./components/Mission/Domestic";
+
 import EventStory from "./pages/EventStory";
 import EventPost from "./components/EventStory/EventPost";
 import EventPostDetail from "./components/EventStory/EventPostDetail";
 import EventWritin from "./components/EventStory/EventWritin";
-import PageLayout from "./pages/PageLayout";
 
 const router = createBrowserRouter([
     {

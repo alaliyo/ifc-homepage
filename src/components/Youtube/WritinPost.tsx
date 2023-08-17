@@ -53,7 +53,7 @@ function WritinPost() {
             alert('관리자 권한 페이지입니다. 권한 관련은 제작자에게 문의하세요');
             navigate('/');
         }
-    }, [loggedIn, navigate, urlChank])
+    }, [loggedIn, navigate, urlChank]);
 
     // 작성글 추가 시 길이 변경
     useEffect(() => {
@@ -65,8 +65,8 @@ function WritinPost() {
 
     useEffect(() => {
         setUrlChank(currentUrl === '/youtube/kr-post/writin' ? 'youtobe-kr-posts' : 'youtobe-en-posts');
-    }, [currentUrl])
-    console.log(postMaxId);
+    }, [currentUrl]);
+
     return(
         <WritinPostBody>
             <Form onSubmit={handleSubmit(onSubmit)}>

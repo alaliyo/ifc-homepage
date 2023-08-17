@@ -24,7 +24,6 @@ function EventPost() {
     const [searchResult, setSearchResult] = useState<EventPostProps | undefined>(); // 검색 결과를 저장할 배열
     
     const getPostsForCurrentPage = () => {
-        console.log(searchResult ? searchResult.posts : posts)
         const targetPosts = searchResult ? searchResult.postsData : posts;
         return targetPosts;
     };
