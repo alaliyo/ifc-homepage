@@ -17,8 +17,7 @@ function SketchMap() {
     const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
     const options = { //지도를 생성할 때 필요한 기본 옵션
         center: mapPosition, //지도의 중심좌표.
-        level: 2, //지도의 레벨(확대, 축소 정도)
-        draggable: false, //이동 제한
+        level: 3, //지도의 레벨(확대, 축소 정도)
     };
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
@@ -33,15 +32,15 @@ function SketchMap() {
     new kakao.maps.CustomOverlay({ // 커스텀 오버레이 생성
       map: map,
       content: `
-      <div style="position:relative;">
-        <div style="background-color:white; padding:5px; border-radius:5px; text-align:center; font-size:20px; font-weight: 900; border: 2px solid gray; border-radius: 10px;">열방교회</div>
-        <div 
-          style="position:absolute; left:50%; bottom:-10px; transform:translateX(-50%); width:0;
-          height:0; border-left:5px solid transparent; border-right:5px solid transparent; border-top:10px solid gray;"
-        >
+        <div style="position:relative;">
+          <div style="background-color:white; padding:5px; border-radius:5px; text-align:center; font-size:20px; font-weight: 900; border: 2px solid gray; border-radius: 10px;">열방교회</div>
+          <div 
+            style="position:absolute; left:50%; bottom:-10px; transform:translateX(-50%); width:0;
+            height:0; border-left:5px solid transparent; border-right:5px solid transparent; border-top:10px solid gray;"
+          >
+          </div>
         </div>
-      </div>
-    `, // 오버레이에 표시할 내용 (HTML 형식)
+      `, // 오버레이에 표시할 내용 (HTML 형식)
       position: mapPosition, // 오버레이의 위치
       xAnchor: 0.5, // 오버레이의 가로 위치 설정
       yAnchor: 2.5, // 오버레이의 세로 위치 설정

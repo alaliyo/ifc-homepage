@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { authService } from './firebase';
 import { Spinner } from 'react-bootstrap';
@@ -10,6 +10,7 @@ function Root() {
   const [windowWidth, setwindowWidth] = useState(window.innerWidth); //웹 넓이 
   const [init, setInit] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const location = useLocation().pathname;
 
   //웹 넓이에 반응
   useEffect(() => { 
@@ -43,11 +44,13 @@ function Root() {
     <div>
       {init ? (<>
         <GlobalStyle />
-        <Header WindowSize={windowWidth} loggedIn={loggedIn} />
-          <Outlet context={{
-            windowWidth: windowWidth,
-            loggedIn: loggedIn,
-          }} />
+        {location === '/login' ? null : 
+          <Header WindowSize={windowWidth} loggedIn={loggedIn} />
+        }
+        <Outlet context={{
+          windowWidth: windowWidth,
+          loggedIn: loggedIn,
+        }} />
         <Footer />
       </>) : (
         <SpinnerStyled animation="border" role="status">

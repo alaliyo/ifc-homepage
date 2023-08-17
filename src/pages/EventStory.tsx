@@ -1,6 +1,4 @@
-import styled from "styled-components";
-import CrossFades from "../components/Common/CrossFades";
-import { ChildBox, OutletBox } from "./PageStyled";
+import { ChildBox, OutletBox, PageBody } from "./PageStyled";
 import { Outlet, useOutletContext } from "react-router-dom";
 import PageNav from "../components/Common/PageNav";
 import { useEffect, useState } from "react";
@@ -30,8 +28,7 @@ function EventStory() {
     }, [])
 
     return(
-        <div>
-            <CrossFades />
+        <PageBody>
             <ChildBox>
                 <PageNav
                     title="행사"
@@ -49,7 +46,7 @@ function EventStory() {
                     }} />
                 </OutletBox>
             </ChildBox>
-        </div>
+        </PageBody>
     );
 }
 

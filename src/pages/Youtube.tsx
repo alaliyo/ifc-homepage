@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Outlet, useOutletContext } from 'react-router-dom';
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
-import CrossFades from "../components/Common/CrossFades";
 import { dbService } from '../firebase';
 import { PageBody } from './PageStyled';
 import PageNav from "../components/Common/PageNav";
@@ -60,7 +59,6 @@ function Youtube() {
     
     return(
         <PageBody>
-            <CrossFades />
             <YoutubeBox>
                 <PageNav
                     title='유튜브'

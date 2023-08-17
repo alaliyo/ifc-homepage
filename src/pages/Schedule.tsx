@@ -1,6 +1,5 @@
 import { Outlet, useOutletContext } from 'react-router-dom';
 import { PageBody, ChildBox, OutletBox } from './PageStyled';
-import CrossFades from "../components/Common/CrossFades";
 import PageNav from '../components/Common/PageNav';
 
 interface ScheduleProps { // props 타입
@@ -18,7 +17,6 @@ function Schedule() {
 
     return(
         <PageBody>
-            <CrossFades />
             <ChildBox>
                 <PageNav
                     title='일정'

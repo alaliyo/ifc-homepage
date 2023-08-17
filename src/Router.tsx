@@ -26,6 +26,7 @@ import EventStory from "./pages/EventStory";
 import EventPost from "./components/EventStory/EventPost";
 import EventPostDetail from "./components/EventStory/EventPostDetail";
 import EventWritin from "./components/EventStory/EventWritin";
+import PageLayout from "./pages/PageLayout";
 
 const router = createBrowserRouter([
     {
@@ -41,106 +42,112 @@ const router = createBrowserRouter([
                 element: <LogIn />,
             },
             {
-                path: `introduction`,
-                element: <Introduction />,
+                path: '',
+                element: <PageLayout />,
                 children: [
                     {
-                        path: 'vision',
-                        element: <Vision />
+                        path: `introduction`,
+                        element: <Introduction />,
+                        children: [
+                            {
+                                path: 'vision',
+                                element: <Vision />
+                            },
+                            {
+                                path: 'history',
+                                element: <History />
+                            },
+                            {
+                                path: 'rev',
+                                element: <Rev />
+                            },
+                            {
+                                path: 'pastors',
+                                element: <Pastors />
+                            },
+                            {
+                                path: 'elder',
+                                element: <Elder />
+                            },
+                            {
+                                path: 'sketch-map',
+                                element: <SketchMap />
+                            },
+                        ],
                     },
                     {
-                        path: 'history',
-                        element: <History />
+                        path: `schedule`,
+                        element: <Schedule />,
+                        children: [
+                            {
+                                path: 'worship-time',
+                                element: <WorshipTime />,
+                            },
+                            {
+                                path: 'year',
+                                element: <YearSchedule />,
+                            },
+                        ],
                     },
                     {
-                        path: 'rev',
-                        element: <Rev />
+                        path: `youtube`,
+                        element: <Youtube />,
+                        children: [
+                            {
+                                path: 'kr-posts',
+                                element: <KrPosts />,
+                            },
+                            {
+                                path: 'En-posts',
+                                element: <EnPosts />,
+                            },
+                            {
+                                path: 'detail/:category/:postsId',
+                                element: <PostDetail />,
+                            },
+                            {
+                                path: ':category/writin',
+                                element: <WritinPost />
+                            },
+                        ],
                     },
                     {
-                        path: 'pastors',
-                        element: <Pastors />
+                        path: `event-story`,
+                        element: <EventStory />,
+                        children: [
+                            {
+                                path: 'post',
+                                element: <EventPost />,
+                            },
+                            {
+                                path: 'post/:postId',
+                                element: <EventPostDetail />,
+                            },
+                            {
+                                path: 'post/writin',
+                                element: <EventWritin />,
+                            },
+                        ],
                     },
                     {
-                        path: 'elder',
-                        element: <Elder />
+                        path: `mission`,
+                        element: <Mission />,
+                        children:[
+                            {
+                                path: 'overseas',
+                                element: <Overseas />,
+                            },
+                            {
+                                path: 'domestic',
+                                element: <Domestic />,
+                            },
+                        ]
                     },
                     {
-                        path: 'sketch-map',
-                        element: <SketchMap />
+                        path: `ministry`,
+                        element: <Ministry />,
                     },
                 ],
-            },
-            {
-                path: `schedule`,
-                element: <Schedule />,
-                children: [
-                    {
-                        path: 'worship-time',
-                        element: <WorshipTime />,
-                    },
-                    {
-                        path: 'year',
-                        element: <YearSchedule />,
-                    },
-                ],
-            },
-            {
-                path: `youtube`,
-                element: <Youtube />,
-                children: [
-                    {
-                        path: 'kr-posts',
-                        element: <KrPosts />,
-                    },
-                    {
-                        path: 'En-posts',
-                        element: <EnPosts />,
-                    },
-                    {
-                        path: 'detail/:category/:postsId',
-                        element: <PostDetail />,
-                    },
-                    {
-                        path: ':category/writin',
-                        element: <WritinPost />
-                    },
-                ],
-            },
-            {
-                path: `event-story`,
-                element: <EventStory />,
-                children: [
-                    {
-                        path: 'post',
-                        element: <EventPost />,
-                    },
-                    {
-                        path: 'post/:postId',
-                        element: <EventPostDetail />,
-                    },
-                    {
-                        path: 'post/writin',
-                        element: <EventWritin />,
-                    },
-                ],
-            },
-            {
-                path: `mission`,
-                element: <Mission />,
-                children:[
-                    {
-                        path: 'overseas',
-                        element: <Overseas />,
-                    },
-                    {
-                        path: 'domestic',
-                        element: <Domestic />,
-                    },
-                ]
-            },
-            {
-                path: `ministry`,
-                element: <Ministry />,
             },
         ],
         errorElement: <NotFound />

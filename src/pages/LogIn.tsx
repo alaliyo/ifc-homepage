@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useNavigate, useOutletContext, } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext, } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { collection, getDocs, query } from "firebase/firestore";
-import { dbService } from '../firebase';
 import { Button, Form, Stack, Alert } from 'react-bootstrap';
-import CrossFades from "../components/Common/CrossFades";
 import { PageBody } from './PageStyled';
+import Logo from '../imgs/IFC-Logo.png';
 
 interface LogInProps { //props 타입
     loggedIn: boolean
@@ -18,7 +16,6 @@ function LogIn() {
     const [errors, setErrors] = useState("") //에러 메세지
     const navigate = useNavigate(); //router v6 페이지 자동 이동
     const { loggedIn } = useOutletContext<LogInProps>(); //로그인 확인 여부
-    const [chack, setChack] = useState(false); //페이지 이동 인증 
 
     //admin 이이디, 비말번호 받음 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
@@ -59,47 +56,26 @@ function LogIn() {
     // 로그인 페이지 접속 시 인증 및 중복 로그인 막기
     useEffect(() => { 
         if (loggedIn) {
-            alert('이미 로그인 되어 있습니다.')
-            navigate('/');
-            return;
+            alert("이미 로그인 되어 있습니다.")
+            navigate("/");
         }
-        
-        if (chack) {
-            return;
-        }
-    
-        const answer = prompt('관리자 로그인입니다. 인증번호를 입력해주세요', "");
-        
-        //DB 인증 값 가져오기
-        const checkCertification = async () => { 
-            const q = query(
-                collection(dbService, "admin"),
-            );
-            const snapshot = await getDocs(q);
-            const postsArr: any = snapshot.docs.map((doc) => ({
-                ...doc.data(),
-            }));
-            const certification = postsArr[0].password;
-            if (certification === answer) {
-                setChack(true);
-                navigate('/login');
-            } else {
-                alert("인증 번호가 틀렸습니다. 제작자에게 문의하세요")
-                navigate('/');
-            }
-        }
-        
-        if (answer == null || answer === '') {
-            alert("인증 번호가 틀렸습니다. 제작자에게 문의하세요")
-            navigate('/');
-        } else (
-            checkCertification()
-        )
-    }, [navigate, chack, loggedIn]);
+
+        alert("관리자 로그인 페이지입니다.");
+    }, [loggedIn]);
 
     return(
         <PageBody>
-            <CrossFades />
+            <LinkBoxs>
+                <HomeTitle>
+                    <Link to={'/'}>
+                        <div>
+                            <img src={Logo} alt='' />
+                            <span>대한예수교장로회</span> 
+                        </div>
+                        열 방 교 회
+                    </Link>
+                </HomeTitle>
+            </LinkBoxs>
             <LogInBox>
                 <Form onSubmit={onSubmit}>
                     <LoginTitle>로그인</LoginTitle>
@@ -126,6 +102,52 @@ function LogIn() {
 
 export default LogIn;
 
+const LinkBoxs = styled.div`
+    height: 75px;
+    width: 1020px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+
+    @media screen and (max-width: 1140px) {
+        width: 88%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+`;
+
+const HomeTitle = styled.div`
+    display: flex;
+    align-items: center;
+    margin-top: -10px;
+
+    a {
+        color: #ffffff;
+        font-weight: 900;
+        text-shadow: 1px 1px 4px #808080, -1px -1px 4px #808080;
+        font-size: 25px;
+        text-decoration: none;
+
+        @media screen and (max-width: 650px) {
+            font-size: 20px;
+        }
+
+        img {
+            width: 20px;
+            height: 20px;
+        }
+
+        span {
+            font-size: 12px;
+            @media screen and (max-width: 650px) {
+                font-size: 10px;
+            }
+        }
+    }
+`;
+
 const LogInBox = styled.div`
     background-color: rgb(240, 240, 240);
     padding: 50px;
@@ -140,13 +162,13 @@ const LogInBox = styled.div`
             width:90%;
         }
     }
-`
+`;
 
 const LoginTitle = styled.h3`
     @media screen and (max-width: 768px) {
         font-size: 20px;
     }
-`
+`;
 
 const Explanation = styled.p`
     @media screen and (max-width: 768px) {

@@ -1,6 +1,5 @@
 import { ChildBox, OutletBox, PageBody } from './PageStyled';
 import { Outlet, useOutletContext } from "react-router-dom";
-import CrossFades from "../components/Common/CrossFades";
 import NavMission from "../components/Mission/NavMission";
 
 interface MissionProps { // props 타입
@@ -9,13 +8,10 @@ interface MissionProps { // props 타입
 }
 
 function Mission() {
-    const { windowWidth } = useOutletContext<MissionProps>(); // 웹 width 크기
-    const { loggedIn } = useOutletContext<MissionProps>(); // 로드인 여부
-
+    const { loggedIn, windowWidth } = useOutletContext<MissionProps>();
 
     return(
         <PageBody>
-            <CrossFades />
             <ChildBox>
                 <NavMission />
                 <OutletBox> 

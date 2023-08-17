@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import CrossFades from "../components/Common/CrossFades";
 import { PageBody } from './PageStyled';
 
 function Ministry() {
     return(
         <PageBody>
-            <CrossFades />
             <Title>사역 페이지 제작중입니다...</Title>
         </PageBody>
     );

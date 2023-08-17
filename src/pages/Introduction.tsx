@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom';
-import CrossFades from "../components/Common/CrossFades";
 import { PageBody, ChildBox, OutletBox } from './PageStyled';
 import PageNav from '../components/Common/PageNav';
 
@@ -15,7 +14,6 @@ function Introduction() {
 
     return(
         <PageBody>
-            <CrossFades />
             <ChildBox>
                 <PageNav
                     title='교회소개'
