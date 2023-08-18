@@ -85,7 +85,7 @@ const CardTitle = styled(Card.Title)`
         font-size: 15px;
     }
 
-    @media screen and (max-width: 350px) {
+    @media screen and (max-width: 400px) {
         font-size: 14px;
     }
 `;
@@ -94,6 +94,14 @@ const PostDate = styled.div`
     font-size: 14px;
     color: gray;
     text-align: right;
+
+    @media screen and (max-width: 450px) {
+        font-size: 13px;
+    }
+
+    @media screen and (max-width: 350px) {
+        font-size: 12px;
+    }
 `;
 
 const SecondCard = styled.div`
@@ -113,8 +121,12 @@ const SecondImg = styled.img`
     height: 120px;
     border-radius: 10px;
 
-    @media screen and (max-width: 350px) {
+    @media screen and (max-width: 400px) {
         width: 45%;
+        height: 110px;
+    }
+
+    @media screen and (max-width: 350px) {
         height: 100px;
     }
 `;
@@ -123,8 +135,11 @@ const SecondTextBox = styled.div`
     width: 60%;
     padding: 10px;
 
-    @media screen and (max-width: 350px) {
+    @media screen and (max-width: 400px) {
         width: 55%;
+    }
+
+    @media screen and (max-width: 350px) {
         padding: 5px;
     }
 `;
@@ -137,4 +152,8 @@ const SecondContent = styled.p`
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+
+    @media screen and (max-width: 400px) {
+        font-size: 13px;
+    }
 `;
