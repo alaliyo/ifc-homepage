@@ -47,7 +47,7 @@ function SketchMap() {
     });
 
     const handleMarkerClick = () => { //클릭 시 page url 반환
-      window.open("https://map.naver.com/v5/search/%EC%97%B4%EB%B0%A9%EA%B5%90%ED%9A%8C/place/35396013?c=15,0,0,0,dh&placePath=%3Fentry%253Dbmp");
+      window.open("https://map.naver.com/v5/directions/-/14379663.452638414,4219953.998840958,%EC%97%B4%EB%B0%A9%EA%B5%90%ED%9A%8C,35396013,PLACE_POI/-/transit?c=15,0,0,0,dh");
     };
 
     // 마커 클릭 시 이벤트 처리
