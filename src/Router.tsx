@@ -29,7 +29,7 @@ import Overseas from "./components/Mission/Overseas";
 import Domestic from "./components/Mission/Domestic";
 
 import EventStory from "./pages/EventStory";
-import EventPost from "./components/EventStory/EventPost";
+import EventPosts from "./components/EventStory/EventPosts";
 import EventPostDetail from "./components/EventStory/EventPostDetail";
 import EventWritin from "./components/EventStory/EventWritin";
 
@@ -122,7 +122,7 @@ const router = createBrowserRouter([
                         children: [
                             {
                                 path: 'post',
-                                element: <EventPost />,
+                                element: <EventPosts />,
                             },
                             {
                                 path: 'post/:postId',

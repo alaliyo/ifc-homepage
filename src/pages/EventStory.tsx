@@ -1,9 +1,9 @@
-import { ChildBox, OutletBox, PageBody } from "./PageStyled";
+import { OutletBox, PageBody } from "./PageStyled";
 import { Outlet, useOutletContext } from "react-router-dom";
-import PageNav from "../components/Common/PageNav";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { dbService } from "../firebase";
+import styled from "styled-components";
 
 interface EventProps {
     loggedIn: boolean;
@@ -29,25 +29,24 @@ function EventStory() {
 
     return(
         <PageBody>
-            <ChildBox>
-                <PageNav
-                    title="행사"
-                    LinkInfo={[
-                        {
-                            title1: '행사',
-                            LinkUrl: '/event-story/post',
-                        },
-                    ]}
-                />
-                <OutletBox>
-                    <Outlet context={{
-                        loggedIn: loggedIn,
-                        posts: posts,
-                    }} />
-                </OutletBox>
-            </ChildBox>
+            <OutletBoxstyle>
+                <Outlet context={{
+                    loggedIn: loggedIn,
+                    posts: posts,
+                }} />
+            </OutletBoxstyle>
         </PageBody>
     );
 }
 
 export default EventStory;
+
+const OutletBoxstyle = styled(OutletBox)`
+    width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+
+    @media screen and (max-width: 1017px) {
+        width: auto;
+    }
+`;

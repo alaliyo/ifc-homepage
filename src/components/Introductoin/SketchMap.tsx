@@ -47,7 +47,7 @@ function SketchMap() {
     });
 
     const handleMarkerClick = () => { //클릭 시 page url 반환
-      window.open(`https://map.kakao.com/link/search/경남 양산시 삼호동부6길 18`);
+      window.open("https://map.naver.com/v5/search/%EC%97%B4%EB%B0%A9%EA%B5%90%ED%9A%8C/place/35396013?c=15,0,0,0,dh&placePath=%3Fentry%253Dbmp");
     };
 
     // 마커 클릭 시 이벤트 처리
@@ -60,7 +60,7 @@ function SketchMap() {
 
   }, []);
   
-  return (
+    return (
       <Body>
         <Title>찾아오는 길</Title>
         <Map id="map"></Map>

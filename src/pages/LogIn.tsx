@@ -81,12 +81,12 @@ function LogIn() {
                     <LoginTitle>로그인</LoginTitle>
                     <Explanation>이 페이지는 관리자를 위한 로그인 페이지 입니다.</Explanation>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>아이디</Form.Label>
+                        <FormLabel>아이디</FormLabel>
                         <Form.Control name="email" type="email" placeholder="아이디를 입력해주세요." required value={email} onChange={onChange} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>비밀번호</Form.Label>
+                        <FormLabel>비밀번호</FormLabel>
                         <Form.Control name="password" type="password" placeholder="비밀번호를 입력해주세요." required value={password} onChange={onChange} />
                     </Form.Group>
                     
@@ -130,7 +130,7 @@ const HomeTitle = styled.div`
         font-size: 25px;
         text-decoration: none;
 
-        @media screen and (max-width: 650px) {
+        @media screen and (max-width: 768px) {
             font-size: 20px;
         }
 
@@ -141,7 +141,7 @@ const HomeTitle = styled.div`
 
         span {
             font-size: 12px;
-            @media screen and (max-width: 650px) {
+            @media screen and (max-width: 768px) {
                 font-size: 10px;
             }
         }
@@ -154,13 +154,28 @@ const LogInBox = styled.div`
     width: 500px;
     margin: 100px auto;
     border-radius: 20px;
+
     @media screen and (max-width: 768px) {
         width: 85%;
         margin: 50px auto;
         padding: 15px;
+
         input {
+            font-size: 15px;
             width:90%;
         }
+    }
+
+    @media screen and (max-width: 450px) {
+        width: 100%;
+        background-color: white;
+        margin: 0px;
+
+        input {
+            font-size: 14px;
+            width:100%;
+        }
+
     }
 `;
 
@@ -168,10 +183,28 @@ const LoginTitle = styled.h3`
     @media screen and (max-width: 768px) {
         font-size: 20px;
     }
+
+    @media screen and (max-width: 450px) {
+        font-size: 18px;
+    }
 `;
 
 const Explanation = styled.p`
     @media screen and (max-width: 768px) {
         font-size: 13px;
     }
+
+    @media screen and (max-width: 450px) {
+        font-size: 12px;
+    }
 `;
+
+const FormLabel = styled(Form.Label)`
+    @media screen and (max-width: 768px) {
+        font-size: 17px;
+    }
+
+    @media screen and (max-width: 450px) {
+        font-size: 15px;
+    }
+`

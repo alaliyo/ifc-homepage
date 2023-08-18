@@ -17,7 +17,7 @@ interface EventPostProps {
     postsData: Array<PostProps>;
 }
 
-function EventPost() {
+function EventPosts() {
     const { loggedIn } = useOutletContext<EventPostProps>();
     const { posts } = useOutletContext<EventPostProps>();
     const [searchQuery, setSearchQuery] = useState('');
@@ -65,7 +65,7 @@ function EventPost() {
     );
 }
 
-export default EventPost;
+export default EventPosts;
 
 export const Writin = styled(Link)`
     color: black;

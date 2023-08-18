@@ -1,20 +1,22 @@
 import styled from "styled-components";
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import useHandleResize from "../../hooks/useHandleResize";
 
 interface PostProps {
     postId: number;
     title: string;
     img: any;
     date: string;
-}
+};
 
 interface PostCardProps {
     post: PostProps;
     num: number;
-}
+};
 
 function PostCard({ post, num }: PostCardProps) {
+    const handleResize = useHandleResize();
 
     return(
         <CardStyle style={{ width: '14rem' }}>
@@ -33,8 +35,13 @@ export default PostCard;
 
 const CardStyle = styled(Card)`
     margin: 12px;
+
     @media screen and (max-width: 650px){
         margin: 12px auto;
+    }
+
+    @media screen and (max-width: 500px){
+        display: flex;
     }
 `;
 

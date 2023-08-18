@@ -14,11 +14,11 @@ function Root() {
 
   //웹 넓이에 반응
   useEffect(() => { 
-      const handleResize = () => {
-          setwindowWidth(window.innerWidth);
-      }
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
+    const handleResize = () => {
+        setwindowWidth(window.innerWidth);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [])
 
   // 모든 컴포넌트들이 로딩되었는지 확인하는 이벤트
