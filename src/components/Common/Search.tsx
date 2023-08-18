@@ -96,6 +96,6 @@ const InputBox = styled(InputGroup)`
     }
     @media screen and (max-width: 650px) {
         padding-right: 10px;
-        width: 60%;
+        width: 70%;
     }
 `;

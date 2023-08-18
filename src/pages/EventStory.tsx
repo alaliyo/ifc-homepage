@@ -19,13 +19,14 @@ function EventStory() {
             collection(dbService, "eventData"),
             orderBy("date", "desc")
         );
+
         onSnapshot(q, (snapshot) => {
             const postsArr: any = snapshot.docs.map((doc) => ({
                 ...doc.data(),
             }));
             setPosts(postsArr.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id));
         });
-    }, [])
+    }, []);
 
     return(
         <PageBody>
@@ -48,5 +49,13 @@ const OutletBoxstyle = styled(OutletBox)`
 
     @media screen and (max-width: 1017px) {
         width: auto;
+    }
+
+    @media screen and (max-width: 650px) {
+        padding: 15px;
+    }
+
+    @media screen and (max-width: 450px) {
+        padding: 15px 0;
     }
 `;

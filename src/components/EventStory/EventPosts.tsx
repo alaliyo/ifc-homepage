@@ -7,6 +7,7 @@ import { useState } from "react";
 interface PostProps {
     postId: number;
     title: string;
+    detail: string;
     img: string;
     date: string;
 }
@@ -29,7 +30,7 @@ function EventPosts() {
     };
 
     return(
-        <div>
+        <>
             {loggedIn && <Writin to="writin">글 작성</Writin>}
             <PostsHeader>
                 <Title>게시물</Title>
@@ -39,7 +40,7 @@ function EventPosts() {
                     searchResult={searchResult}
                     setSearchQuery={setSearchQuery}
                     setSearchResult={setSearchResult}
-                 />
+                />
             </PostsHeader>
             <CardsBox>
                 {searchResult ? (
@@ -59,9 +60,8 @@ function EventPosts() {
                         />
                     ))
                 )}
-                
             </CardsBox>
-        </div>
+        </>
     );
 }
 
@@ -75,15 +75,26 @@ export const Writin = styled(Link)`
 
 const PostsHeader = styled.header`
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
+
+    @media screen and (max-width: 450px) {
+        padding: 0 10px;
+    }
 `;
 
 const Title = styled.p`
     width: 100px;
     font-size: 30px;
     font-weight: 900;
+
     @media screen and (max-width: 650px) {
+        width: 80px;
         font-size: 20px;
+    }
+
+    @media screen and (max-width: 450px) {
+        width: 60px;
+        font-size: 18px;
     }
 `;
 
@@ -92,7 +103,16 @@ const CardsBox = styled.div`
     padding: 13px;
     display: flex;
     flex-wrap: wrap;
+
     @media screen and (max-width: 650px){
-        padding: 5px;
+        padding: 5px 0px;
+    }
+
+    @media screen and (max-width: 500px){
+        display: block;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: center; 
+        align-items: center;
     }
 `;
