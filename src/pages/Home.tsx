@@ -5,7 +5,6 @@ import { PageBody } from './PageStyled';
 import { Link, useNavigate } from 'react-router-dom';
 import useHandleResize from '../hooks/useHandleResize';
 import CrossImg from '../imgs/CrossImg.png';
-import CrossImg2 from '../imgs/CrossImg2.png';
 import Img1 from '../imgs/HomeImg01.png';
 import Img2 from '../imgs/HomeImg02.png';
 import Img3 from '../imgs/HomeImg03.png';
@@ -25,27 +24,53 @@ function Home() {
             <CrossFade />
             <HomeBody>
                 <ShortcutsBox>
-                    <Sermon Resize={Resize} onClick={onClickNavigate}>
-                        <Sermontitle>담임 목사님의 <br />&emsp;오전 설교</Sermontitle>
-                        <BadgeStyled bg="success"><Link to='/youtube/kr-posts'>바로 가기</Link></BadgeStyled>
-                    </Sermon>
-                    <IntroBox>
-                        <div>
-                            <Link to='/schedule/worship-time'>예배<br />안내</Link>
-                        </div>
-                        <div>
-                            <Link to='/introduction/sketch-map'>교회<br />약도</Link>
-                        </div>
-                        <div>
-                            <Link to='/schedule/year'>연중<br />계획</Link>
-                        </div>
-                        <div>
-                            <Link to='/introduction/vision'>교회<br />비전</Link>
-                        </div>
-                    </IntroBox>
-                    <Construction>
-                        <span>행사 페이지가 <br /> 업데이트 {Resize > 450 && <br />} 되었습니다.</span>
-                    </Construction>
+                    {Resize > 450 ? (<>
+                        <Sermon Resize={Resize} onClick={onClickNavigate}>
+                            <Sermontitle>담임 목사님의 <br />&emsp;오전 설교</Sermontitle>
+                            <BadgeStyled bg="success"><Link to='/youtube/kr-posts'>바로 가기</Link></BadgeStyled>
+                        </Sermon>
+                        <IntroBox>
+                            <div>
+                                <Link to='/schedule/worship-time'>예배<br />안내</Link>
+                            </div>
+                            <div>
+                                <Link to='/introduction/sketch-map'>교회<br />약도</Link>
+                            </div>
+                            <div>
+                                <Link to='/schedule/year'>연중<br />계획</Link>
+                            </div>
+                            <div>
+                                <Link to='/introduction/vision'>교회<br />비전</Link>
+                            </div>
+                        </IntroBox>
+                        <Construction>
+                            <span>행사 페이지가 <br /> 업데이트 <br /> 되었습니다.</span>
+                        </Construction>
+                    </>) : (<>
+                        <ChilderBox>
+                            <Sermon Resize={Resize} onClick={onClickNavigate}>
+                                <Sermontitle>담임 목사님의 <br />&emsp;오전 설교</Sermontitle>
+                                <BadgeStyled bg="success"><Link to='/youtube/kr-posts'>바로 가기</Link></BadgeStyled>
+                            </Sermon>
+                            <Construction>
+                                <span>행사 페이지가 <br /> 업데이트 되었습니다.</span>
+                            </Construction>
+                        </ChilderBox>
+                        <IntroBox>
+                            <div>
+                                <Link to='/schedule/worship-time'>예배<br />안내</Link>
+                            </div>
+                            <div>
+                                <Link to='/introduction/sketch-map'>교회<br />약도</Link>
+                            </div>
+                            <div>
+                                <Link to='/schedule/year'>연중<br />계획</Link>
+                            </div>
+                            <div>
+                                <Link to='/introduction/vision'>교회<br />비전</Link>
+                            </div>
+                        </IntroBox>
+                    </>)}
                 </ShortcutsBox>
             </HomeBody>
         </PageBody>
@@ -95,7 +120,7 @@ const Sermon = styled.div<Resize>`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-image: ${p => p.Resize > 450 ? `url(${CrossImg})` : `url(${CrossImg2})`};
+    background-image: url(${CrossImg});
     background-size: 100% 100%;
 
     @media screen and (max-width: 650px) {
@@ -105,8 +130,6 @@ const Sermon = styled.div<Resize>`
     @media screen and (max-width: 450px) {
         width: 96%;
         height: 120px;
-        margin: 0 auto 5px auto;
-        flex-direction: row;
     }
 `;
 
@@ -242,9 +265,19 @@ const Construction = styled.div`
     @media screen and (max-width: 450px) {
         width: 96%;
         height: 120px;
-        font-size: 17px;
-        margin: 5px auto -5px auto;
+        font-size: 15px;
         padding-top: 7px;
         flex-direction: row;
+    }
+`;
+
+const ChilderBox = styled.div`
+    width: 96%;
+    margin: 0 auto 7px auto;
+    display: flex;
+    justify-content: space-between;
+    
+    div {
+        width: 49%;
     }
 `;
