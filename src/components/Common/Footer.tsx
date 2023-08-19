@@ -9,10 +9,8 @@ function Footer() {
                 <p>전화번호: 055-386-1080</p>
                 <p>주소: 경남 양산시 삼호동부6길 18</p>
                 <p>이메일: fellowshipic2010@gmail.com</p>
-                <p>제작자: 김성원</p>
             </FooterTextBox>
             <FooterTextBox>
-                <p>버전: v1.5.8</p>
                 <p>홈페이지 저작권: 도용을 금합니다.</p>
                 <p>이미지 저작권: 미리캠퍼스</p>
                 <p>폰트 저작권: NAVER</p>

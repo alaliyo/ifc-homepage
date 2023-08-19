@@ -2,8 +2,10 @@ import styled from 'styled-components';
 import Badge from 'react-bootstrap/Badge';
 import CrossFade from './../components/Home/CrossFade';
 import { PageBody } from './PageStyled';
-import { Link } from 'react-router-dom';
-import SermonImg from '../imgs/CrossImg.png';
+import { Link, useNavigate } from 'react-router-dom';
+import useHandleResize from '../hooks/useHandleResize';
+import CrossImg from '../imgs/CrossImg.png';
+import CrossImg2 from '../imgs/CrossImg2.png';
 import Img1 from '../imgs/HomeImg01.png';
 import Img2 from '../imgs/HomeImg02.png';
 import Img3 from '../imgs/HomeImg03.png';
@@ -11,12 +13,19 @@ import Img4 from '../imgs/HomeImg04.png';
 import Img5 from '../imgs/HomeImg05.png';
 
 function Home() {
+    const Resize = useHandleResize();
+    const navigate = useNavigate();
+
+    const onClickNavigate = () => {
+        navigate('/youtube/kr-posts')
+    }
+
     return(
         <PageBody>
             <CrossFade />
             <HomeBody>
                 <ShortcutsBox>
-                    <Sermon>
+                    <Sermon Resize={Resize} onClick={onClickNavigate}>
                         <Sermontitle>담임 목사님의 <br />&emsp;오전 설교</Sermontitle>
                         <BadgeStyled bg="success"><Link to='/youtube/kr-posts'>바로 가기</Link></BadgeStyled>
                     </Sermon>
@@ -35,7 +44,7 @@ function Home() {
                         </div>
                     </IntroBox>
                     <Construction>
-                        <span>행사 페이지가 <br /> 업데이트 <br /> 되었습니다.</span>
+                        <span>행사 페이지가 <br /> 업데이트 {Resize > 450 && <br />} 되었습니다.</span>
                     </Construction>
                 </ShortcutsBox>
             </HomeBody>
@@ -50,6 +59,7 @@ const HomeBody = styled.div`
     height: 306px;
     margin: 0 auto;
     padding: 15px 0;
+
     @media screen and (max-width: 1020px) {
         width: 100%;
         height: auto;
@@ -62,22 +72,41 @@ const ShortcutsBox = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 30%);
     justify-content: space-evenly;
+
     @media screen and (max-width: 1020px) {
         height: 27vw;
+        grid-template-rows: 1fr;
+    }
+
+    @media screen and (max-width: 450px) {
+        height: 100%;
+        display: block;
     }
 `;
 
-const Sermon = styled.div`
+interface Resize {
+    Resize: number;
+}
+
+const Sermon = styled.div<Resize>`
     width: 100%;
     padding: 20px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-image: url(${SermonImg});
+    background-image: ${p => p.Resize > 450 ? `url(${CrossImg})` : `url(${CrossImg2})`};
     background-size: 100% 100%;
+
     @media screen and (max-width: 650px) {
         padding: 10px;
+    }
+
+    @media screen and (max-width: 450px) {
+        width: 96%;
+        height: 120px;
+        margin: 0 auto 5px auto;
+        flex-direction: row;
     }
 `;
 
@@ -88,36 +117,32 @@ const Sermontitle = styled.span`
     font-weight: 900;
     text-shadow: 1px 1px 4px #000000, -1px -1px 4px #000000;
     color: white;
+
     @media screen and (max-width: 650px) {
         font-size: 14px;
     }
-    @media screen and (max-width: 460px) {
-        font-size: 12px;
-    }
-    @media screen and (max-width: 350px) {
-        font-size: 11px;
+
+    @media screen and (max-width: 450px) {
+        font-size: 17px;
     }
 `;
 
 const BadgeStyled = styled(Badge)`
     float: right;
     align-self: flex-end;
+
     &:hover {
         background-color: #a1a1a1a1;
     }
+
     a {
         font-size: 15px;
         color: #dbdbdb;
         text-decoration: none;
+
         &:hover {
             color: #ffffff;
         }
-        @media screen and (max-width: 650px) {
-            font-size: 12px;
-        }
-        @media screen and (max-width: 350px) {
-        font-size: 11px;
-    }
     }
 `;
 
@@ -127,6 +152,12 @@ const IntroBox = styled.div`
     grid-template-columns: repeat(2, 49%);
     grid-template-rows: repeat(2, 49%);
     gap: 2%;
+    
+    @media screen and (max-width: 450px) {
+        grid-template-columns: repeat(4, 23.5%);
+        grid-template-rows: none;
+    }
+
     div {
         box-shadow: 1px 1px 3px #838383, -1px -1px 3px #838383;
         cursor: pointer;
@@ -136,21 +167,25 @@ const IntroBox = styled.div`
             background-image: url(${Img1});
             background-size: 100% 100%;
         }
+
         :nth-child(2) {
             border-top-right-radius: 10px;
             background-image: url(${Img2});
             background-size: 100% 100%;
         }
+
         :nth-child(3) {
             border-bottom-left-radius: 10px;
             background-image: url(${Img3});
             background-size: 100% 100%;
         }
+
         :nth-child(4) {
             border-bottom-right-radius: 10px;
             background-image: url(${Img4});
             background-size: 100% 100%;
         }
+
         a {
             width: 100%;
             height: 100%;
@@ -163,18 +198,23 @@ const IntroBox = styled.div`
             font-weight: 900;
             text-shadow: 1px 1px 4px #000000, -1px -1px 4px #000000;
             text-decoration: none;
+
             &:hover {
                 color: #e6e6e6;
             }
+
             @media screen and (max-width: 600px) {
                 font-size: 13px;
             }
+
             @media screen and (max-width: 450px) {
-                font-size: 12px;
+                font-size: 15px;
             }
-            @media screen and (max-width: 350px) {
-                font-size: 11px;
-            }
+        }
+
+        @media screen and (max-width: 450px) {
+            border-radius: 10px;
+            height: 20vw;
         }
     }
 `;
@@ -189,19 +229,22 @@ const Construction = styled.div`
     font-weight: 900;
     text-align: center;
     text-shadow: 1px 1px 4px #000000, -1px -1px 4px #000000;
+
     @media screen and (max-width: 820px) {
         font-size: 15px;
     }
+
     @media screen and (max-width: 650px) {
         padding-top: 10px;
-        font-size: 14px;
+        font-size: 13px;
     }
-    @media screen and (max-width: 500px) {
-        padding-top: 5px;
-        font-size: 11px;
-    }
-    @media screen and (max-width: 350px) {
-        padding-top: 3px;
-        font-size: 10px;
+
+    @media screen and (max-width: 450px) {
+        width: 96%;
+        height: 120px;
+        font-size: 17px;
+        margin: 5px auto -5px auto;
+        padding-top: 7px;
+        flex-direction: row;
     }
 `;
