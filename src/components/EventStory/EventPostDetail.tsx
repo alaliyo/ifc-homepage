@@ -96,20 +96,30 @@ const ListLink = styled(Link)`
     color: #3636368d;
     font-weight: 900;
     text-decoration: none;
+
+    @media screen and (max-width: 450px) {
+        margin-left: 10px;
+    }
 `;
 
 const DetailHeader = styled.header`
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
+
     p {
         margin-bottom: 5px;
+    }
+
+    @media screen and (max-width: 450px) {
+        padding: 0 10px;
     }
 `
 
 const PostTitle = styled.p`
     font-size: 25px;
     font-weight: 900;
+
     @media screen and (max-width: 650px){
         font-size: 17px;
     }
@@ -119,6 +129,7 @@ const PostDate = styled.p`
     font-size: 18px;
     font-weight: 900;
     color: gray;
+
     @media screen and (max-width: 650px){
         font-size: 15px;
     }

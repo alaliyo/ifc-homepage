@@ -1,19 +1,10 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import styled from "styled-components";
+import { ScheduleData } from "../../utils/dbService";
 
-interface ScheduleData {
-    id: string;
-    title: string;
-    date: string;
-    url: string;
-}
-
-interface ListWeekProps {
-    scheduleDatas: Array<ScheduleData>;
-}
-
-function ListWeek({scheduleDatas}: ListWeekProps) {
+function ListWeek({setEventData, setShowModal}: any) {
+    const scheduleDatas = ScheduleData();
     const date = new Date();
     const [year, setYear] = useState(date.getFullYear());
     const [month, setMonth] = useState(date.getMonth() + 1);
@@ -34,7 +25,14 @@ function ListWeek({scheduleDatas}: ListWeekProps) {
             setYear(e => e - 1);
             setMonth(12);
         } 
-        
+    };
+
+    const handleEventClick = (id: string) => {
+        const scheduleData = scheduleDatas.find(schedule => schedule.id === id);
+        if (scheduleData) {
+            setEventData(scheduleData);
+            setShowModal(true);
+        }
     };
 
     return(
@@ -47,14 +45,19 @@ function ListWeek({scheduleDatas}: ListWeekProps) {
                 </HeaderBtnBox>
             </ListWeekHeader>
 
-            {scheduleDatas.map(data => 
-                Number(data.date.split('-')[1]) === month &&
-                Number(data.date.split('-')[0]) === year && (
-                <>
-                    <p>{data.title}</p>
-                    <p>{data.date}</p>
-                </>
-            ))}
+            <ListBox>
+                {scheduleDatas.map((data, i) => 
+                    Number(data.date.split('-')[1]) === month &&
+                    Number(data.date.split('-')[0]) === year && (
+                        <List 
+                            key={data.id}
+                            isEven={i % 2 === 0}
+                            onClick={() => handleEventClick(data.id)}
+                        >
+                            {data.date.split('-')[2].replace('0', '')}일 {data.title}
+                        </List>
+                ))}
+            </ListBox>
         </ListWeekBox>
     );
 }
@@ -62,12 +65,13 @@ function ListWeek({scheduleDatas}: ListWeekProps) {
 export default ListWeek;
 
 const ListWeekBox = styled.div`
-    padding: 0 10px;
+    padding: 0;
 `;
 
 const ListWeekHeader = styled.div`
     display: flex;
     justify-content: space-between;
+    padding: 0 10px;
 `;
 
 const HeaderBtnBox = styled.div`
@@ -76,4 +80,21 @@ const HeaderBtnBox = styled.div`
         width: 35px;
         text-align: center;
     }
+`;
+
+const ListBox = styled.div`
+    margin: 10px 0;
+    border-top: 2px solid #c2c2c2;
+`;
+
+interface IsEven {
+    isEven: boolean;
+}
+
+const List = styled.p<IsEven>`
+    font-weight: 900;
+    padding: 10px;
+    border-bottom: 2px solid #c2c2c2;
+    margin: 0;
+    background-color: ${props => (props.isEven ? "#f0f0f0" : "transparent")};
 `;
