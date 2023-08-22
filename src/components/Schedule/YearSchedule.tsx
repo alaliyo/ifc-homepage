@@ -9,11 +9,12 @@ import localesKo from '@fullcalendar/core/locales/ko'
 import { Button, Form, Modal } from 'react-bootstrap';
 import { Link, useOutletContext } from 'react-router-dom';
 import './YearSchedule.css'
-import { Body } from './IntroStyled';
+import { Body } from './IntroStyled'; 
+import ListWeek from './ListWeek';
+import useHandleResize from '../../hooks/useHandleResize';
 
 interface ScheduleProps {
     loggedIn: boolean;
-    windowWidth: number;
 }
 
 interface ScheduleData {
@@ -25,7 +26,7 @@ interface ScheduleData {
 
 function YearSchedule() {
     const { loggedIn } = useOutletContext<ScheduleProps>();
-    const { windowWidth } = useOutletContext<ScheduleProps>(); // 웹 width 크기
+    const windResize = useHandleResize();
     const [scheduleDatas, setScheduleDatas] = useState<Array<ScheduleData>>([]);
     const { register, handleSubmit, reset } = useForm<ScheduleData>(); // useForm 사용
     const [showModal, setShowModal] = useState(false);
@@ -36,7 +37,7 @@ function YearSchedule() {
     useEffect(() => {
         const q = query(
             collection(dbService, "schedules"),
-            orderBy("date", "desc")
+            orderBy("date", "asc")
         );
         onSnapshot(q, (snapshot) => {
             const ScheduleArr: any = snapshot.docs.map((doc) => ({
@@ -95,8 +96,8 @@ function YearSchedule() {
     }
 
     useEffect(() => {
-        setWidthBoolean(windowWidth <= 550 && true)
-    }, [windowWidth])
+        setWidthBoolean(windResize <= 550 && true)
+    }, [windResize])
 
     function handleEventClickWrapper(e: any) {
         handleEventClick(e);
@@ -147,8 +148,8 @@ function YearSchedule() {
                     </Button>
                 </Modal.Footer>
             </Modal>
-
-            <FullCalendar
+            {windResize > 551? (
+                <FullCalendar
                 plugins={[dayGridPlugin]}
                 initialView="dayGridMonth"
                 height='auto'
@@ -165,6 +166,9 @@ function YearSchedule() {
                 eventDisplay="block"
                 eventClick={loggedIn ? handleDelete : handleEventClickWrapper}
             />
+            ):(
+                <ListWeek scheduleDatas={scheduleDatas}/>
+            )}
         </Body>
     );
 }

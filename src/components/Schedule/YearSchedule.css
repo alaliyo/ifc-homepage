@@ -1,25 +1,10 @@
 .fc-toolbar-chunk {
     margin: 10px 10px 0px 10px;
-    @media screen and (max-width: 450px) {
-        margin: 5px 5px 0px 5px;
-        font-size: 12px;
-    }
-    @media screen and (max-width: 400px) {
-        margin: 5px 5px 0px 5px;
-        font-size: 11px;
-    }
-    @media screen and (max-width: 350px) {
-        margin: 5px 5px 0px 5px;
-        font-size: 10px;
-    }
 }
 
 .fc-col-header-cell-cushion {
     color: #000;
     text-decoration: none;
-    @media screen and (max-width: 550px) {
-        font-size: 12px;
-    }
 }
 .fc-col-header-cell-cushion:hover {
     color:#000;
@@ -27,10 +12,6 @@
 .fc-daygrid-day-number {
     color: #000;
     text-decoration: none;
-    @media screen and (max-width: 550px) {
-        font-size: 12px;
-        font-weight: 900;
-    }
 }
 .fc-daygrid-day-number:hover {
     color: #000;
@@ -48,14 +29,6 @@
     word-break: keep-all;
     @media screen and (max-width: 800px) {
         font-size: 12px;
-        font-weight: 900;
-    }
-    @media screen and (max-width: 450px) {
-        font-size: 11px;
-        font-weight: 900;
-    }
-    @media screen and (max-width: 350px) {
-        font-size: 10px;
         font-weight: 900;
     }
 }
