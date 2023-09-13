@@ -43,18 +43,22 @@ function Home() {
                                 <Link to='/introduction/vision'>교회<br />비전</Link>
                             </div>
                         </IntroBox>
-                        <Construction>
-                            <span>행사 페이지가 <br /> 업데이트 <br /> 되었습니다.</span>
-                        </Construction>
+                            <Construction>
+                                <Link to="/event-story/post">
+                                    <span>행사 페이지가 <br /> 업데이트 <br /> 되었습니다.</span>
+                                </Link>
+                            </Construction>
                     </>) : (<>
                         <ChilderBox>
                             <Sermon Resize={Resize} onClick={onClickNavigate}>
                                 <Sermontitle>담임 목사님의 <br />&emsp;오전 설교</Sermontitle>
                                 <BadgeStyled bg="success"><Link to='/youtube/kr-posts'>바로 가기</Link></BadgeStyled>
                             </Sermon>
-                            <Construction>
-                                <span>행사 페이지가 <br /> 업데이트 되었습니다.</span>
-                            </Construction>
+                            <Link to="/event-story/post">
+                                <Construction>
+                                    <span>행사 페이지가 <br /> 업데이트 되었습니다.</span>
+                                </Construction>
+                            </Link>
                         </ChilderBox>
                         <IntroBox>
                             <div>
@@ -247,11 +251,15 @@ const Construction = styled.div`
     background-size: 100% 100%;
     border-radius: 10px;
     padding-top: 20px;
-    color: white;
     font-size: 20px;
     font-weight: 900;
     text-align: center;
     text-shadow: 1px 1px 4px #000000, -1px -1px 4px #000000;
+
+    a {
+        color: white;
+        text-decoration: none;
+    }
 
     @media screen and (max-width: 820px) {
         font-size: 15px;
