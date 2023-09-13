@@ -42,16 +42,19 @@ export const PostsBody = styled.div`
         font-weight: 900;
         color: black;
         padding: 5px;
+
         @media screen and (max-width: 650px) {
             padding: 5px 0;
             font-size: 11px;
         }
+
         :Hover {
             background-color: #adadad;
             color: white;
             transition: .3s;
             border-radius: 5px;
         }
+
         div {
             margin-left: 10px;
             @media screen and (max-width: 650px) {
@@ -59,6 +62,7 @@ export const PostsBody = styled.div`
             }
         }
     }
+    
     @media screen and (max-width: 650px) {
         border-top: none;
     }

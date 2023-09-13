@@ -5,35 +5,16 @@ import {
     PostsBody, PaginationBox, PageNumber, GoBun
 } from './YoutubeStyled';
 import Search from "../Common/Search";
-
-interface enData { // post 타입
-    postId: number;
-    title: string;
-    url: string;
-    date: string;
-    bibleVerse:string;
-}
-
-interface Props {//객체를 배열로 감쌈
-    enData: Array<enData>;
-    postsData: Array<enData>;
-}
-
-interface YoutubePostsProps {
-    windowWidth: number;
-    loggedIn: boolean;
-}
-
+import { ArrayProps, YoutubeProps } from "./YoutubeProps";
 
 function EnPosts() {
-    const { enData } = useOutletContext<Props>();
+    const { enData } = useOutletContext<ArrayProps>();
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [postsPerPage] = useState(15); // 한 페이지당 보여질 게시물 수
     const [totalPages, setTotalPages] = useState(Math.max(1, Math.ceil(enData.length / postsPerPage))); // 총 페이지 수
-    //const { windowWidth } = useOutletContext<YoutubePostsProps>();
-    const { loggedIn } = useOutletContext<YoutubePostsProps>();
+    const { loggedIn } = useOutletContext<YoutubeProps>();
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchResult, setSearchResult] = useState<Props>(); // 검색 결과를 저장할 배열
+    const [searchResult, setSearchResult] = useState<ArrayProps>(); // 검색 결과를 저장할 배열
 
     // 페이지 수 계산 함수
     const calculateTotalPages = () => {

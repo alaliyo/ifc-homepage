@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import Root from "./Root";
+import App from "./App";
 import Home from "./pages/Home";
 import LogIn from './pages/LogIn';
 import PageLayout from "./pages/PageLayout";
@@ -34,10 +34,13 @@ import EventPostDetail from "./components/EventStory/EventPostDetail";
 import EventWritin from "./components/EventStory/EventWritin";
 import Weekly from "./components/Schedule/Weekly";
 
+import AdminPage from "./admin/AdminPage";
+import AdminLogIn from './admin/Login'
+
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Root />,
+        element: <App />,
         children: [
             {
                 path: ``,
@@ -161,6 +164,16 @@ const router = createBrowserRouter([
             },
         ],
         errorElement: <NotFound />
+    },
+    {
+        path: "/admin",
+        element: <AdminPage />,
+        children: [
+            {
+                path: ``,
+                element: <AdminLogIn />,
+            },
+        ]
     }
 ]);
 

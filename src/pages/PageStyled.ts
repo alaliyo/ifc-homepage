@@ -15,7 +15,7 @@ export const PageBody = styled.div`
 `;
 
 export const ChildBox = styled.div`
-    width: 1020px;
+    width: 1024px;
     margin: 0 auto;
     display: flex;
 

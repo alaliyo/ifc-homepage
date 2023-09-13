@@ -5,23 +5,11 @@ import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { dbService } from '../firebase';
 import { PageBody } from './PageStyled';
 import PageNav from "../components/Common/PageNav";
-
-interface PostsData { // post 타입
-    postId: number,
-    title: string,
-    url: string,
-    date: string,
-    bibleVerse:string,
-}
-
-interface YoutubeProps { // props 타입
-    windowWidth: number;
-    loggedIn: boolean;
-}
+import { DataProps, YoutubeProps } from "../components/Youtube/YoutubeProps";
 
 function Youtube() {
-    const [krData, setkrDate] = useState<Array<PostsData>>([]); //게시물
-    const [enData, setEnDate] = useState<Array<PostsData>>([]); //게시물
+    const [krData, setkrDate] = useState<Array<DataProps>>([]); //게시물
+    const [enData, setEnDate] = useState<Array<DataProps>>([]); //게시물
     const { windowWidth } = useOutletContext<YoutubeProps>(); // 웹 width 크기
     const { loggedIn } = useOutletContext<YoutubeProps>(); // 로드인 여부
     const linkInfoArr = [
