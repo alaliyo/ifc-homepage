@@ -17,6 +17,7 @@ export function ScheduleData() {
             collection(dbService, "schedules"),
             orderBy("date", "asc")
         );
+        
         onSnapshot(q, (snapshot) => {
             const ScheduleArr: any = snapshot.docs.map((doc) => ({
                 id: doc.id,

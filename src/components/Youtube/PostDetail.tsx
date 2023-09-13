@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useOutletContext, useParams, Link, useMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
-interface PostsData { // 데이터 타입
+interface PostsData { //데이터 타입
     postId: number,
     title: string,
     url: string,
@@ -27,7 +27,7 @@ function PostDetail() {
     useEffect(() => {
         const postObj = flexibleData?.find(obj => obj.postId === Number(postsId))
         setPost(postObj)
-    }, [flexibleData, postsId])
+    }, [flexibleData, postsId]);
 
     // 한국 또는 영어 date 조회
     useEffect(() => {
@@ -36,7 +36,7 @@ function PostDetail() {
         } else {
             setFlexibleData(krData);
         }
-    }, [currentUrl, enData, krData])
+    }, [currentUrl, enData, krData]);
 
     return(
         <PostDetailBox>
@@ -65,22 +65,27 @@ const PostDetailBox = styled.div`
     padding: 20px;
     width: 80%;
     text-align: center;
+
     h4 {
         margin-top: 10px;
         font-weight: 900;
+
         @media screen and (max-width: 650px) {
             font-size: 15px;
             margin-top: 5px;
         }
     }
+
     h5 {
         margin-top: 10px;
         font-weight: 900;
+
         @media screen and (max-width: 650px) {
             font-size: 15px;
             margin-top: 5px;
         }
     }
+
     @media screen and (max-width: 650px) {
         padding: 5px;
         width: 100%;
@@ -89,6 +94,7 @@ const PostDetailBox = styled.div`
 
 const LinkBox = styled.div`
     text-align: end;
+
     a{
         color: gray;
         text-decoration: none;
@@ -99,15 +105,19 @@ const LinkBox = styled.div`
 const PostBox = styled.div`
     width: 100%;
     height: 436px;
+
     @media screen and (max-width: 900px) {
         height: 350px;
     }
+
     @media screen and (max-width: 650px) {
         height: 350px;
     }
+
     @media screen and (max-width: 550px) {
         height: 320px;
     }
+
     @media screen and (max-width: 400px) {
         height: 220px;
     }
@@ -115,12 +125,15 @@ const PostBox = styled.div`
 
 const PostIframe = styled.iframe`
     width: 100%;
+
     @media screen and (max-width: 650px) {
         height: 330px;
     }
+
     @media screen and (max-width: 550px) {
         height: 300px;
     }
+
     @media screen and (max-width: 400px) {
         height: 200px;
     }

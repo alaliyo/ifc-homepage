@@ -1,6 +1,6 @@
-import { Table } from 'react-bootstrap';
 import styled from 'styled-components';
-import { Body } from './IntroStyled';
+import { Table } from 'react-bootstrap';
+import { Body } from '../Common/CommonStyled';
 
 function WorshipTime() {
     return(
@@ -106,14 +106,18 @@ export default WorshipTime;
 const TitleBox = styled.div`
     text-align: center;
     margin: 20px 0;
+
     h3 {
         font-weight: 900;
+
         @media screen and (max-width: 500px) {
             font-size: 20px;
         }
     }
+
     h5 {
         font-weight: 900;
+
         @media screen and (max-width: 500px) {
             font-size: 17px;
         }
@@ -124,12 +128,15 @@ const TableStyled = styled(Table)`
     td {
         font-weight: 900;
         vertical-align: middle;
+
         @media screen and (max-width: 825px) {
             font-size: 15px;
         }
+
         @media screen and (max-width: 500px) {
             font-size: 13px;
         }
+
         @media screen and (max-width: 400px) {
             font-size: 11px;
         }
@@ -138,6 +145,7 @@ const TableStyled = styled(Table)`
 
 const ChargeExplanation = styled.span`
     font-size: 11px;
+
     @media screen and (max-width: 825px) {
         font-size: 10px;
     }

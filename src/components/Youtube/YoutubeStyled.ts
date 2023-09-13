@@ -1,19 +1,12 @@
 import { Link } from "react-router-dom";
-import styled, {keyframes} from "styled-components";
-
-const fadeInAnimation = keyframes`
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-`;
+import styled from "styled-components";
+import { fadeInAnimation } from "../Common/CommonStyled";
 
 export const PostsBox = styled.div`
     width: 80%;
     padding: 20px;
     animation: ${fadeInAnimation} 0.3s ease-in;
+    
     @media screen and (max-width: 650px) {
         width: 100%;
         padding: 5px;
@@ -42,6 +35,7 @@ export const Title = styled.p`
 
 export const PostsBody = styled.div`
     border-top: 2px solid gray;
+
     a {
         display: flex;
         text-decoration: none;
@@ -86,10 +80,12 @@ export const PageNumber = styled.button<{ active: boolean }>`
     cursor: pointer;
     border-radius: 5px;
     transition: 0.3s;
+
     :hover {
         background-color: #adadad;
         color: white;
     }
+
     @media screen and (max-width: 650px) {
         width: 20px;
         height: 20px;
@@ -107,10 +103,12 @@ export const GoBun = styled.button`
     border-radius: 5px;
     transition: 0.3s;
     color: black;
+
     :hover {
         background-color: #adadad;
         color: white;
     }
+
     @media screen and (max-width: 650px) {
         width: 20px;
         height: 20px;

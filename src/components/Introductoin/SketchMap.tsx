@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { Body, Title } from './IntroStyled';
+import { Title } from './IntroStyled';
+import { Body } from '../Common/CommonStyled';
 
 declare global { //타입 선언
   interface Window {
@@ -81,6 +82,7 @@ const Map = styled.div`
   margin: 10px auto;
   border: 2px solid gray;
   border-radius: 15px;
+  
   @media screen and (max-width: 650px) {
     margin: 0 0;
     width: 100%;
@@ -91,11 +93,13 @@ const Map = styled.div`
 const TextBox = styled.div`
   margin-top: 20px;
   margin: 10px 0;
+
   div {
     margin: 5px 0;
     font-size: 18px;
     font-weight: 900;
     text-align: center;
+
     @media screen and (max-width: 650px) {
       font-size: 13px;
     }

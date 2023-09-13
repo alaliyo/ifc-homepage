@@ -32,6 +32,7 @@ import EventStory from "./pages/EventStory";
 import EventPosts from "./components/EventStory/EventPosts";
 import EventPostDetail from "./components/EventStory/EventPostDetail";
 import EventWritin from "./components/EventStory/EventWritin";
+import Weekly from "./components/Schedule/Weekly";
 
 const router = createBrowserRouter([
     {
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
                             {
                                 path: 'year',
                                 element: <YearSchedule />,
+                            },
+                            {
+                                path: 'weekly',
+                                element: <Weekly />,
                             },
                         ],
                     },

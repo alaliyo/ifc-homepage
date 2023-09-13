@@ -1,7 +1,8 @@
 import { Card } from 'react-bootstrap';
-import { Body, Title, HrBottom, CardBox, CardFrame, CardText } from './IntroStyled';
+import { Title, HrBottom, CardBox, CardFrame, CardText } from './IntroStyled';
 import ElderSong from '../../imgs/ElderSong.jpg';
 import ElderKim from '../../imgs/ElderKim.jpg';
+import { Body } from '../Common/CommonStyled';
 
 function Elder() {
     return(

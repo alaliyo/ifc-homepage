@@ -1,5 +1,13 @@
-import styled from "styled-components";
-import { fadeInAnimation } from "../Common/AnimationStyled";
+import styled, { keyframes } from "styled-components";
+
+export const fadeInAnimation = keyframes`
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+`;
 
 export const Body = styled.div`
     width: 100%;

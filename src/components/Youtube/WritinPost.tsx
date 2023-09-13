@@ -121,9 +121,7 @@ function WritinPost() {
                         />
                     </Col>
                 </Form.Group>
-
                 <br />
-
                 <Stack direction="horizontal">
                     <Button className='ms-auto' variant="light" type="submit" >작성 완료</Button>
                 </Stack>

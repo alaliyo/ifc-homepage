@@ -1,5 +1,6 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { Title } from './IntroStyled';
+import { Body } from '../Common/CommonStyled';
 
 function History() {
     return(
@@ -51,25 +52,6 @@ function History() {
 }
 
 export default History;
-
-const fadeInAnimation = keyframes`
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-`;
-
-
-const Body = styled.div`
-  width: 100%;
-  margin-top: 20px;
-  animation: ${fadeInAnimation} 0.3s ease-in;
-  @media screen and (max-width: 650px) {
-      margin-top: 10px;
-  }
-`;
 
 const TextBox = styled.div`
   display: grid;

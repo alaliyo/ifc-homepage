@@ -5,12 +5,12 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import localesKo from '@fullcalendar/core/locales/ko'
 import './YearSchedule.css'
-import { Body } from './IntroStyled'; 
 import ListWeek from './ListWeek';
 import useHandleResize from '../../hooks/useHandleResize';
 import ScheduleModal from './ScheduleModal';
 import { ScheduleData, ScheduleDataPoops } from '../../utils/dbService';
 import ScheduleWrite from './ScheduleWrite';
+import { Body } from '../Common/CommonStyled';
 
 function YearSchedule() {
     const loggedIn = authService.currentUser;
@@ -42,15 +42,15 @@ function YearSchedule() {
     const letterNum = (text: string) => {
         const newText = text.slice(0, 3);
         return `${newText}...`;
-    }
+    };
 
     useEffect(() => {
         setWidthBoolean(windResize <= 550 && true)
-    }, [windResize])
+    }, [windResize]);
 
-    function handleEventClickWrapper(e: any) {
+    const handleEventClickWrapper = (e: any) => {
         handleEventClick(e);
-    }
+    };
     
     return (
         <Body>
@@ -82,6 +82,7 @@ function YearSchedule() {
                     setShowModal={setShowModal}
                 />
             )}
+
             <ScheduleModal
                 eventData={eventData}
                 showModal={showModal}

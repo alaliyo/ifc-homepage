@@ -1,9 +1,10 @@
 import { Card } from 'react-bootstrap';
-import { Body, Title, HrBottom, CardBox, CardFrame, CardText, SeparationText } from './IntroStyled';
+import { Title, HrBottom, CardBox, CardFrame, CardText, SeparationText } from './IntroStyled';
 import PastorChoi from '../../imgs/PastorChoi.jpg';
 import PastorOh from '../../imgs/PastorOh.jpg';
 import PastorJeong from '../../imgs/PastorJeong.jpg';
 import PastorKim from '../../imgs/PastorKim.jpg';
+import { Body } from '../Common/CommonStyled';
 
 function Pastors() {
     return(

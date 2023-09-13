@@ -69,6 +69,7 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
                     >
                         <li><LinkStyled to='/schedule/worship-time'>예배시간</LinkStyled></li>
                         <li><LinkStyled to='/schedule/year'>연중계획</LinkStyled></li>
+                        <li><LinkStyled to='/schedule/weekly'>주보</LinkStyled></li>
                     </HeaderWrapper>
 
                     <HeaderWrapper 
@@ -186,6 +187,7 @@ const LinkStyled = styled(Link)`
     font-weight: 900;
     color: #cecece;
     text-decoration: none;
+    
     &:hover {
         background-color: #777777;
         color: white;

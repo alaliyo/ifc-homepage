@@ -1,4 +1,5 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
+import { fadeInAnimation } from "../Common/CommonStyled";
 
 function Vision(){
     return(
@@ -45,19 +46,11 @@ function Vision(){
 
 export default Vision;
 
-const fadeInAnimation = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
 const VisionBox = styled.div`
     width: 100%;
     margin-top: 20px;
     animation: ${fadeInAnimation} 0.3s ease-in;
+    
     h5 {
         font-weight: 900;
         border-bottom: 2px ridge gray;
