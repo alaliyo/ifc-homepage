@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 function Header() {
     const location = useLocation().pathname.split("/")[2];
@@ -17,7 +17,7 @@ function Header() {
                 </LogInBox>
             ) : (
                 <MenuBox>
-                    
+                    <Link></Link>
                 </MenuBox>
             )}
         </HeaderBox>
