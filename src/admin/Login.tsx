@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { Button, Form, Stack, Alert } from 'react-bootstrap';
+import { authService } from "../firebase";
 
 function Login() {
     const [email, setEmail] = useState(""); //아이디
     const [password, setPassword] = useState(""); //비밀번호
     const [errors, setErrors] = useState("") //에러 메세지
     const navigate = useNavigate(); //router v6 페이지 자동 이동
+    const user = authService.currentUser; // user 정보
 
     //admin 이이디, 비말번호 받음 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
@@ -26,10 +28,11 @@ function Login() {
     // 로그인 시도
     const onSubmit = async(e: React.FormEvent) => { 
         e.preventDefault();
+
         try {
             const auth = getAuth();
             await signInWithEmailAndPassword(auth, email, password);
-            navigate('/')
+            navigate('/admin/home');
         } catch (error: any) {
             const message = error.message;
             if (message === "Firebase: Error (auth/invalid-email).") {
@@ -46,12 +49,17 @@ function Login() {
         }
     };
 
+    useEffect(() => {
+        if(user) {
+            navigate('/admin/home')
+        }
+    }, []);
+
     return(
         <div>
             <LogInBox>
                 <Form onSubmit={onSubmit}>
-                    <LoginTitle>로그인</LoginTitle>
-                    <Explanation>이 페이지는 관리자를 위한 로그인 페이지 입니다.</Explanation>
+                    <ChurchNameBox>IFC 열방교회</ChurchNameBox>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <FormLabel>아이디</FormLabel>
                         <Form.Control name="email" type="email" placeholder="아이디를 입력해주세요." required value={email} onChange={onChange} />
@@ -75,27 +83,14 @@ function Login() {
 export default Login;
 
 const LogInBox = styled.div`
-    background-color: rgb(240, 240, 240);
-    padding: 50px;
-    width: 500px;
-    margin: 100px auto;
-    border-radius: 20px;
+    color: white;
+    background-color: rgb(73, 73, 73);
+    padding: 20px;
+    width: 400px;
+    margin: 30vh auto 0 auto;
 
-    @media screen and (max-width: 768px) {
-        width: 85%;
-        margin: 50px auto;
-        padding: 15px;
-
-        input {
-            font-size: 15px;
-            width:90%;
-        }
-    }
-
-    @media screen and (max-width: 450px) {
+    @media screen and (max-width: 480px) {
         width: 100%;
-        background-color: white;
-        margin: 0px;
 
         input {
             font-size: 14px;
@@ -105,32 +100,14 @@ const LogInBox = styled.div`
     }
 `;
 
-const LoginTitle = styled.h3`
-    @media screen and (max-width: 768px) {
-        font-size: 20px;
-    }
-
-    @media screen and (max-width: 450px) {
-        font-size: 18px;
-    }
-`;
-
-const Explanation = styled.p`
-    @media screen and (max-width: 768px) {
-        font-size: 13px;
-    }
-
-    @media screen and (max-width: 450px) {
-        font-size: 12px;
-    }
+const ChurchNameBox = styled.p`
+    color: white;
+    font-size: 20px;
 `;
 
 const FormLabel = styled(Form.Label)`
-    @media screen and (max-width: 768px) {
-        font-size: 17px;
-    }
-
-    @media screen and (max-width: 450px) {
+    
+    @media screen and (max-width: 480px) {
         font-size: 15px;
     }
 `

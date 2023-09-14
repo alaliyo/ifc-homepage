@@ -36,6 +36,7 @@ import Weekly from "./components/Schedule/Weekly";
 
 import AdminPage from "./admin/AdminPage";
 import AdminLogIn from './admin/Login'
+import AdminHome from './admin/Home'
 
 const router = createBrowserRouter([
     {
@@ -170,8 +171,12 @@ const router = createBrowserRouter([
         element: <AdminPage />,
         children: [
             {
-                path: ``,
+                path: "",
                 element: <AdminLogIn />,
+            },
+            {
+                path: "home",
+                element: <AdminHome />,
             },
         ]
     }

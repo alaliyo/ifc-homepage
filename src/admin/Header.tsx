@@ -1,13 +1,23 @@
 import styled from "styled-components";
+import {useLocation} from "react-router-dom"
 
 function Header() {
+    const location = useLocation().pathname.split("/")[2];
+
     return(
         <HeaderBox>
-            <LogInBox>
-                <InChTitle>
-                    <a href="https://set-up-church-website.firebaseapp.com">InCh</a>
-                </InChTitle>
-            </LogInBox>
+            {location === undefined ? (
+                <LogInBox>
+                    <InChTitle>
+                        <a href="https://set-up-church-website.firebaseapp.com">InCh</a>
+                    </InChTitle>
+                    <HomepageTitle>
+                        <a href="/">홈페이지</a>
+                    </HomepageTitle>
+                </LogInBox>
+            ) : (
+                null
+            )}
         </HeaderBox>
     )
 }
@@ -29,19 +39,33 @@ const LogInBox = styled.div`
     height: 100%;
     display: flex;
     justify-content: space-between;
+
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        a {
+            color: #838383;
+            font-weight: 900;
+            text-decoration: none;
+        }
+    }
 `;
 
 const InChTitle = styled.div`
     width: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
 
     a {
-        color: #8ba3f3;
         font-size: 25px;
-        font-weight: 900;
-        text-decoration: none;
+    }
+`;
+
+const HomepageTitle = styled.div`
+    width: 130px;
+
+    a {
+        font-size: 20px;
     }
 `;
