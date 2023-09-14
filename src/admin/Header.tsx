@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {useLocation} from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 function Header() {
     const location = useLocation().pathname.split("/")[2];
@@ -16,7 +16,9 @@ function Header() {
                     </HomepageTitle>
                 </LogInBox>
             ) : (
-                null
+                <MenuBox>
+                    
+                </MenuBox>
             )}
         </HeaderBox>
     )
@@ -68,4 +70,9 @@ const HomepageTitle = styled.div`
     a {
         font-size: 20px;
     }
+`;
+
+const MenuBox = styled.div`
+    display: flex;
+    justify-content: center;
 `;
