@@ -115,6 +115,7 @@ const HeaderBox = styled.header`
     height: 130px;
     width: 100%;
     padding: 0 10px;
+
     @media screen and (max-width: 1020px) {
         width: 100%;
         padding: 0px;
@@ -129,6 +130,7 @@ const LinkBoxs = styled.div`
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
+
     @media screen and (max-width: 1140px) {
         width: 88%;
         padding-left: 0;
@@ -140,18 +142,22 @@ const HomeTitle = styled.div<HomeTitleProps>`
     display: flex;
     align-items: center;
     margin-top: -10px;
+
     a {
         color: #ffffff;
         font-weight: 900;
         text-shadow: 1px 1px 4px #808080, -1px -1px 4px #808080;
         font-size: ${p => p.isActive ? '25px' : '20px'};
         text-decoration: none;
+
         img {
             width: 20px;
             height: 20px;
         }
+
         span {
             font-size: 12px;
+
             @media screen and (max-width: 650px) {
                 font-size: 10px;
             }
@@ -162,6 +168,7 @@ const HomeTitle = styled.div<HomeTitleProps>`
 const LinkBox = styled.div`
     display: flex;
     align-items: center;
+    
     a {
         font-size: 11px;
         color: #ffffff;

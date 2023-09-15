@@ -1,8 +1,17 @@
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import { authService } from "../firebase";
 
 function Header() {
     const location = useLocation().pathname.split("/")[2];
+    const navigate = useNavigate(); 
+
+    // 로그아웃
+    const onLogOutClick = () => {
+        authService.signOut();
+        alert("로그아웃 되었습니다.");
+        navigate("/admin");
+    }
 
     return(
         <HeaderBox>
@@ -17,7 +26,15 @@ function Header() {
                 </LogInBox>
             ) : (
                 <MenuBox>
-                    <Link></Link>
+                    <div></div>
+                    <LinkBox>
+                        <Link to="/admin/home">홈</Link>
+                        <Link to="/admin/home">게시판 관리</Link>
+                        <Link to="/admin/home">회원관리</Link>
+                        <Link to="/admin/home">유지보수</Link>
+                        <Link to="/admin/home">메뉴얼</Link>
+                    </LinkBox>
+                    <LogOutBtn onClick={onLogOutClick}>out</LogOutBtn>
                 </MenuBox>
             )}
         </HeaderBox>
@@ -35,6 +52,12 @@ const HeaderBox = styled.header`
     top: 0;
     left: 0;
     z-index: 10;
+
+    a {
+        font-size: 20px;
+        font-weight: 900;
+        text-decoration: none;
+    }
 `;
 
 const LogInBox = styled.div`
@@ -47,12 +70,10 @@ const LogInBox = styled.div`
         align-items: center;
         justify-content: center;
         cursor: pointer;
+    }
 
-        a {
-            color: #838383;
-            font-weight: 900;
-            text-decoration: none;
-        }
+    a {
+        color: #838383;
     }
 `;
 
@@ -66,13 +87,38 @@ const InChTitle = styled.div`
 
 const HomepageTitle = styled.div`
     width: 130px;
-
-    a {
-        font-size: 20px;
-    }
 `;
 
 const MenuBox = styled.div`
+    background-color: #555555;
+    height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+
+    a {
+        color: white;
+    }
+`;
+
+const LinkBox = styled.div`
+    display: flex;
+
+    a {
+        font-weight: 400;
+        margin-left: 20px;
+        display: block;
+
+        &:hover {
+            transition: 0.2s;
+            transform: scale(1.07);
+        }
+    }
+`;
+
+const LogOutBtn = styled.div`
+    color: white;
+    font-size: 20px;
+    margin-right: 15px;
+    cursor:pointer;
 `;

@@ -3,14 +3,13 @@ import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { Button, Form, Stack, Alert } from 'react-bootstrap';
-import { authService } from "../firebase";
+import { authService } from "../../firebase";
 
 function Login() {
     const [email, setEmail] = useState(""); //아이디
     const [password, setPassword] = useState(""); //비밀번호
     const [errors, setErrors] = useState("") //에러 메세지
-    const navigate = useNavigate(); //router v6 페이지 자동 이동
-    const user = authService.currentUser; // user 정보
+    const navigate = useNavigate();
 
     //admin 이이디, 비말번호 받음 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
@@ -50,9 +49,14 @@ function Login() {
     };
 
     useEffect(() => {
-        if(user) {
-            navigate('/admin/home')
-        }
+        const unsubscribe = authService.onAuthStateChanged(user => {
+            if (user) {
+                navigate('/admin/home');
+            }
+        });
+
+        // 컴포넌트가 언마운트될 때 리스너를 정리합니다.
+        return () => unsubscribe();
     }, []);
 
     return(

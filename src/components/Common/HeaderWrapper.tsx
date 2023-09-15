@@ -72,6 +72,7 @@ const LinkStyled = styled(Link)`
     text-decoration: none;
     border-right: 2px solid #575757;
     display: block;
+    
     &:hover {
         background-color: #777777;
         color: white;

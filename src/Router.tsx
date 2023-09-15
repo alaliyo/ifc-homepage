@@ -35,8 +35,12 @@ import EventWritin from "./components/EventStory/EventWritin";
 import Weekly from "./components/Schedule/Weekly";
 
 import AdminPage from "./admin/AdminPage";
-import AdminLogIn from './admin/Login'
-import AdminHome from './admin/Home'
+import AdminLogIn from './admin/pages/LogIn'
+import AdminHome from './admin/pages/Home'
+import BulletinBoard from "./admin/pages/BulletinBoard";
+import User from "./admin/pages/User";
+import Maintain from "./admin/pages/Maintain";
+import Manual from "./admin/pages/Manual";
 
 const router = createBrowserRouter([
     {
@@ -177,6 +181,22 @@ const router = createBrowserRouter([
             {
                 path: "home",
                 element: <AdminHome />,
+            },
+            {
+                path: "bulletin-board",
+                element: <BulletinBoard />,
+            },
+            {
+                path: "user",
+                element: <User />,
+            },
+            {
+                path: "maintain",
+                element: <Maintain />,
+            },
+            {
+                path: "manual",
+                element: <Manual />,
             },
         ]
     }
