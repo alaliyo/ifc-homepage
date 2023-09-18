@@ -46,6 +46,7 @@ const Text = styled.p`
     font-weight: 900;
     margin-bottom: 5px;
     text-decoration: none;
+    display: block;
 
     :hover {
         color: white;
