@@ -54,11 +54,11 @@ function Home() {
                                 <Sermontitle>담임 목사님의 <br />&emsp;오전 설교</Sermontitle>
                                 <BadgeStyled bg="success"><Link to='/youtube/kr-posts'>바로 가기</Link></BadgeStyled>
                             </Sermon>
-                            <Link to="/event-story/post">
                                 <Construction>
-                                    <span>행사 페이지가 <br /> 업데이트 되었습니다.</span>
+                                    <Link to="/event-story/post">
+                                        <span>행사 페이지가 <br /> 업데이트 되었습니다.</span>
+                                    </Link>
                                 </Construction>
-                            </Link>
                         </ChilderBox>
                         <IntroBox>
                             <div>
