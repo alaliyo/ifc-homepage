@@ -1,15 +1,13 @@
 import { useLogInChack } from "../hooks/Chack";
+import { AdminPageBox } from "../style/CommonStyled";
 
 function Maintain() {
     useLogInChack();
     
     return(
-        <div>
-            <br />
-            <br />
-            <br />
+        <AdminPageBox>
             <h1>유지보수</h1>
-        </div>
+        </AdminPageBox>
     )
 }
 

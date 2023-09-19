@@ -1,15 +1,13 @@
 import { useLogInChack } from "../hooks/Chack";
+import { AdminPageBox } from "../style/CommonStyled";
 
 function Home() {
     useLogInChack();
     
     return(
-        <div>
-            <br />
-            <br />
-            <br />
+        <AdminPageBox>
             <h1>홈</h1>
-        </div>
+        </AdminPageBox>
     )
 }
 

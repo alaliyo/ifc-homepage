@@ -29,10 +29,10 @@ function Header() {
                     <div></div>
                     <LinkBox>
                         <Link to="/admin/home">홈</Link>
-                        <Link to="/admin/home">게시판 관리</Link>
-                        <Link to="/admin/home">회원관리</Link>
-                        <Link to="/admin/home">유지보수</Link>
-                        <Link to="/admin/home">메뉴얼</Link>
+                        <Link to="/admin/bulletin-board">게시판 관리</Link>
+                        <Link to="/admin/user">회원관리</Link>
+                        <Link to="/admin/maintain">유지보수</Link>
+                        <Link to="/admin/manual">메뉴얼</Link>
                     </LinkBox>
                     <LogOutBtn onClick={onLogOutClick}>out</LogOutBtn>
                 </MenuBox>
@@ -47,7 +47,6 @@ const HeaderBox = styled.header`
     height: 60px;
     width: 100%;
     background-color: white;
-    border-bottom: 2px solid #c7c7c7;
     position: fixed;
     top: 0;
     left: 0;
