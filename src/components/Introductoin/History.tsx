@@ -4,20 +4,17 @@ import { Body } from '../Common/CommonStyled';
 import { Nav } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { authService, dbService } from '../../firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 function History() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [histroyDate, setHistroyDate] = useState(0);
   const [histroyContent, setHistroyContent] = useState("");
-  const nowDate = Date.now();
-  console.log(Number(new Date("1980-01-01"))-Number(new Date("1960-01-01")));
-  // 631152000000
+  
   const contentText = (e: any) => {
     const {
       target: { name, value}
     } = e;
-
     if (name === "date") {
       setHistroyDate(value);
     } else if (name === "content") {
@@ -39,10 +36,39 @@ function History() {
     e.preventDefault();
 
     try {
-      await setDoc(doc(dbService, 'schedules', `${nowDate}`), {
-        id: nowDate,
-        
-      });
+      const year = Math.floor(new Date(histroyDate).getFullYear() / 10) * 10;
+      console.log(year);
+
+      // 해당 연도의 데이터 가져오기
+      const yearDocRef = doc(dbService, 'history', `${year}`);
+      const yearDocSnap = await getDoc(yearDocRef);
+
+      if (yearDocSnap.exists()) {
+        // 데이터가 이미 존재하는 경우 배열에 내용 추가
+        const yearData = yearDocSnap.data();
+        yearData.contentsArr.push({
+          date: histroyDate,
+          content: histroyContent,
+        });
+
+        // 기존 데이터 업데이트
+        await updateDoc(yearDocRef, {
+          contentsArr: yearData.contentsArr,
+        });
+      } else {
+        // 데이터가 없는 경우 새로운 데이터 생성
+        await setDoc(yearDocRef, {
+          date: year,
+          contentsArr: [
+            {
+              date: histroyDate,
+              content: histroyContent,
+            }
+          ]
+        });
+      }
+      setHistroyDate(0);
+      setHistroyContent("");
     } catch (error) {
       return alert(error);
     }
