@@ -12,7 +12,23 @@ function History() {
   const [histroyDate, setHistroyDate] = useState<string>("");
   const [histroyContent, setHistroyContent] = useState("");
   const historyData = HistoryData();
+  const [decadIndex, setDecadIndex] = useState(0);
   console.log(historyData);
+
+  // 로그인 확인
+  useEffect(() => {
+    authService.onAuthStateChanged((user) => {
+      if (user) {
+        setLoggedIn(true);
+      }
+    })
+  }, []);
+
+  const decadIndexChange = (index: number) => {
+    setDecadIndex(index)
+  }
+
+  // data 입력
   const contentText = (e: any) => {
     const {
       target: { name, value}
@@ -23,15 +39,6 @@ function History() {
       setHistroyContent(value);
     }
   };
-
-  // 로그인 확인
-  useEffect(() => {
-    authService.onAuthStateChanged((user) => {
-      if (user) {
-        setLoggedIn(true);
-      }
-    })
-  }, []);
 
   // 게시물 post 
   const historyPost = async (e: any) => {
@@ -44,10 +51,10 @@ function History() {
     }
 
     try {
-      const year = Math.floor(new Date(histroyDate).getFullYear() / 10) * 10;
+      const decad = Math.floor(new Date(histroyDate).getFullYear() / 10) * 10;
 
       // 해당 연도의 데이터 가져오기
-      const yearDocRef = doc(dbService, 'history', `${year}`);
+      const yearDocRef = doc(dbService, 'history', `${decad}`);
       const yearDocSnap = await getDoc(yearDocRef);
 
       if (yearDocSnap.exists()) {
@@ -65,7 +72,7 @@ function History() {
       } else {
         // 데이터가 없는 경우 새로운 데이터 생성
         await setDoc(yearDocRef, {
-          date: year,
+          date: decad,
           contentsArr: [
             {
               date: histroyDate,
@@ -78,6 +85,7 @@ function History() {
       alert("연혁 작성이 완료 되었습니다.");
       setHistroyDate("");
       setHistroyContent("");
+
     } catch (error) {
       return alert(error);
     }
@@ -117,52 +125,27 @@ function History() {
           </div>
         )}
         <Nav fill variant="tabs" defaultActiveKey="/home">
-          {historyData && historyData.map(obj => (
+          {historyData && historyData.map((obj, i) => (
             <Nav.Item key={obj.date}>
-              <NavLink>{obj.date}`s</NavLink>
+              <NavLink onClick={() => decadIndexChange(i)}>{obj.date}`s</NavLink>
             </Nav.Item>
           ))}
         </Nav>
-        <TextBox>
-          <LeftTextBox>
-            <LeftText>
-              1.교회 설립 <br /> 2010.02.21 
-            </LeftText>
-            <LeftText>
-              3. 담임 목사 안수 <br /> 2014.04.18
-            </LeftText>
-            <LeftText>
-              5. 타이타이 열방교회 설립 <br/> (필리핀) <br /> 2014.04.18
-            </LeftText>
-            <LeftText>
-              7. 패밀리 캠프 <br /> 2015.08
-            </LeftText>
-            <LeftText>
-              9. 타이타이 열방교회 설립 <br /> 2017.10
-            </LeftText>
-          </LeftTextBox>
-          <div>
-            <ArrowLine />
-            <ArrowBottom />
-          </div>
-          <RightTextBox>
-            <RightText>
-              2. 교회 이전 <br /> 2011.11.30
-            </RightText>
-            <RightText>
-              4. 새 예배당 건축 <br /> 2014.07
-            </RightText>
-            <RightText>
-              6. 제1차 필리핀 선교 <br /> 2015.03.22
-            </RightText>
-            <RightText>
-              8. 스리랑카 선교 시작 <br /> 2017.06.04
-            </RightText>
-            <RightText>
-              10. 열방교회 2번째 건축 <br /> 2022.11
-            </RightText>
-          </RightTextBox>
-        </TextBox>
+        <DecadBox>
+          <h2>{historyData && historyData[decadIndex].date}`s</h2>
+          <Line></Line>
+        </DecadBox>
+        <div>
+          {historyData && historyData[decadIndex].contentsArr
+            .sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)))
+            .map((obj, i) => (
+              <HistoryBox key={i}>
+                <HistoryDate>{obj.date.replaceAll("-", ".")}</HistoryDate>
+                <HistoryContent>{obj.content}</HistoryContent>
+              </HistoryBox>              
+            ))
+          }
+        </div>
       </Body>
     );
 }
@@ -173,61 +156,55 @@ const NavLink = styled(Nav.Link)`
   color: black;
 `;
 
-const TextBox = styled.div`
-  display: grid;
-  grid-template-columns: 48% 30px 48%;
+const DecadBox = styled.div`
+  padding: 5px;
+  margin: 30px 0 0 0;
+  display: flex;
+  align-items: center;
+
+  h2 {
+    color: #7c7c7c;
+    margin: 0 10px 0 0;
+  }
 `;
 
-const LeftTextBox = styled.div`
-  padding-top: 50px;
+const Line = styled.div`
+  background-color: #7c7c7c;
+  width: 100%;
+  height: 2px;
 `;
 
-const LeftText = styled.p`
-  font-size: 18px;
+const HistoryBox = styled.div`
+  font-size: 19px;
+  margin: 30px 10px;
+  border-bottom: 1px solid #b9b9b9;
+`;
+
+const HistoryDate = styled.p`
+  color: #8ba3f3;
+  font-size: 22px;
   font-weight: 900;
-  text-align: right;
-  margin-bottom: 150px;
-  border-bottom: 2px solid gray;
-  word-break: keep-all;
-  @media screen and (max-width: 410px) {
-    font-size: 15px;
+  margin-bottom: 10px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 21px;
   }
-  @media screen and (max-width: 350px) {
-    font-size: 13px;
+
+  @media screen and (max-width: 480px) {
+    font-size: 19px;
   }
 `;
 
-const ArrowLine = styled.div`
-  margin: 0px auto;
-  height: 1300px;
-  width: 5px;
-  background-color: #727272;
-`
-
-const ArrowBottom = styled.div`
-  width: 0;
-  height: 0;
-  margin: 0px auto;
-  border-top: 20px solid #727272;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-`;
-
-const RightTextBox = styled.div`
-  padding-top: 150px;
-`;
-
-const RightText = styled.p`
+const HistoryContent = styled.p`
   font-size: 18px;
-  font-weight: 900;
-  text-align: left;
-  margin-bottom: 150px;
-  border-bottom: 2px solid gray;
+  padding: 0 10px;
   word-break: keep-all;
-  @media screen and (max-width: 410px) {
-    font-size: 15px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 17px;
   }
-  @media screen and (max-width: 350px) {
-    font-size: 13px;
+
+  @media screen and (max-width: 480px) {
+    font-size: 15px;
   }
 `;

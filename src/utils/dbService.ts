@@ -33,7 +33,7 @@ export function ScheduleData() {
 
 export interface historyDataPoops {
     date: number;
-    contentsArr: {content: string, date: string}
+    contentsArr: Array<{content: string, date: string}>
 }
 
 export function HistoryData() {
