@@ -5,12 +5,14 @@ import { Nav } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { authService, dbService } from '../../firebase';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { HistoryData } from '../../utils/dbService';
 
 function History() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [histroyDate, setHistroyDate] = useState(0);
+  const [histroyDate, setHistroyDate] = useState<string>("");
   const [histroyContent, setHistroyContent] = useState("");
-  
+  const historyData = HistoryData();
+  console.log(historyData);
   const contentText = (e: any) => {
     const {
       target: { name, value}
@@ -35,9 +37,14 @@ function History() {
   const historyPost = async (e: any) => {
     e.preventDefault();
 
+    if (histroyDate.length === 0) {
+      return alert("날짜를 입력해 주세요.");
+    } else if (histroyContent.length === 0) {
+      return alert("내용을 입력해 주세요.");
+    }
+
     try {
       const year = Math.floor(new Date(histroyDate).getFullYear() / 10) * 10;
-      console.log(year);
 
       // 해당 연도의 데이터 가져오기
       const yearDocRef = doc(dbService, 'history', `${year}`);
@@ -67,7 +74,9 @@ function History() {
           ]
         });
       }
-      setHistroyDate(0);
+
+      alert("연혁 작성이 완료 되었습니다.");
+      setHistroyDate("");
       setHistroyContent("");
     } catch (error) {
       return alert(error);
@@ -88,6 +97,13 @@ function History() {
                 value={histroyDate}
                 onChange={contentText}
               />
+              <input
+                type="text"
+                name="date"
+                onChange={contentText}
+                value={histroyDate}
+                placeholder="예) 2023-01-01"
+              />
               <br />
               <span>내용 : </span>
               <input 
@@ -101,9 +117,11 @@ function History() {
           </div>
         )}
         <Nav fill variant="tabs" defaultActiveKey="/home">
-          <Nav.Item>
-            <NavLink>Active</NavLink>
-          </Nav.Item>
+          {historyData && historyData.map(obj => (
+            <Nav.Item key={obj.date}>
+              <NavLink>{obj.date}`s</NavLink>
+            </Nav.Item>
+          ))}
         </Nav>
         <TextBox>
           <LeftTextBox>

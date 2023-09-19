@@ -29,3 +29,30 @@ export function ScheduleData() {
 
     return scheduleDatas;
 }
+
+
+export interface historyDataPoops {
+    date: number;
+    contentsArr: {content: string, date: string}
+}
+
+export function HistoryData() {
+    const [historydata, setHistoryData] = useState<historyDataPoops[]>();
+
+    useEffect(() => {
+        const q = query(
+            collection(dbService, "history"),
+            orderBy("date", "asc")
+        );
+        
+        onSnapshot(q, (snapshot) => {
+            const historyArr: any = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setHistoryData(historyArr);
+        });
+    }, []);
+
+    return historydata;
+}
