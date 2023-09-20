@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const AdminPageBox = styled.div`
-    display: flex;
-    padding-top: 60px;
     height: 98vh;
+    padding-top: 60px;
+    display: flex;
 `;
 
 export const LayoutBox = styled.div`
