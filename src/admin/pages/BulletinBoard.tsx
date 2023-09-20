@@ -1,15 +1,20 @@
+import { Outlet } from "react-router-dom";
 import AdminNav from "../AdminNav";
 import { useLogInChack } from "../hooks/Chack";
 import { AdminPageBox, LayoutBox } from "../style/CommonStyled";
+
+const LinkInfo = [
+    {LinkUrl: "history", title:"연혁"},
+]
 
 function BulletinBoard() {
     useLogInChack();
     
     return(
         <AdminPageBox>
-            <AdminNav />
+            <AdminNav LinkInfo={LinkInfo}/>
             <LayoutBox>
-                <h1>게시판 관리</h1>
+                <Outlet />
             </LayoutBox>
         </AdminPageBox>
     )

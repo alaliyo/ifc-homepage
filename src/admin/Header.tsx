@@ -29,7 +29,7 @@ function Header() {
                     <div></div>
                     <LinkBox>
                         <Link to="/admin/home">홈</Link>
-                        <Link to="/admin/bulletin-board">게시판 관리</Link>
+                        <Link to="/admin/bulletin-board/history">게시판 관리</Link>
                         <Link to="/admin/user">회원관리</Link>
                         <Link to="/admin/maintain">유지보수</Link>
                         <Link to="/admin/manual">메뉴얼</Link>
@@ -109,7 +109,7 @@ const LinkBox = styled.div`
         display: block;
 
         &:hover {
-            transition: 0.2s;
+            transition: 0.2s ease-in-out;
             transform: scale(1.07);
         }
     }

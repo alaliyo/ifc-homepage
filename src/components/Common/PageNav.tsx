@@ -24,10 +24,10 @@ function PageNav({ title, LinkInfo }: PageNavProps) {
             {windowWidth > 650 && <Title>{title}</Title>}
             {LinkInfo.map((e, i) => (
                 <Link key={i} to={e.LinkUrl}>
-                {e.title1}
-                {windowWidth > 650 && <br />}
-                {e.title2 && e.title2}
-            </Link>
+                    {e.title1}
+                    {windowWidth > 650 && <br />}
+                    {e.title2 && e.title2}
+                </Link>
             ))}
         </NavBox>
     );
