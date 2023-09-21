@@ -28,15 +28,11 @@ const FooterBox = styled.footer`
     display: grid;
     grid-template-columns: 4fr 5fr;
 
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 768px) {
         padding: 15px;
     }
 
-    @media screen and (max-width: 510px) {
-        padding: 10px;
-    }
-
-    @media screen and (max-width: 410px) {
+    @media screen and (max-width: 480px) {
         padding: 10px 5px;
     }
 `;
@@ -53,17 +49,13 @@ const Text = styled.p`
         text-decoration: underline;
     }
 
-    @media screen and (max-width: 650px) {
-        font-size: 15px;
+    @media screen and (max-width: 768px) {
+        font-size: 14px;
         margin-bottom: 3px;
     }
 
-    @media screen and (max-width: 560px) {
+    @media screen and (max-width: 480px) {
         font-size: 12px;
         margin-bottom: 2px;
     }
-
-    @media screen and (max-width: 440px) {
-        font-size: 10px;
-    }
-`
+`;

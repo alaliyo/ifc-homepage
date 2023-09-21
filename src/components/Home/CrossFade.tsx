@@ -63,7 +63,7 @@ const StyledCarousel = styled(Carousel)`
         object-fit: cover;
     }
 
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 768px) {
         width: 100%; /* 웹 창 가로폭에 맞게 조정됩니다. */
         height: auto; /* 이미지 비율이 유지됩니다. */
         

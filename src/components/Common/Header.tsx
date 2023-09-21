@@ -24,7 +24,7 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
     return(
         <HeaderBox>
             <LinkBoxs>
-                <HomeTitle isActive={WindowSize > 650}>
+                <HomeTitle isActive={WindowSize > 768}>
                     <Link to={'/'}>
                         <div>
                             <img src={Logo} alt='' />
@@ -34,7 +34,7 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
                     </Link>
                 </HomeTitle>
                 <LinkBox>
-                    {WindowSize <= 650 ? (
+                    {WindowSize <= 768 ? (
                         <Offcanva loggedIn={loggedIn} />
                     ) : (
                         loggedIn ? (
@@ -49,12 +49,9 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
                     )}
                 </LinkBox>
             </LinkBoxs>
-            {WindowSize > 650 && (
+            {WindowSize > 768 && (
                 <NavBox>
-                    <HeaderWrapper
-                        label={WindowSize <= 825 ? '소개' : '교회소개'}
-                        to='/introduction/vision'
-                    >
+                    <HeaderWrapper label='교회소개' to='/introduction/vision'>
                         <li><LinkStyled to='/introduction/vision'>비전</LinkStyled></li>
                         <li><LinkStyled to='/introduction/history'>연혁</LinkStyled></li>
                         <li><LinkStyled to='/introduction/rev'>담임목사</LinkStyled></li>
@@ -63,42 +60,31 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
                         <li><LinkStyled to='/introduction/sketch-map'>약도</LinkStyled></li>
                     </HeaderWrapper>
 
-                    <HeaderWrapper
-                        label={WindowSize <= 825 ? '일정' : '교회일정'}
-                        to='/schedule/worship-time'
-                    >
+                    <HeaderWrapper label='교회일정' to='/schedule/worship-time'>
                         <li><LinkStyled to='/schedule/worship-time'>예배시간</LinkStyled></li>
                         <li><LinkStyled to='/schedule/year'>연중계획</LinkStyled></li>
                         <li><LinkStyled to='/schedule/weekly'>주보</LinkStyled></li>
                     </HeaderWrapper>
 
-                    <HeaderWrapper 
-                        label={WindowSize <= 825 ? '유튜브' : '교회 유튜브'}
-                        to='/youtube/kr-posts'
-                    >
+                    <HeaderWrapper label='유튜브' to='/youtube/kr-posts'>
                         <li><LinkStyled to='/youtube/kr-posts'>한국</LinkStyled></li>
                         <li><LinkStyled to='/youtube/en-posts'>영어</LinkStyled></li>
                     </HeaderWrapper>
                     
-                    <HeaderWrapper 
-                        label='행사'
-                        to='/event-story/post'
-                    >
+                    <HeaderWrapper label='행사' to='/event-story/post'>
                     </HeaderWrapper>
 
-                    {/* <HeaderWrapper 
-                        label={WindowSize <= 825 ? '사역' : '교회학교 및 훈련사역'}
+                    {/*
+                    <HeaderWrapper 
+                        label={WindowSize <= 1024 ? '사역' : '교회학교 및 훈련사역'}
                         to='/ministry'
                     >
-                    </HeaderWrapper> */}
-
-                    <HeaderWrapper 
-                        label={WindowSize <= 825 ? '선교' : '선교 및 전도'}
-                        to='/mission/overseas'
-                    >
-                    </HeaderWrapper> 
-
+                    </HeaderWrapper>
+                    */}
+                
+                    <HeaderWrapper label='선교 및 전도' to='/mission/overseas'>
                     
+                    </HeaderWrapper> 
                 </NavBox>
             )}
         </HeaderBox>
@@ -116,7 +102,7 @@ const HeaderBox = styled.header`
     width: 100%;
     padding: 0 10px;
 
-    @media screen and (max-width: 1020px) {
+    @media screen and (max-width: 1024px) {
         width: 100%;
         padding: 0px;
     }
@@ -131,7 +117,7 @@ const LinkBoxs = styled.div`
     display: flex;
     justify-content: space-between;
 
-    @media screen and (max-width: 1140px) {
+    @media screen and (max-width: 1024px) {
         width: 88%;
         padding-left: 0;
         padding-right: 0;
@@ -158,7 +144,7 @@ const HomeTitle = styled.div<HomeTitleProps>`
         span {
             font-size: 12px;
 
-            @media screen and (max-width: 650px) {
+            @media screen and (max-width: 768px) {
                 font-size: 10px;
             }
         }

@@ -16,7 +16,6 @@ function History() {
   return(
       <Body>
         <Title>교회 연혁</Title>
-        <hr />
         <Nav fill variant="tabs" defaultActiveKey="/home">
           {historyData && historyData.map((obj, i) => (
             <Nav.Item key={obj.date}>

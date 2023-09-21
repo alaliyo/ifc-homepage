@@ -4,20 +4,20 @@ import { Card } from 'react-bootstrap';
 export const Title = styled.h3`
     font-weight: 900;
     text-align: center;
-    margin-bottom: 20px;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #c7c7c7; 
 
-    @media screen and (max-width: 650px) {
-        font-size: 20px;
-        margin-bottom: 10px;
+    @media screen and (max-width: 768px) {
+        font-size: 22px;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
     }
-`;
 
-export const HrBottom = styled.hr`
-    border-top: 3px solid #363636; 
-    margin-bottom: 50px;
-
-    @media screen and (max-width: 650px) {
-        border-top: 1px solid black; 
+    @media screen and (max-width: 480px) {
+        font-size: 20px;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
     }
 `;
 
@@ -26,7 +26,7 @@ export const CardBox = styled.div`
     justify-content: space-evenly;
     margin-bottom: 40px;
 
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 768px) {
         display: block;
     }
 `;
@@ -37,7 +37,7 @@ export const CardFrame = styled.div`
     border-radius: 10px;
     box-shadow: 1px 1px 10px #d1d1d1, -1px -1px 4px #d3d3d3;
 
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 768px) {
         margin: 20px auto;
     }
 `;
@@ -55,7 +55,7 @@ export const SeparationText = styled.p`
     margin-bottom: 20px;
     text-align: center;
     
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 768px) {
         margin-right: auto;
         margin-left: auto;
         font-size: 18px;

@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { fadeInAnimation } from "../Common/CommonStyled";
+import { Body } from "../Common/CommonStyled";
+import { Title } from "./IntroStyled";
 
 function Vision(){
     return(
-        <VisionBox>
+        <Body>
             <Title>교회 비전</Title>
-            <hr />
             <TextBox>
                 영구목표: 하나님이 기뻐하시는 교회
             </TextBox>
@@ -40,71 +40,56 @@ function Vision(){
                     상심한 성도들을 회복시키는 것을 최대목표로 삼는다.
                 </li>
             </MinistryDirectionList>
-        </VisionBox>
+        </Body>
     );
 }
 
 export default Vision;
-
-const VisionBox = styled.div`
-    width: 100%;
-    margin-top: 20px;
-    animation: ${fadeInAnimation} 0.3s ease-in;
-    
-    h5 {
-        font-weight: 900;
-        border-bottom: 2px ridge gray;
-        width: 80px;
-        @media screen and (max-width: 650px) {
-            font-size: 17px;
-            width: 70px;
-        }
-    }
-    @media screen and (max-width: 650px) {
-        margin-top: 10px;
-    }
-`;
-
-const Title = styled.h3`
-    font-weight: 900;
-    text-align: center;
-    margin-bottom: 20px;
-    @media screen and (max-width: 650px) {
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-`;
 
 const TextBox = styled.div`
     font-weight: 900;
     margin-bottom: 10px;
     font-size: 17.5px;
     display: flex;
+
+    @media screen and (max-width: 768px) {
+        font-size: 16px;
+    }
+
+    @media screen and (max-width: 480px) {
+        font-size: 15px;
+    }
+
     div {
         &:first-child {
             flex-basis: 90px;
-            @media screen and (max-width: 650px) {
+
+            @media screen and (max-width: 768px) {
                 flex-basis: 75px;
             }
-            @media screen and (max-width: 400px) {
-                flex-basis: 90px;
-            }
-            @media screen and (max-width: 350px) {
+
+            @media screen and (max-width: 480px) {
                 flex-basis: 100px;
             }
         }
     }
-    @media screen and (max-width: 650px) {
-        font-size: 15px;
-    }
+
+    
 `;
 
 const MinistryDirectionList = styled.ol`
+    font-size: 16px;
     padding-right: 20px;
+
+    @media screen and (max-width: 480px) {
+        font-size: 15px;
+    }
+
     li {
         margin-top: 15px;
-        @media screen and (max-width: 650px) {
-            font-size: 13px;
+
+        @media screen and (max-width: 480px) {
+            font-size: 14px;
             margin-top: 13px;
         }
     }

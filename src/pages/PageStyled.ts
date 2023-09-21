@@ -19,12 +19,12 @@ export const ChildBox = styled.div`
     margin: 0 auto;
     display: flex;
 
-    @media screen and (max-width: 1020px) {
+    @media screen and (max-width: 1024px) {
         margin: 0 0;
         width: 100%;
     }
 
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 768px) {
         display: grid;
     }
 `;
@@ -33,7 +33,7 @@ export const OutletBox = styled.div`
     width: 80%;
     padding: 20px;
     
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 768px) {
         width: 100%;
         padding: 5px;
     }

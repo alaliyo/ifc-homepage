@@ -11,9 +11,9 @@ function Schedule() {
     const { loggedIn } = useOutletContext<ScheduleProps>(); // 로그인 여부
     const { windowWidth } = useOutletContext<ScheduleProps>(); // 웹 width 크기
     const linkInfoArr = [
-        {title1: '예배', title2: '시간', LinkUrl: 'worship-time'},
-        {title1: '연중', title2: '계획', LinkUrl: 'year'},
-        {title1: '주보', LinkUrl: 'weekly'},
+        {title: '예배시간', LinkUrl: 'worship-time'},
+        {title: '연중계획', LinkUrl: 'year'},
+        {title: '주보', LinkUrl: 'weekly'},
     ]
 
     return(

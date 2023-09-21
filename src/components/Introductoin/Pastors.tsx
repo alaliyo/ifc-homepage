@@ -1,5 +1,5 @@
 import { Card } from 'react-bootstrap';
-import { Title, HrBottom, CardBox, CardFrame, CardText, SeparationText } from './IntroStyled';
+import { Title, CardBox, CardFrame, CardText, SeparationText } from './IntroStyled';
 import PastorChoi from '../../imgs/PastorChoi.jpg';
 import PastorOh from '../../imgs/PastorOh.jpg';
 import PastorJeong from '../../imgs/PastorJeong.jpg';
@@ -10,7 +10,6 @@ function Pastors() {
     return(
         <Body>
             <Title>교역자 소개</Title>
-            <HrBottom />
             <SeparationText>협동 목사</SeparationText>
             <CardBox>
                 <CardFrame>

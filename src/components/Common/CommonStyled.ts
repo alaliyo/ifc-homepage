@@ -14,7 +14,11 @@ export const Body = styled.div`
     margin-top: 20px;
     animation: ${fadeInAnimation} 0.3s ease-in;
 
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 768px) {
+        margin-top: 15px;
+    }
+
+    @media screen and (max-width: 480px) {
         margin-top: 10px;
     }
 `;

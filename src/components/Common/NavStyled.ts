@@ -6,18 +6,19 @@ export const NavBox = styled.nav`
     padding-top: 20px;
     text-align: center;
 
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 768px) {
+        text-align: start;
+        height: auto;
         width: 100%;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-top: 0;
-        border-bottom: 1px solid #7c7c7c;
+        overflow-x: scroll;
+        white-space: nowrap;
+        border-bottom: 1px solid gray;
+        display: inline-block;
+        padding: 0;
     }
 
     a {
-        padding: 10px;
+        padding: 15px;
         color: #525252;
         font-size: 17px;
         display: block;
@@ -25,21 +26,20 @@ export const NavBox = styled.nav`
         font-weight: 900;
         flex: 1;
 
-        @media screen and (max-width: 650px) {
-            font-size: 13px;
-            padding: 4.5px 1px;
-            border-right: 1px solid gray;
-        }
-
-        @media screen and (max-width: 350px) {
-            font-size: 12px;
-            padding: 6px 1px;
-        }
-
         :hover {
             color: #ffffff;
             background-color: #7c7c7c;
             transition: .3s;
+        }
+
+        @media screen and (max-width: 768px) {
+            padding: 10px 20px;
+            display: inline-block;
+        }
+
+        @media screen and (max-width: 480px) {
+            font-size: 15px;
+            padding: 8px 15px;
         }
     }
 `;
@@ -47,7 +47,4 @@ export const NavBox = styled.nav`
 export const Title = styled.h5`
     font-weight: 900;
     margin-bottom: 20px;
-    @media screen and (max-width: 650px) {
-        font-size: 13px;
-    }
 `;

@@ -1,5 +1,5 @@
 import { Card } from 'react-bootstrap';
-import { Title, HrBottom, CardBox, CardFrame, CardText, SeparationText } from './IntroStyled';
+import { Title, CardBox, CardFrame, CardText, SeparationText } from './IntroStyled';
 import RevImg from '../../imgs/RevImg.jpg';
 import styled from 'styled-components';
 import { Body } from '../Common/CommonStyled';
@@ -8,7 +8,6 @@ function Rev() {
     return(
         <Body>
             <Title>담임 목사</Title>
-            <HrBottom />
             <CardBox>
                 <CardFrame>
                     <Card style={{ width: '10rem' }}>
@@ -40,7 +39,7 @@ const BriefHistoryBox = styled.div`
     padding: 0 30px;
     margin-bottom: 50px;
 
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 480px) {
         padding: 0 10px;
     }
     

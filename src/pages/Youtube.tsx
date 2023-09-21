@@ -13,8 +13,8 @@ function Youtube() {
     const { windowWidth } = useOutletContext<YoutubeProps>(); // 웹 width 크기
     const { loggedIn } = useOutletContext<YoutubeProps>(); // 로드인 여부
     const linkInfoArr = [
-        {title1: '한국', LinkUrl: 'kr-posts'},
-        {title1: '영어', LinkUrl: 'en-posts'},
+        {title: '한국', LinkUrl: 'kr-posts'},
+        {title: '영어', LinkUrl: 'en-posts'},
     ]
     
     // Get 게시물
@@ -66,14 +66,14 @@ function Youtube() {
 export default Youtube;
 
 const YoutubeBox = styled.div`
-    width: 1020px;
+    width: 1024px;
     margin: 0 auto;
     display: flex;
-    @media screen and (max-width: 1020px) {
+    @media screen and (max-width: 1024px) {
         margin: 0 0;
         width: 100%;
     }
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 768px) {
         display: grid;
     }
 `;

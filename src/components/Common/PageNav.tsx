@@ -1,32 +1,21 @@
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { NavBox, Title } from './NavStyled';
-
-interface WindowSize {
-    windowWidth: number
-}
-
-interface LinkInfoProps {
-    title1: string;
-    title2?: string;
-    LinkUrl: string;
-}
+import useHandleResize from '../../hooks/useHandleResize';
 
 interface PageNavProps {
     title: string;
-    LinkInfo: LinkInfoProps[];
+    LinkInfo: Array<{title: string, LinkUrl: string}>;
 }
 
 function PageNav({ title, LinkInfo }: PageNavProps) {
-    const { windowWidth } = useOutletContext<WindowSize>();
+    const resize = useHandleResize();
 
     return(
         <NavBox>
-            {windowWidth > 650 && <Title>{title}</Title>}
+            {resize > 768 && <Title>{title}</Title>}
             {LinkInfo.map((e, i) => (
                 <Link key={i} to={e.LinkUrl}>
-                    {e.title1}
-                    {windowWidth > 650 && <br />}
-                    {e.title2 && e.title2}
+                    {e.title}
                 </Link>
             ))}
         </NavBox>

@@ -1,5 +1,5 @@
 import { Card } from 'react-bootstrap';
-import { Title, HrBottom, CardBox, CardFrame, CardText } from './IntroStyled';
+import { Title, CardBox, CardFrame, CardText } from './IntroStyled';
 import ElderSong from '../../imgs/ElderSong.jpg';
 import ElderKim from '../../imgs/ElderKim.jpg';
 import { Body } from '../Common/CommonStyled';
@@ -8,7 +8,6 @@ function Elder() {
     return(
         <Body>
             <Title>장로 소개</Title>
-            <HrBottom />
             <CardBox>
                 <CardFrame>
                     <Card style={{ width: '10rem' }}>
