@@ -1,6 +1,5 @@
 import { Card } from 'react-bootstrap';
 import { Title, CardBox, CardFrame, CardText, SeparationText } from './IntroStyled';
-import RevImg from '../../imgs/RevImg.jpg';
 import styled from 'styled-components';
 import { Body } from '../Common/CommonStyled';
 
@@ -8,16 +7,16 @@ function Rev() {
     return(
         <Body>
             <Title>담임 목사</Title>
-            <CardBox>
+            <CardBoxCustom>
                 <CardFrame>
-                    <Card style={{ width: '10rem' }}>
-                        <Card.Img variant="top" src={RevImg} />
+                    <Card>
+                        <Card.Img variant="top" src="https://firebasestorage.googleapis.com/v0/b/ifc-homepage-2a6b5.appspot.com/o/IntroImg%2FRevHong.jpg?alt=media&token=6013fd3f-c173-4615-8102-055df9ce7a77" />
                         <Card.Body>
                             <CardText>홍경희 목사</CardText>
                         </Card.Body>
                     </Card>
                 </CardFrame>
-            </CardBox>
+            </CardBoxCustom>
             <BriefHistoryBox>
                 <SeparationText>약력</SeparationText>
                 <ul>
@@ -34,6 +33,10 @@ function Rev() {
 }
 
 export default Rev;
+
+const CardBoxCustom = styled(CardBox)`
+    grid-template-columns: none;
+`;
 
 const BriefHistoryBox = styled.div`
     padding: 0 30px;

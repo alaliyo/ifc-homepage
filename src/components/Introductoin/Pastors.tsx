@@ -1,53 +1,31 @@
 import { Card } from 'react-bootstrap';
-import { Title, CardBox, CardFrame, CardText, SeparationText } from './IntroStyled';
-import PastorChoi from '../../imgs/PastorChoi.jpg';
-import PastorOh from '../../imgs/PastorOh.jpg';
-import PastorJeong from '../../imgs/PastorJeong.jpg';
-import PastorKim from '../../imgs/PastorKim.jpg';
+import { Title, CardBox, CardFrame, CardText, SeparationText, CardBody } from './IntroStyled';
 import { Body } from '../Common/CommonStyled';
+import { PastorsData } from '../../utils/dbService';
 
 function Pastors() {
+    const pastorsData = PastorsData()
+
     return(
         <Body>
             <Title>교역자 소개</Title>
-            <SeparationText>협동 목사</SeparationText>
-            <CardBox>
-                <CardFrame>
-                    <Card style={{ width: '10rem' }}>
-                        <Card.Img variant="top" src={PastorChoi} />
-                        <Card.Body>
-                            <CardText>최영미 협동목사</CardText>
-                        </Card.Body>
-                    </Card>
-                </CardFrame>
-            </CardBox>
-            <SeparationText>전도사</SeparationText>
-            <CardBox>
-                <CardFrame>
-                    <Card style={{ width: '10rem' }}>
-                        <Card.Img variant="top" src={PastorOh} />
-                        <Card.Body>
-                            <CardText>오순자 선임전도사</CardText>
-                        </Card.Body>
-                    </Card>
-                </CardFrame>
-                <CardFrame>
-                    <Card style={{ width: '10rem' }}>
-                        <Card.Img variant="top" src={PastorJeong} />
-                        <Card.Body>
-                            <CardText>정옥경 전도사</CardText>
-                        </Card.Body>
-                    </Card>
-                </CardFrame>
-                <CardFrame>
-                    <Card style={{ width: '10rem' }}>
-                        <Card.Img variant="top" src={PastorKim} />
-                        <Card.Body>
-                            <CardText>김염미 전도사</CardText>
-                        </Card.Body>
-                    </Card>
-                </CardFrame>
-            </CardBox>
+            {pastorsData && pastorsData.slice(0, 2).map((obj, i) => (
+                <div key={i}>
+                    <SeparationText>{obj.separationText}</SeparationText>
+                    <CardBox>
+                    {obj.detail.map((detailobj, j) => (
+                        <CardFrame key={j}>
+                            <Card>
+                                <Card.Img variant="top" src={detailobj.img} />
+                                <CardBody>
+                                    <CardText>{detailobj.name}</CardText>
+                                </CardBody>
+                            </Card>
+                        </CardFrame>
+                    ))}
+                    </CardBox>
+                </div>
+            ))}
         </Body>
     );
 }

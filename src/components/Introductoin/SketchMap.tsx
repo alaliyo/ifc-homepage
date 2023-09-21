@@ -61,17 +61,17 @@ function SketchMap() {
 
   }, []);
   
-    return (
-      <Body>
-        <Title>찾아오는 길</Title>
-        <Map id="map"></Map>
-        <TextBox>
-          <div>주   소: 경남 양산시 삼호동부6길 18 (2층)</div>
-          <div>전화번호: 055-365-1080 / 010-4314-6007</div>
-          <div>(마크를 누르면 길 찾기도 가능합니다.)</div>
-        </TextBox>
-      </Body>
-    );
+  return (
+    <Body>
+      <Title>찾아오는 길</Title>
+      <Map id="map"></Map>
+      <TextBox>
+        <div>주   소: 경남 양산시 삼호동부6길 18 (2층)</div>
+        <div>전화번호: 055-365-1080 / 010-4314-6007</div>
+        <div>(마크를 누르면 길 찾기도 가능합니다.)</div>
+      </TextBox>
+    </Body>
+  );
   }
 
 export default SketchMap;
@@ -83,7 +83,7 @@ const Map = styled.div`
   border: 2px solid gray;
   border-radius: 15px;
   
-  @media screen and (max-width: 650px) {
+  @media screen and (max-width: 480px) {
     margin: 0 0;
     width: 100%;
     height: 250px;
@@ -100,7 +100,7 @@ const TextBox = styled.div`
     font-weight: 900;
     text-align: center;
 
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 480px) {
       font-size: 13px;
     }
   }

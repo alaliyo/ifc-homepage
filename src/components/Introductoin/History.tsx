@@ -19,12 +19,12 @@ function History() {
         <Nav fill variant="tabs" defaultActiveKey="/home">
           {historyData && historyData.map((obj, i) => (
             <Nav.Item key={obj.date}>
-              <NavLink onClick={() => decadIndexChange(i)}>{obj.date}`s</NavLink>
+              <NavLink onClick={() => decadIndexChange(i)}>{obj.date}s</NavLink>
             </Nav.Item>
           ))}
         </Nav>
         <DecadBox>
-          <h2>{historyData && historyData[decadIndex].date}`s</h2>
+          <h2>{historyData && historyData[decadIndex].date}s</h2>
           <Line></Line>
         </DecadBox>
         <div>

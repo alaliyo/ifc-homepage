@@ -31,13 +31,13 @@ export function ScheduleData() {
 }
 
 
-export interface historyDataPoops {
+export interface HistoryDataPoops {
     date: number;
     contentsArr: Array<{content: string, date: string, id: number}>
 }
 
 export function HistoryData() {
-    const [historydata, setHistoryData] = useState<historyDataPoops[]>();
+    const [historydata, setHistoryData] = useState<HistoryDataPoops[]>();
 
     useEffect(() => {
         const q = query(
@@ -55,4 +55,31 @@ export function HistoryData() {
     }, []);
 
     return historydata;
+}
+
+
+export interface PastorsDataPoops {
+    separationText: string;
+    detail: Array<{name: string, img: string, id: number}>
+}
+
+export function PastorsData() {
+    const [pastorsData, setPastorsData] = useState<PastorsDataPoops[]>();
+
+    useEffect(() => {
+        const q = query(
+            collection(dbService, "pastors"),
+            orderBy("id", "asc")
+        );
+        
+        onSnapshot(q, (snapshot) => {
+            const pastorsArr: any = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setPastorsData(pastorsArr);
+        });
+    }, []);
+
+    return pastorsData;
 }

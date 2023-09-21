@@ -22,17 +22,14 @@ export const Title = styled.h3`
 `;
 
 export const CardBox = styled.div`
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    justify-items: center;
     margin-bottom: 40px;
-
-    @media screen and (max-width: 768px) {
-        display: block;
-    }
 `;
 
 export const CardFrame = styled.div`
-    width: 11.5rem;
+    width: 10.5rem;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 1px 1px 10px #d1d1d1, -1px -1px 4px #d3d3d3;
@@ -40,6 +37,10 @@ export const CardFrame = styled.div`
     @media screen and (max-width: 768px) {
         margin: 20px auto;
     }
+`;
+
+export const CardBody = styled(Card.Body)`
+    padding: 10px;
 `;
 
 export const CardText = styled(Card.Text)`

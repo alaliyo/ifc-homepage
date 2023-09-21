@@ -13,8 +13,7 @@ function Vision(){
                 실천사항: 오직 예수! 오직 성경! 오직 사랑!
             </TextBox>
             <TextBox>
-                <div>2023표어:</div>                
-                <div>그리스도의 말씀이 너희 속에 풍성히 거하게 하라</div>
+                2023표어: 그리스도의 말씀이 너희 속에 풍성히 거하게 하라
             </TextBox>
             <br />
             <br />
@@ -49,8 +48,9 @@ export default Vision;
 const TextBox = styled.div`
     font-weight: 900;
     margin-bottom: 10px;
-    font-size: 17.5px;
+    font-size: 17px;
     display: flex;
+    word-break: keep-all;
 
     @media screen and (max-width: 768px) {
         font-size: 16px;

@@ -1,30 +1,25 @@
 import { Card } from 'react-bootstrap';
-import { Title, CardBox, CardFrame, CardText } from './IntroStyled';
-import ElderSong from '../../imgs/ElderSong.jpg';
-import ElderKim from '../../imgs/ElderKim.jpg';
+import { Title, CardBox, CardFrame, CardText, CardBody } from './IntroStyled';
 import { Body } from '../Common/CommonStyled';
+import { PastorsData } from '../../utils/dbService';
 
 function Elder() {
+    const pastorsData = PastorsData();
+    
     return(
         <Body>
             <Title>장로 소개</Title>
             <CardBox>
-                <CardFrame>
-                    <Card style={{ width: '10rem' }}>
-                        <Card.Img variant="top" src={ElderKim} />
-                        <Card.Body>
-                            <CardText>김차묵 장로</CardText>
-                        </Card.Body>
+            {pastorsData && pastorsData[2].detail.map((obj, i) => (
+                <CardFrame key={i}>
+                    <Card>
+                        <Card.Img variant="top" src={obj.img} />
+                        <CardBody>
+                            <CardText>{obj.name}</CardText>
+                        </CardBody>
                     </Card>
                 </CardFrame>
-                <CardFrame>
-                    <Card style={{ width: '10rem' }}>
-                        <Card.Img variant="top" src={ElderSong} />
-                        <Card.Body>
-                            <CardText>송명열 장로</CardText>
-                        </Card.Body>
-                    </Card>
-                </CardFrame>
+            ))}
             </CardBox>
         </Body>
     );
