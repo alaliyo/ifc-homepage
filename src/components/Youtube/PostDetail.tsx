@@ -44,14 +44,14 @@ function PostDetail() {
                 <Link to={currentUrl === '/youtube/detail/en/' ? '/youtube/en-posts' : '/youtube/kr-posts'}>←목록으로</Link>
             </LinkBox>
             <PostBox>
-                <PostIframe
+                <iframe
                     width="100%"
                     height="100%"
                     src={post?.url}
                     title="YouTube video player"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen>
-                </PostIframe>
+                </iframe>
             </PostBox>
             <h4>제목: {post?.title}</h4>
             <h5>말씀: {post?.bibleVerse}</h5>
@@ -104,37 +104,5 @@ const LinkBox = styled.div`
 
 const PostBox = styled.div`
     width: 100%;
-    height: 436px;
-
-    @media screen and (max-width: 900px) {
-        height: 350px;
-    }
-
-    @media screen and (max-width: 650px) {
-        height: 350px;
-    }
-
-    @media screen and (max-width: 550px) {
-        height: 320px;
-    }
-
-    @media screen and (max-width: 400px) {
-        height: 220px;
-    }
-`;
-
-const PostIframe = styled.iframe`
-    width: 100%;
-
-    @media screen and (max-width: 650px) {
-        height: 330px;
-    }
-
-    @media screen and (max-width: 550px) {
-        height: 300px;
-    }
-
-    @media screen and (max-width: 400px) {
-        height: 200px;
-    }
+    aspect-ratio: 16 / 9; /* 16:9 비율을 유지 */
 `;
