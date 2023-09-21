@@ -1,10 +1,10 @@
 import { useState } from "react";
-import styled from "styled-components";
-import { Button, Form, InputGroup, ListGroup, Nav, NavLink } from "react-bootstrap";
+import { Button, Form, InputGroup, Nav, NavLink } from "react-bootstrap";
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { HistoryData } from "../../../utils/dbService";
 import { ChildTitle } from "../../style/CommonStyled";
 import { dbService } from "../../../firebase";
+import { FormBox, ListGroupItem, ListGroupStyled, NavStyled } from "./Styled";
 
 function AdminHistory() {
     const historyData = HistoryData();
@@ -209,7 +209,7 @@ function AdminHistory() {
             <NavStyled fill variant="tabs" >
                 {historyData && historyData.map((obj, i) => (
                     <Nav.Item key={obj.date}>
-                    <NavLink onClick={() => decadIndexChange(i)}>{obj.date}`s</NavLink>
+                        <NavLink onClick={() => decadIndexChange(i)}>{obj.date}`s</NavLink>
                     </Nav.Item>
                 ))}
             </NavStyled>
@@ -222,18 +222,18 @@ function AdminHistory() {
                             {obj.date} {obj.content}
                             <div>
                                 <Button 
-                                    variant="outline-danger"
-                                    size="sm"
-                                    onClick={() => deleteHistory(obj.id, obj.content)}
-                                >
-                                    삭제
-                                </Button>
-                                <Button 
                                     variant="outline-secondary"
                                     size="sm"
                                     onClick={() => editHistory(obj)}
                                 >
                                     수정
+                                </Button>
+                                <Button 
+                                    variant="outline-danger"
+                                    size="sm"
+                                    onClick={() => deleteHistory(obj.id, obj.content)}
+                                >
+                                    삭제
                                 </Button>
                             </div>
                         </ListGroupItem>
@@ -245,24 +245,3 @@ function AdminHistory() {
 }
 //2022-11-01 교회 2번째 이전
 export default AdminHistory;
-
-const NavStyled = styled(Nav)`
-    width: 80%;
-    margin: 0 auto;
-`;
-
-const ListGroupStyled = styled(ListGroup)`
-    width: 80%;
-    margin: 0 auto;
-`;
-
-const FormBox = styled.form`
-    width: 600px;
-    margin: 20px auto;
-    text-align: end;
-`;
-
-const ListGroupItem = styled(ListGroup.Item)`
-    display: flex;
-    justify-content: space-between;
-`;

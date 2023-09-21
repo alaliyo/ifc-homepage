@@ -1,26 +1,6 @@
 import styled from "styled-components";
 import { Card } from 'react-bootstrap';
 
-export const Title = styled.h3`
-    font-weight: 900;
-    text-align: center;
-    padding-bottom: 30px;
-    margin-bottom: 30px;
-    border-bottom: 1px solid #c7c7c7; 
-
-    @media screen and (max-width: 768px) {
-        font-size: 22px;
-        padding-bottom: 20px;
-        margin-bottom: 20px;
-    }
-
-    @media screen and (max-width: 480px) {
-        font-size: 20px;
-        padding-bottom: 10px;
-        margin-bottom: 10px;
-    }
-`;
-
 export const CardBox = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));

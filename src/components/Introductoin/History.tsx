@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { Title } from './IntroStyled';
-import { Body } from '../Common/CommonStyled';
+import { Body, ChildTitle } from '../Common/CommonStyled';
 import { Nav } from 'react-bootstrap';
 import { useState } from 'react';
 import { HistoryData } from '../../utils/dbService';
@@ -15,7 +14,7 @@ function History() {
 
   return(
       <Body>
-        <Title>교회 연혁</Title>
+        <ChildTitle>교회 연혁</ChildTitle>
         <Nav fill variant="tabs" defaultActiveKey="/home">
           {historyData && historyData.map((obj, i) => (
             <Nav.Item key={obj.date}>

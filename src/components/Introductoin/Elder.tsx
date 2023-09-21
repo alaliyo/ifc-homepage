@@ -1,6 +1,6 @@
 import { Card } from 'react-bootstrap';
-import { Title, CardBox, CardFrame, CardText, CardBody } from './IntroStyled';
-import { Body } from '../Common/CommonStyled';
+import { CardBox, CardFrame, CardText, CardBody } from './IntroStyled';
+import { Body, ChildTitle } from '../Common/CommonStyled';
 import { PastorsData } from '../../utils/dbService';
 
 function Elder() {
@@ -8,7 +8,7 @@ function Elder() {
     
     return(
         <Body>
-            <Title>장로 소개</Title>
+            <ChildTitle>장로 소개</ChildTitle>
             <CardBox>
             {pastorsData && pastorsData[2].detail.map((obj, i) => (
                 <CardFrame key={i}>

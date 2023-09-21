@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { Title } from './IntroStyled';
-import { Body } from '../Common/CommonStyled';
+import { Body, ChildTitle } from '../Common/CommonStyled';
 
 declare global { //타입 선언
   interface Window {
@@ -63,7 +62,7 @@ function SketchMap() {
   
   return (
     <Body>
-      <Title>찾아오는 길</Title>
+      <ChildTitle>찾아오는 길</ChildTitle>
       <Map id="map"></Map>
       <TextBox>
         <div>주   소: 경남 양산시 삼호동부6길 18 (2층)</div>

@@ -1,6 +1,6 @@
 import { Card } from 'react-bootstrap';
-import { Title, CardBox, CardFrame, CardText, SeparationText, CardBody } from './IntroStyled';
-import { Body } from '../Common/CommonStyled';
+import { CardBox, CardFrame, CardText, SeparationText, CardBody } from './IntroStyled';
+import { Body, ChildTitle } from '../Common/CommonStyled';
 import { PastorsData } from '../../utils/dbService';
 
 function Pastors() {
@@ -8,7 +8,7 @@ function Pastors() {
 
     return(
         <Body>
-            <Title>교역자 소개</Title>
+            <ChildTitle>교역자 소개</ChildTitle>
             {pastorsData && pastorsData.slice(0, 2).map((obj, i) => (
                 <div key={i}>
                     <SeparationText>{obj.separationText}</SeparationText>

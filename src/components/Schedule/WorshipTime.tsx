@@ -110,7 +110,7 @@ const TitleBox = styled.div`
     h3 {
         font-weight: 900;
 
-        @media screen and (max-width: 500px) {
+        @media screen and (max-width: 480px) {
             font-size: 20px;
         }
     }
@@ -118,7 +118,7 @@ const TitleBox = styled.div`
     h5 {
         font-weight: 900;
 
-        @media screen and (max-width: 500px) {
+        @media screen and (max-width: 480px) {
             font-size: 17px;
         }
     }
@@ -129,16 +129,12 @@ const TableStyled = styled(Table)`
         font-weight: 900;
         vertical-align: middle;
 
-        @media screen and (max-width: 825px) {
+        @media screen and (max-width: 768px) {
             font-size: 15px;
         }
 
-        @media screen and (max-width: 500px) {
-            font-size: 13px;
-        }
-
-        @media screen and (max-width: 400px) {
-            font-size: 11px;
+        @media screen and (max-width: 480px) {
+            font-size: 12px;
         }
     }
 `
@@ -146,7 +142,7 @@ const TableStyled = styled(Table)`
 const ChargeExplanation = styled.span`
     font-size: 11px;
 
-    @media screen and (max-width: 825px) {
+    @media screen and (max-width: 768px) {
         font-size: 10px;
     }
 `;

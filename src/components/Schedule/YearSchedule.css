@@ -27,7 +27,8 @@
     font-size: 15px;
     font-weight: 900;
     word-break: keep-all;
-    @media screen and (max-width: 800px) {
+
+    @media screen and (max-width: 768px) {
         font-size: 12px;
         font-weight: 900;
     }

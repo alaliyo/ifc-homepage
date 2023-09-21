@@ -26,7 +26,9 @@ function Header() {
                 </LogInBox>
             ) : (
                 <MenuBox>
-                    <div></div>
+                    <HomepageTitle>
+                        <a href="/">홈페이지</a>
+                    </HomepageTitle>
                     <LinkBox>
                         <Link to="/admin/home">홈</Link>
                         <Link to="/admin/bulletin-board/history">게시판 관리</Link>

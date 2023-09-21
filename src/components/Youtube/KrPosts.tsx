@@ -29,6 +29,7 @@ function KrPosts() {
 
     useEffect(() => {
         calculateTotalPages();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [krData]);
 
     // 현재 페이지에 해당하는 게시물들을 필터링하여 가져오는 함수

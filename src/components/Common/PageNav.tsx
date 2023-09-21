@@ -12,7 +12,7 @@ function PageNav({ title, LinkInfo }: PageNavProps) {
 
     return(
         <NavBox>
-            {resize > 768 && <Title>{title}</Title>}
+            {resize >= 769 && <Title>{title}</Title>}
             {LinkInfo.map((e, i) => (
                 <Link key={i} to={e.LinkUrl}>
                     {e.title}

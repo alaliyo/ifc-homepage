@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import { Body } from "../Common/CommonStyled";
-import { Title } from "./IntroStyled";
+import { Body, ChildTitle } from "../Common/CommonStyled";
 
 function Vision(){
     return(
         <Body>
-            <Title>교회 비전</Title>
+            <ChildTitle>교회 비전</ChildTitle>
             <TextBox>
                 영구목표: 하나님이 기뻐하시는 교회
             </TextBox>

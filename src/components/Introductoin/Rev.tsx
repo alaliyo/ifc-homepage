@@ -1,12 +1,12 @@
 import { Card } from 'react-bootstrap';
-import { Title, CardBox, CardFrame, CardText, SeparationText } from './IntroStyled';
+import { CardBox, CardFrame, CardText, SeparationText } from './IntroStyled';
 import styled from 'styled-components';
-import { Body } from '../Common/CommonStyled';
+import { Body, ChildTitle } from '../Common/CommonStyled';
 
 function Rev() {
     return(
         <Body>
-            <Title>담임 목사</Title>
+            <ChildTitle>담임 목사</ChildTitle>
             <CardBoxCustom>
                 <CardFrame>
                     <Card>

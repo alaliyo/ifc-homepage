@@ -1,8 +1,10 @@
+import { Body, ChildTitle } from "../Common/CommonStyled";
+
 function Weekly() {
     return(
-        <div>
-            
-        </div>
+        <Body>
+            <ChildTitle>주보</ChildTitle>
+        </Body>
     );
 }
 

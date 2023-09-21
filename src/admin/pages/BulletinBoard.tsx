@@ -5,6 +5,7 @@ import { AdminPageBox, LayoutBox } from "../style/CommonStyled";
 
 const LinkInfo = [
     {LinkUrl: "history", title:"연혁"},
+    {LinkUrl: "year", title:"연중계획"},
 ]
 
 function BulletinBoard() {
