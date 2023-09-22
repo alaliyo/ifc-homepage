@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Form, InputGroup, Nav, NavLink } from "react-bootstrap";
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { deleteDoc, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { HistoryData } from "../../../utils/dbService";
 import { ChildTitle } from "../../style/CommonStyled";
 import { dbService } from "../../../firebase";
@@ -92,9 +92,12 @@ function AdminHistory() {
                         const yearData = yearDocSnap.data();
                         const updatedContents = yearData.contentsArr.filter((item: any) => item.id !== id);
         
-                        await updateDoc(yearDocRef, {
-                            contentsArr: updatedContents,
-                        });
+                        if (updatedContents.length === 0) {
+                            setDecadIndex(0);
+                            await deleteDoc(yearDocRef);
+                        } else {
+                            await updateDoc(yearDocRef, {contentsArr: updatedContents});
+                        }
         
                         alert("연혁 삭제가 완료되었습니다.");
                     }
@@ -207,7 +210,7 @@ function AdminHistory() {
             </div>
 
             <NavStyled fill variant="tabs" >
-                {historyData && historyData.map((obj, i) => (
+                {historyData && historyData[0].contentsArr.length > 0 && historyData.map((obj, i) => (
                     <Nav.Item key={obj.date}>
                         <NavLink onClick={() => decadIndexChange(i)}>{obj.date}`s</NavLink>
                     </Nav.Item>
@@ -215,7 +218,7 @@ function AdminHistory() {
             </NavStyled>
 
             <ListGroupStyled>
-                {historyData && historyData[decadIndex].contentsArr
+                {historyData && historyData[0].contentsArr.length > 0 && historyData[decadIndex].contentsArr
                     .sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)))
                     .map((obj, i) => (
                         <ListGroupItem key={i}>

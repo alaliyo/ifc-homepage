@@ -12,9 +12,9 @@ function AdminYear() {
     const [scheduleTitle, setScheduleTitle] = useState("");
     const [editingItem, setEditingItem] = useState<{ id: string; date: string; title: string } | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(15);
+    const [postsPerPage] = useState(10);
     const [totalPages, setTotalPages] = useState(Math.max(1, Math.ceil(scheduleData.length / postsPerPage)));
-
+    
     const contentText = (e: any) => {
         const {
             target: { name, value}
@@ -94,8 +94,7 @@ function AdminYear() {
 
     useEffect(() => {
         calculateTotalPages();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [scheduleData]);
 
     const getPostsForCurrentPage = () => {
         const startIndex = (currentPage - 1) * postsPerPage;
@@ -111,7 +110,7 @@ function AdminYear() {
         currentPage < totalPages && setCurrentPage(e => e += 1);
     };
 
-    const scheduleYear = ["2022"]
+    const scheduleYear = ["2023"]
 
     return(
         <div>
