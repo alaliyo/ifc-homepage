@@ -15,6 +15,7 @@ function AdminYear() {
     const [postsPerPage] = useState(10);
     const [totalPages, setTotalPages] = useState(Math.max(1, Math.ceil(scheduleData.length / postsPerPage)));
     
+    // 클라이언트 DATA
     const contentText = (e: any) => {
         const {
             target: { name, value}
@@ -26,6 +27,7 @@ function AdminYear() {
         }
     };
 
+    //POST
     const onSubmit = async () => {
         try {
             await addDoc(collection(dbService, 'schedules'), {
@@ -40,6 +42,7 @@ function AdminYear() {
         }
     };
 
+    //DELETE
     const handleDelete = async (event_id: string) => {
         if (window.confirm("정말 삭제하시겠습니까?")) {
             try {
@@ -52,6 +55,7 @@ function AdminYear() {
         }
     };
 
+    //PUT
     const handlePut = async (event_id: string) => {
         if (!editingItem) return;
 
@@ -115,51 +119,50 @@ function AdminYear() {
     return(
         <div>
             <ChildTitle>연중계획</ChildTitle>
-            <div>
-                <FormBox onSubmit={onSubmit}>
-                    <InputGroup className="mb-3">
-                        <InputGroup.Text>날짜</InputGroup.Text>
-                        <Form.Control aria-label="First name"
-                            type="date"
-                            name="date"
-                            value={scheduleDate}
-                            onChange={contentText}
-                        />
-                        <Form.Control aria-label="Last name"
-                            type="text"
-                            name="date"
-                            onChange={contentText}
-                            value={scheduleDate}
-                            placeholder="예) 2023-01-01"
-                        />
-                    </InputGroup>
+            
+            <FormBox onSubmit={onSubmit}>
+                <InputGroup className="mb-3">
+                    <InputGroup.Text>날짜</InputGroup.Text>
+                    <Form.Control aria-label="First name"
+                        type="date"
+                        name="date"
+                        value={scheduleDate}
+                        onChange={contentText}
+                    />
+                    <Form.Control aria-label="Last name"
+                        type="text"
+                        name="date"
+                        onChange={contentText}
+                        value={scheduleDate}
+                        placeholder="예) 2023-01-01"
+                    />
+                </InputGroup>
 
-                    <InputGroup className="mb-3">
-                        <InputGroup.Text>내용</InputGroup.Text>
-                        <Form.Control 
-                            type="text"
-                            name="content"
-                            value={scheduleTitle}
-                            onChange={contentText}
-                        />
-                    </InputGroup>
+                <InputGroup className="mb-3">
+                    <InputGroup.Text>내용</InputGroup.Text>
+                    <Form.Control 
+                        type="text"
+                        name="content"
+                        value={scheduleTitle}
+                        onChange={contentText}
+                    />
+                </InputGroup>
 
-                    {editingItem ? (
-                        <div>
-                            <Button variant="outline-success" onClick={() => handlePut(editingItem.id)}>
-                                수정
-                            </Button>
-                            <Button variant="outline-danger" onClick={cancelEdit}>
-                                취소
-                            </Button>
-                        </div>
-                    ) : (
-                        <Button variant="outline-secondary" type='submit'>
-                            완료
+                {editingItem ? (
+                    <div>
+                        <Button variant="outline-success" onClick={() => handlePut(editingItem.id)}>
+                            수정
                         </Button>
-                    )}
-                </FormBox>
-            </div>
+                        <Button variant="outline-danger" onClick={cancelEdit}>
+                            취소
+                        </Button>
+                    </div>
+                ) : (
+                    <Button variant="outline-secondary" type='submit'>
+                        완료
+                    </Button>
+                )}
+            </FormBox>
 
             <NavStyled fill variant="tabs" >
                 {scheduleYear.map((year, i) => (

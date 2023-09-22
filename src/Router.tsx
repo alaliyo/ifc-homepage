@@ -47,6 +47,7 @@ import AdminHome from './admin/pages/Home'
 import BulletinBoard from "./admin/pages/BulletinBoard";
 import AdminHistory from "./admin/components/BulletinBoard/AdminHistory";
 import AdminYear from "./admin/components/BulletinBoard/AdminYear";
+import AdminServers from "./admin/components/BulletinBoard/AdminServers";
 
 import User from "./admin/pages/User";
 
@@ -206,6 +207,10 @@ const router = createBrowserRouter([
                     {
                         path: "year",
                         element: <AdminYear />,
+                    },
+                    {
+                        path: "servers",
+                        element: <AdminServers />,
                     },
                 ]
             },
