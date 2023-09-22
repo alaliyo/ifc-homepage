@@ -7,11 +7,26 @@ export const FormBox = styled.form`
     text-align: end;
 `;
 
-export const NavStyled = styled(Nav)`
+export const NavBox = styled.nav`
+    text-align: start;
+    height: auto;
     width: 80%;
-    margin: 0 auto;
+    border-bottom: 1px solid gray;
+    padding: 0;
+    margin: auto;
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
 `;
 
+export const NavItem = styled.div`
+    padding: 15px;
+    color: #525252;
+    font-size: 17px;
+    font-weight: 900; 
+    white-space: nowrap;
+    cursor: pointer;
+`;
 
 export const ListGroupStyled = styled(ListGroup)`
     width: 80%;

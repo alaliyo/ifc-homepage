@@ -2,6 +2,7 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { dbService } from "../firebase";
 
+// 연간계획 DATA GET
 export interface ScheduleDataPoops {
     id: string;
     title: string;
@@ -30,7 +31,33 @@ export function ScheduleData() {
     return scheduleDatas;
 }
 
+export interface YearScheduleDataPoops {
+    date: number;
+    contentsArr: Array<{content: string, date: string, id: number}>
+}
 
+export function YearScheduleData() {
+    const [YearsCheduleDatas, setYearScheduleDatas] = useState<ScheduleDataPoops[]>([]);
+
+    useEffect(() => {
+        const q = query(
+            collection(dbService, "schedules"),
+            orderBy("date", "asc")
+        );
+        
+        onSnapshot(q, (snapshot) => {
+            const ScheduleArr: any = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setYearScheduleDatas(ScheduleArr);
+        });
+    }, []);
+
+    return YearsCheduleDatas;
+}
+
+// 연혁 DATE GET
 export interface HistoryDataPoops {
     date: number;
     contentsArr: Array<{content: string, date: string, id: number}>
@@ -57,7 +84,7 @@ export function HistoryData() {
     return historydata;
 }
 
-
+// 섬김이 DATE GET
 export interface PastorsDataPoops {
     separationText: string;
     detail: Array<{name: string, img: string, id: number}>

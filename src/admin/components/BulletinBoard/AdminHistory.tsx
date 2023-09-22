@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Button, Form, InputGroup, Nav, NavLink } from "react-bootstrap";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import { deleteDoc, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { HistoryData } from "../../../utils/dbService";
 import { ChildTitle } from "../../style/CommonStyled";
 import { dbService } from "../../../firebase";
-import { FormBox, ListGroupItem, ListGroupStyled, NavStyled } from "./Styled";
+import { FormBox, ListGroupItem, ListGroupStyled, NavBox, NavItem } from "./Styled";
 
 function AdminHistory() {
     const historyData = HistoryData();
@@ -41,6 +41,7 @@ function AdminHistory() {
 
         try {
             const decad = Math.floor(new Date(histroyDate).getFullYear() / 10) * 10;
+            const nowDate = Date.now();
 
             // 해당 연도의 데이터 가져오기
             const yearDocRef = doc(dbService, 'history', `${decad}`);
@@ -50,14 +51,14 @@ function AdminHistory() {
                 // 데이터가 이미 존재하는 경우 배열에 내용 추가
                 const yearData = yearDocSnap.data();
                 yearData.contentsArr.push({
-                    id: Date.now(),
+                    id: nowDate,
                     date: histroyDate,
                     content: histroyContent,
                 });
 
                 // 기존 데이터 업데이트
                 await updateDoc(yearDocRef, {
-                contentsArr: yearData.contentsArr,
+                    contentsArr: yearData.contentsArr,
                 });
             } else {
                 // 데이터가 없는 경우 새로운 데이터 생성
@@ -65,8 +66,9 @@ function AdminHistory() {
                 date: decad,
                 contentsArr: [
                     {
-                    date: histroyDate,
-                    content: histroyContent,
+                        id: nowDate,
+                        date: histroyDate,
+                        content: histroyContent,
                     }
                 ]
                 });
@@ -209,13 +211,11 @@ function AdminHistory() {
                 </FormBox>
             </div>
 
-            <NavStyled fill variant="tabs" >
+            <NavBox>
                 {historyData && historyData[0].contentsArr.length > 0 && historyData.map((obj, i) => (
-                    <Nav.Item key={obj.date}>
-                        <NavLink onClick={() => decadIndexChange(i)}>{obj.date}`s</NavLink>
-                    </Nav.Item>
+                    <NavItem key={i} onClick={() => decadIndexChange(i)}>{obj.date}`s</NavItem>
                 ))}
-            </NavStyled>
+            </NavBox>
 
             <ListGroupStyled>
                 {historyData && historyData[0].contentsArr.length > 0 && historyData[decadIndex].contentsArr

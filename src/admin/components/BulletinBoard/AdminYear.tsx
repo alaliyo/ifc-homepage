@@ -1,9 +1,9 @@
-import { Button, Form, InputGroup, Nav, NavLink } from "react-bootstrap";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import { ScheduleData } from "../../../utils/dbService";
 import { ChildTitle } from "../../style/CommonStyled";
-import { FormBox, ListGroupStyled, ListGroupItem, NavStyled, PaginationBox, GoBun, PageNumber } from "./Styled";
-import { useEffect, useState } from "react";
-import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { FormBox, ListGroupStyled, ListGroupItem, NavBox, NavItem, PaginationBox, GoBun, PageNumber } from "./Styled";
+import { useEffect, useRef, useState } from "react";
+import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { dbService } from "../../../firebase";
 
 function AdminYear() {
@@ -74,7 +74,7 @@ function AdminYear() {
             alert("일정 수정에 실패했습니다.");
         }
     };
-
+    
     const editHistory = (item: { id: string; date: string; title: string }) => {
         setEditingItem(item);
         setScheduleDate(item.date);
@@ -116,10 +116,60 @@ function AdminYear() {
 
     const scheduleYear = ["2023"]
 
+    // 게시물 post 
+    const omgigi = async (e: any) => {
+        e.preventDefault();
+
+        for (let i = 0; i < scheduleData.length; i++) {
+            const date = scheduleData[i].date;
+            const title = scheduleData[i].title;
+
+            try {
+                const nowDate = Date.now();
+
+                // 해당 연도의 데이터 가져오기
+                const yearDocRef = doc(dbService, 'year-schedules', "2023");
+                const yearDocSnap = await getDoc(yearDocRef);
+
+                if (yearDocSnap.exists()) {
+                    // 데이터가 이미 존재하는 경우 배열에 내용 추가
+                    const yearData = yearDocSnap.data();
+                    yearData.contentsArr.push({
+                        id: nowDate,
+                        date: date,
+                        title: title,
+                    });
+
+                    // 기존 데이터 업데이트
+                    await updateDoc(yearDocRef, {
+                        contentsArr: yearData.contentsArr,
+                    });
+                } else {
+                    // 데이터가 없는 경우 새로운 데이터 생성
+                    await setDoc(yearDocRef, {
+                    date: 2023,
+                    contentsArr: [
+                        {
+                            id: nowDate,
+                            date: date,
+                            title: title,
+                        }
+                    ]
+                    });
+                }
+
+                
+            } catch (error) {
+                return alert(error);
+            }
+        }
+        alert("작업 완료");
+    };
+
     return(
         <div>
             <ChildTitle>연중계획</ChildTitle>
-            
+            <button onClick={omgigi}>데이터 이전</button>
             <FormBox onSubmit={onSubmit}>
                 <InputGroup className="mb-3">
                     <InputGroup.Text>날짜</InputGroup.Text>
@@ -164,13 +214,11 @@ function AdminYear() {
                 )}
             </FormBox>
 
-            <NavStyled fill variant="tabs" >
+            <NavBox>
                 {scheduleYear.map((year, i) => (
-                    <Nav.Item key={i}>
-                        <NavLink>{year}</NavLink>
-                    </Nav.Item>
+                    <NavItem key={i}>{year}</NavItem>
                 ))}
-            </NavStyled>
+            </NavBox>
 
             <ListGroupStyled>
                 {getPostsForCurrentPage().map((obj, i) => (
