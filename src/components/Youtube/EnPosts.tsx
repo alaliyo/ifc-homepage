@@ -39,9 +39,9 @@ function EnPosts() {
                 {searchResult ? (
                     searchResult.postsData.map((obj, i) => (
                         <Link key={obj.postId} to={`/youtube/detail/en/${obj.postId}`}>
-                            <div>Title: {obj.title}</div>
+                            <div>{obj.title}</div>
                             <div>
-                                <span>Bible: {obj.bibleVerse}</span>
+                                <span>{obj.bibleVerse}</span>
                                 <span>{obj.date}</span>
                             </div>
                         </Link>
@@ -49,9 +49,9 @@ function EnPosts() {
                 ) : (
                     getPostsForCurrentPage().map((obj, i) => (
                         <Link key={obj.postId} to={`/youtube/detail/en/${obj.postId}`}>
-                            <div>Title: {obj.title}</div>
+                            <div>{obj.title}</div>
                             <div>
-                                <span>Bible: {obj.bibleVerse}</span>
+                                <span>{obj.bibleVerse}</span>
                                 <span>{obj.date}</span>
                             </div>
                         </Link>

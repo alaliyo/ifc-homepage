@@ -39,9 +39,9 @@ function KrPosts() {
                 {searchResult ? (
                     searchResult.postsData.map((obj, i) => (
                         <Link key={obj.postId} to={`/youtube/detail/kr/${obj.postId}`}>
-                            <div>제목: {obj.title}</div>
+                            <div>{obj.title}</div>
                             <div>
-                                <span>말씀: {obj.bibleVerse}</span>
+                                <span>{obj.bibleVerse}</span>
                                 <span>{obj.date}</span>
                             </div>
                         </Link>
@@ -49,9 +49,9 @@ function KrPosts() {
                 ) : (
                     getPostsForCurrentPage().map((obj, i) => (
                         <Link key={obj.postId} to={`/youtube/detail/kr/${obj.postId}`}>
-                            <div>제목: {obj.title}</div>
+                            <div>{obj.title}</div>
                             <div>
-                                <span>말씀: {obj.bibleVerse}</span>
+                                <span>{obj.bibleVerse}</span>
                                 <span>{obj.date}</span>
                             </div>
                         </Link>
