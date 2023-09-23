@@ -6,19 +6,21 @@ import './YearSchedule.css'
 import ListWeek from './ListWeek';
 import useHandleResize from '../../hooks/useHandleResize';
 import ScheduleModal from './ScheduleModal';
-import { ScheduleData, ScheduleDataPoops } from '../../utils/dbService';
+import { ScheduleDataprops, YearScheduleData } from '../../utils/dbService';
 import { Body, ChildTitle } from '../Common/CommonStyled';
 
 function YearSchedule() {
     const windResize = useHandleResize();
-    const scheduleDatas = ScheduleData();
+    const yearScheduleData = YearScheduleData();
     const [showModal, setShowModal] = useState(false);
-    const [eventData, setEventData] = useState<ScheduleDataPoops | null>(null);
+    const [eventData, setEventData] = useState<ScheduleDataprops | null>(null);
 
     // 글 클릭 시 핸들러 (상세 Modal)
     const handleEventClick = (e: { event: { id: string; }; }) => {
-        const eventId = e.event.id;
-        const scheduleData = scheduleDatas.find(schedule => schedule.id === eventId);
+        const eventId = Number(e.event.id);
+        const scheduleData = yearScheduleData
+            ?.find(schedule => schedule.contentsArr.some(obj => obj.id === eventId))
+            ?.contentsArr.find(obj => obj.id === eventId);
         
         if (scheduleData) {
             setEventData(scheduleData);
@@ -29,6 +31,15 @@ function YearSchedule() {
     const handleEventClickWrapper = (e: any) => {
         handleEventClick(e);
     };
+
+    const calendarEvents = yearScheduleData?.reduce((acc, yearSchedule) => {
+        const eventsForYear = yearSchedule.contentsArr.map((event) => ({
+            id: event.id.toString(), // FullCalendar의 이벤트 ID는 문자열이어야 합니다.
+            title: event.title,
+            date: event.date,
+        }));
+        return [...acc, ...eventsForYear];
+    }, [] as { id: string; title: string; date: string; }[]);
     
     return (
         <Body>
@@ -39,15 +50,7 @@ function YearSchedule() {
                     initialView="dayGridMonth"
                     height='auto'
                     locale={localesKo}
-                    events={
-                        scheduleDatas.map(obj => (
-                            {
-                                id: obj.id,
-                                title: (obj.title),
-                                date: obj.date,
-                            }
-                        ))
-                    }
+                    events={calendarEvents}
                     eventDisplay="block"
                     eventClick={handleEventClickWrapper}
                 />

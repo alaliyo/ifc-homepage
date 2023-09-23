@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import styled from "styled-components";
-import { ScheduleData } from "../../utils/dbService";
+import { YearScheduleData } from "../../utils/dbService";
 
 function ListWeek({setEventData, setShowModal}: any) {
-    const scheduleDatas = ScheduleData();
+    const yearScheduleData = YearScheduleData();
     const date = new Date();
     const [year, setYear] = useState(date.getFullYear());
     const [month, setMonth] = useState(date.getMonth() + 1);
@@ -27,8 +27,10 @@ function ListWeek({setEventData, setShowModal}: any) {
         } 
     };
 
-    const handleEventClick = (id: string) => {
-        const scheduleData = scheduleDatas.find(schedule => schedule.id === id);
+    const handleEventClick = (id: number) => {
+        const scheduleData = yearScheduleData
+            ?.find(schedule => schedule.contentsArr.some(obj => obj.id === id))
+            ?.contentsArr.find(obj => obj.id === id);
         if (scheduleData) {
             setEventData(scheduleData);
             setShowModal(true);
@@ -46,17 +48,19 @@ function ListWeek({setEventData, setShowModal}: any) {
             </ListWeekHeader>
 
             <ListBox>
-                {scheduleDatas.map((data, i) => 
-                    Number(data.date.split('-')[1]) === month &&
-                    Number(data.date.split('-')[0]) === year && (
-                        <List 
-                            key={data.id}
-                            isEven={i % 2 === 0}
-                            onClick={() => handleEventClick(data.id)}
-                        >
-                            {data.date.split('-')[2].replace('0', '')}일 {data.title}
-                        </List>
-                ))}
+                {yearScheduleData && yearScheduleData.map((arr, i) =>
+                    arr.contentsArr.map(data => (
+                        Number(data.date.split('-')[1]) === month &&
+                        Number(data.date.split('-')[0]) === year && (
+                            <List 
+                                key={data.id}
+                                onClick={() => handleEventClick(data.id)}
+                            >
+                                {data.date.split('-')[2].replace('0', '')}일 - {data.title}
+                            </List>
+                        )
+                    ))
+                )}
             </ListBox>
         </ListWeekBox>
     );
@@ -87,14 +91,13 @@ const ListBox = styled.div`
     border-top: 2px solid #c2c2c2;
 `;
 
-interface IsEven {
-    isEven: boolean;
-}
-
-const List = styled.p<IsEven>`
+const List = styled.p`
+    color: #3d3d3d;
     font-weight: 900;
-    padding: 10px;
-    border-bottom: 2px solid #c2c2c2;
+    font-size: 18px;
+    background-color: #ffffff;
+    padding: 15px 10px;
+    border-bottom: 2px solid #b3b3b3;
     margin: 0;
-    background-color: ${props => (props.isEven ? "#f0f0f0" : "transparent")};
+    
 `;

@@ -1,20 +1,36 @@
+import { useState } from "react";
+import { deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { Button, Form, InputGroup } from "react-bootstrap";
-import { ScheduleData } from "../../../utils/dbService";
+import { YearScheduleData } from "../../../utils/dbService";
 import { ChildTitle } from "../../style/CommonStyled";
-import { FormBox, ListGroupStyled, ListGroupItem, NavBox, NavItem, PaginationBox, GoBun, PageNumber } from "./Styled";
-import { useEffect, useRef, useState } from "react";
-import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { FormBox, ListGroupStyled, ListGroupItem, NavBox, NavItem } from "./Styled";
 import { dbService } from "../../../firebase";
+import Pagination from "../../../components/Common/Pagination";
 
 function AdminYear() {
-    const scheduleData = ScheduleData();
+    const yearScheduleData = YearScheduleData();
     const [scheduleDate, setScheduleDate] = useState("");
     const [scheduleTitle, setScheduleTitle] = useState("");
-    const [editingItem, setEditingItem] = useState<{ id: string; date: string; title: string } | null>(null);
+    const [arrIndex, setArrIndex] = useState(0);
+    const [editingItem, setEditingItem] = useState<{ id: number; date: string; title: string } | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
-    const [totalPages, setTotalPages] = useState(Math.max(1, Math.ceil(scheduleData.length / postsPerPage)));
     
+    // 페이징 DATA
+    const getPostsForCurrentPage = () => {
+        if (yearScheduleData) {
+            const startIndex = (currentPage - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
+            const DataSort = yearScheduleData[arrIndex].contentsArr.sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)));
+            return DataSort.slice(startIndex, endIndex);
+        }
+        return [];
+    };
+
+    const arrIndexChange = (i: number) => {
+        setArrIndex(i)
+    };
+
     // 클라이언트 DATA
     const contentText = (e: any) => {
         const {
@@ -22,60 +38,90 @@ function AdminYear() {
         } = e;
         if (name === "date") {
             setScheduleDate(value);
-        } else if (name === "content") {
+        } else if (name === "title") {
             setScheduleTitle(value);
         }
     };
 
-    //POST
-    const onSubmit = async () => {
+    // POST
+    const postSchedule = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+
+        if (scheduleDate === "") {
+            return alert("날짜를 입력해 주세요.");
+        } else if (scheduleTitle === "") {
+            return alert("내용을 입력해 주세요.");
+        }
+
         try {
-            await addDoc(collection(dbService, 'schedules'), {
-                title: scheduleTitle,
-                date: scheduleDate,
-            });
-            
-            setScheduleDate("");
-            setScheduleTitle("");
+            const year = new Date(scheduleDate).getFullYear();
+            const nowDate = Date.now();
+            const yearDocRef = doc(dbService, "year-schedules", `${year}`);
+            const yearDocSnap = await getDoc(yearDocRef);
+
+            if (yearDocSnap.exists()) {
+                // 데이터가 이미 존재하는 경우 배열에 내용 추가
+                const yearData = yearDocSnap.data();
+                yearData.contentsArr.push({
+                    id: nowDate,
+                    date: scheduleDate,
+                    title: scheduleTitle,
+                });
+
+                // 기존 데이터 업데이트
+                await updateDoc(yearDocRef, {
+                    contentsArr: yearData.contentsArr,
+                });
+            } else {
+                // 데이터가 없는 경우 새로운 데이터 생성
+                await setDoc(yearDocRef, {
+                date: year,
+                contentsArr: [
+                    {
+                        id: nowDate,
+                        date: scheduleDate,
+                        title: scheduleTitle,
+                    }
+                ]
+                });
+            }
+            alert("연중계획이 추가 되었습니다.");
         } catch (error) {
-            return alert(error);
+            return alert("새로고침 후 다시 시도해주세요" + error);
         }
     };
 
-    //DELETE
-    const handleDelete = async (event_id: string) => {
-        if (window.confirm("정말 삭제하시겠습니까?")) {
+    // DELETE
+    const deleteSchedule = async (id: number, title: string) => {
+        if (window.confirm(`"${title}" 게시물을 삭제하시겠습니까?`)) {
             try {
-                await deleteDoc(doc(dbService, "schedules", event_id));
-                alert("일정 삭제가 완료되었습니다.");
+                if (yearScheduleData) {
+                    const yearDocRef = doc(dbService, "year-schedules", `${yearScheduleData[arrIndex].date}`);
+                    const yearDocSnap = await getDoc(yearDocRef);
+                    console.log(yearDocSnap.exists())
+                    if (yearDocSnap.exists()) {
+                        const yearData = yearDocSnap.data();
+                        const updatedContents = yearData.contentsArr.filter((item: any) => item.id !== id);
+        
+                        if (updatedContents.length === 0) {
+                            setArrIndex(0);
+                            await deleteDoc(yearDocRef);
+                        } else {
+                            await updateDoc(yearDocRef, {contentsArr: updatedContents});
+                        }
+        
+                        alert("게시물 삭제가 완료되었습니다.");
+                    }
+                }
             } catch (error) {
                 console.error("에러 발생: ", error);
-                alert("일정 삭제에 실패했습니다.");
+                alert("게시물 삭제에 실패했습니다.");
             }
         }
     };
-
-    //PUT
-    const handlePut = async (event_id: string) => {
-        if (!editingItem) return;
-
-        try {
-            await updateDoc(doc(dbService, 'schedules', event_id), {
-                date: scheduleDate,
-                title: scheduleTitle,
-            });
-
-            alert("일정 수정이 완료되었습니다.");
-            setEditingItem(null);
-            setScheduleDate("");
-            setScheduleTitle("");
-        } catch (error) {
-            console.error("에러 발생: ", error);
-            alert("일정 수정에 실패했습니다.");
-        }
-    };
     
-    const editHistory = (item: { id: string; date: string; title: string }) => {
+    // 게시물 수정 버튼
+    const editSchedule = (item: { id: number; date: string; title: string }) => {
         setEditingItem(item);
         setScheduleDate(item.date);
         setScheduleTitle(item.title);
@@ -86,91 +132,50 @@ function AdminYear() {
         setScheduleDate("");
         setScheduleTitle("");
     };
-
-    const calculateTotalPages = () => {
-        const totalPages = Math.max(1, Math.ceil(scheduleData.length / postsPerPage));
-        setTotalPages(totalPages);
-    };
-
-    const handlePageChange = (pageNumber: number) => {
-        setCurrentPage(pageNumber);
-    };
-
-    useEffect(() => {
-        calculateTotalPages();
-    }, [scheduleData]);
-
-    const getPostsForCurrentPage = () => {
-        const startIndex = (currentPage - 1) * postsPerPage;
-        const endIndex = startIndex + postsPerPage;
-        return scheduleData.slice(startIndex, endIndex);
-    };
     
-    const PostsPageDowon = () => {
-        currentPage > 1 && setCurrentPage(e => e -= 1);
-    };
+    // PUT
+    const putSchedule = async () => {
+        if (!editingItem) return;
 
-    const PostsPageUp = () => {
-        currentPage < totalPages && setCurrentPage(e => e += 1);
-    };
-
-    const scheduleYear = ["2023"]
-
-    // 게시물 post 
-    const omgigi = async (e: any) => {
-        e.preventDefault();
-
-        for (let i = 0; i < scheduleData.length; i++) {
-            const date = scheduleData[i].date;
-            const title = scheduleData[i].title;
-
-            try {
-                const nowDate = Date.now();
-
-                // 해당 연도의 데이터 가져오기
-                const yearDocRef = doc(dbService, 'year-schedules', "2023");
+        try {
+            if (yearScheduleData) {
+                const yearDocRef = doc(dbService, "year-schedules", `${yearScheduleData[arrIndex].date}`);
                 const yearDocSnap = await getDoc(yearDocRef);
 
                 if (yearDocSnap.exists()) {
-                    // 데이터가 이미 존재하는 경우 배열에 내용 추가
                     const yearData = yearDocSnap.data();
-                    yearData.contentsArr.push({
-                        id: nowDate,
-                        date: date,
-                        title: title,
-                    });
-
-                    // 기존 데이터 업데이트
-                    await updateDoc(yearDocRef, {
-                        contentsArr: yearData.contentsArr,
-                    });
-                } else {
-                    // 데이터가 없는 경우 새로운 데이터 생성
-                    await setDoc(yearDocRef, {
-                    date: 2023,
-                    contentsArr: [
-                        {
-                            id: nowDate,
-                            date: date,
-                            title: title,
+                    const updatedContents = yearData.contentsArr.map((item: any) => {
+                        if (item.id === editingItem.id) {
+                            return {
+                                ...item,
+                                date: scheduleDate,
+                                title: scheduleTitle,
+                            };
                         }
-                    ]
+                        return item;
                     });
-                }
 
-                
-            } catch (error) {
-                return alert(error);
+                    await updateDoc(yearDocRef, {
+                        contentsArr: updatedContents,
+                    });
+
+                    alert("연혁 수정이 완료되었습니다.");
+                    setEditingItem(null);
+                    setScheduleDate("");
+                    setScheduleTitle("");
+                }
             }
+        } catch (error) {
+            console.error("에러 발생: ", error);
+            alert("연혁 수정에 실패했습니다.");
         }
-        alert("작업 완료");
     };
 
     return(
         <div>
             <ChildTitle>연중계획</ChildTitle>
-            <button onClick={omgigi}>데이터 이전</button>
-            <FormBox onSubmit={onSubmit}>
+
+            <FormBox onSubmit={postSchedule}>
                 <InputGroup className="mb-3">
                     <InputGroup.Text>날짜</InputGroup.Text>
                     <Form.Control aria-label="First name"
@@ -192,7 +197,7 @@ function AdminYear() {
                     <InputGroup.Text>내용</InputGroup.Text>
                     <Form.Control 
                         type="text"
-                        name="content"
+                        name="title"
                         value={scheduleTitle}
                         onChange={contentText}
                     />
@@ -200,7 +205,7 @@ function AdminYear() {
 
                 {editingItem ? (
                     <div>
-                        <Button variant="outline-success" onClick={() => handlePut(editingItem.id)}>
+                        <Button variant="outline-success" onClick={putSchedule}>
                             수정
                         </Button>
                         <Button variant="outline-danger" onClick={cancelEdit}>
@@ -215,8 +220,8 @@ function AdminYear() {
             </FormBox>
 
             <NavBox>
-                {scheduleYear.map((year, i) => (
-                    <NavItem key={i}>{year}</NavItem>
+                {yearScheduleData && yearScheduleData.map((obj, i) => (
+                    <NavItem key={i} onClick={() => arrIndexChange(i)}>{obj.date}</NavItem>
                 ))}
             </NavBox>
 
@@ -224,18 +229,18 @@ function AdminYear() {
                 {getPostsForCurrentPage().map((obj, i) => (
                     <ListGroupItem key={i}>
                         {obj.date} {obj.title}
-                        <div>
+                        <div>                           
                             <Button 
                                 variant="outline-secondary"
                                 size="sm"
-                                onClick={() => editHistory(obj)}
+                                onClick={() => editSchedule(obj)}
                             >
                                 수정
                             </Button>
                             <Button 
                                 variant="outline-danger"
                                 size="sm"
-                                onClick={() => handleDelete(obj.id)}
+                                onClick={() => deleteSchedule(obj.id, obj.title)}
                             >
                                 삭제
                             </Button>
@@ -243,15 +248,14 @@ function AdminYear() {
                     </ListGroupItem>
                 ))} 
             </ListGroupStyled>
-            <PaginationBox>
-                <GoBun onClick={PostsPageDowon}>◀</GoBun>
-                {Array.from({ length: totalPages }, (_, i) => (
-                    <PageNumber key={i + 1} active={i + 1 === currentPage} onClick={() => handlePageChange(i + 1)}>
-                        {i + 1}
-                    </PageNumber>
-                ))}
-                <GoBun onClick={PostsPageUp}>▶</GoBun>
-            </PaginationBox>
+
+            <Pagination 
+                data={yearScheduleData}
+                arrIndex={arrIndex}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                postsPerPage={postsPerPage}
+            />
         </div>
     );
 }

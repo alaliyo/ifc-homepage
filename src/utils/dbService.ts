@@ -2,46 +2,24 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { dbService } from "../firebase";
 
-// 연간계획 DATA GET
-export interface ScheduleDataPoops {
-    id: string;
+export interface ScheduleDataprops {
     title: string;
     date: string;
-    url: string;
+    id: number;
 }
 
-export function ScheduleData() {
-    const [scheduleDatas, setScheduleDatas] = useState<ScheduleDataPoops[]>([]);
-
-    useEffect(() => {
-        const q = query(
-            collection(dbService, "schedules"),
-            orderBy("date", "asc")
-        );
-        
-        onSnapshot(q, (snapshot) => {
-            const ScheduleArr: any = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setScheduleDatas(ScheduleArr);
-        });
-    }, []);
-
-    return scheduleDatas;
-}
-
-export interface YearScheduleDataPoops {
+// 연간계획 DATA GET
+export interface YearScheduleDataprops {
     date: number;
-    contentsArr: Array<{content: string, date: string, id: number}>
+    contentsArr: Array<ScheduleDataprops>
 }
 
 export function YearScheduleData() {
-    const [YearsCheduleDatas, setYearScheduleDatas] = useState<ScheduleDataPoops[]>([]);
+    const [YearsCheduleDatas, setYearScheduleDatas] = useState<YearScheduleDataprops[]>();
 
     useEffect(() => {
         const q = query(
-            collection(dbService, "schedules"),
+            collection(dbService, "year-schedules"),
             orderBy("date", "asc")
         );
         
