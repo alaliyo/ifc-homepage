@@ -88,6 +88,7 @@ const InChTitle = styled.div`
 
 const HomepageTitle = styled.div`
     width: 130px;
+    text-align: center;
 `;
 
 const MenuBox = styled.div`
