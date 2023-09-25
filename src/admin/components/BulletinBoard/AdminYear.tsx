@@ -3,7 +3,7 @@ import { deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { YearScheduleData } from "../../../utils/dbService";
 import { ChildTitle } from "../../style/CommonStyled";
-import { FormBox, ListGroupStyled, ListGroupItem, NavBox, NavItem } from "./Styled";
+import { FormBox, ListGroupStyled, ListGroupItem, NavBox, NavItem, InputGroupCustom } from "./Styled";
 import { dbService } from "../../../firebase";
 import Pagination from "../../../components/Common/Pagination";
 
@@ -11,6 +11,7 @@ function AdminYear() {
     const yearScheduleData = YearScheduleData();
     const [scheduleDate, setScheduleDate] = useState("");
     const [scheduleTitle, setScheduleTitle] = useState("");
+    const [scheduleContent, setScheduleContent] = useState("");
     const [arrIndex, setArrIndex] = useState(0);
     const [editingItem, setEditingItem] = useState<{ id: number; date: string; title: string } | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
@@ -40,6 +41,8 @@ function AdminYear() {
             setScheduleDate(value);
         } else if (name === "title") {
             setScheduleTitle(value);
+        } else if (name === "content") {
+            setScheduleContent(value);
         }
     };
 
@@ -66,6 +69,7 @@ function AdminYear() {
                     id: nowDate,
                     date: scheduleDate,
                     title: scheduleTitle,
+                    content: scheduleContent,
                 });
 
                 // 기존 데이터 업데이트
@@ -81,10 +85,14 @@ function AdminYear() {
                         id: nowDate,
                         date: scheduleDate,
                         title: scheduleTitle,
+                        content: scheduleContent,
                     }
                 ]
                 });
             }
+            setScheduleDate("");
+            setScheduleTitle("");
+            setScheduleContent("");
             alert("연중계획이 추가 되었습니다.");
         } catch (error) {
             return alert("새로고침 후 다시 시도해주세요" + error);
@@ -98,7 +106,7 @@ function AdminYear() {
                 if (yearScheduleData) {
                     const yearDocRef = doc(dbService, "year-schedules", `${yearScheduleData[arrIndex].date}`);
                     const yearDocSnap = await getDoc(yearDocRef);
-                    console.log(yearDocSnap.exists())
+                    
                     if (yearDocSnap.exists()) {
                         const yearData = yearDocSnap.data();
                         const updatedContents = yearData.contentsArr.filter((item: any) => item.id !== id);
@@ -121,16 +129,18 @@ function AdminYear() {
     };
     
     // 게시물 수정 버튼
-    const editSchedule = (item: { id: number; date: string; title: string }) => {
+    const editSchedule = (item: { id: number; date: string; title: string; content: string; }) => {
         setEditingItem(item);
         setScheduleDate(item.date);
         setScheduleTitle(item.title);
+        setScheduleContent(item.content);
     };
 
     const cancelEdit = () => {
         setEditingItem(null);
         setScheduleDate("");
         setScheduleTitle("");
+        setScheduleContent("");
     };
     
     // PUT
@@ -150,6 +160,7 @@ function AdminYear() {
                                 ...item,
                                 date: scheduleDate,
                                 title: scheduleTitle,
+                                content: scheduleContent
                             };
                         }
                         return item;
@@ -163,6 +174,7 @@ function AdminYear() {
                     setEditingItem(null);
                     setScheduleDate("");
                     setScheduleTitle("");
+                    setScheduleContent("");
                 }
             }
         } catch (error) {
@@ -176,7 +188,7 @@ function AdminYear() {
             <ChildTitle>연중계획</ChildTitle>
 
             <FormBox onSubmit={postSchedule}>
-                <InputGroup className="mb-3">
+                <InputGroupCustom >
                     <InputGroup.Text>날짜</InputGroup.Text>
                     <Form.Control aria-label="First name"
                         type="date"
@@ -191,17 +203,25 @@ function AdminYear() {
                         value={scheduleDate}
                         placeholder="예) 2023-01-01"
                     />
-                </InputGroup>
-
-                <InputGroup className="mb-3">
-                    <InputGroup.Text>내용</InputGroup.Text>
+                </InputGroupCustom>
+                <InputGroupCustom>
+                    <InputGroup.Text>제목</InputGroup.Text>
                     <Form.Control 
                         type="text"
                         name="title"
                         value={scheduleTitle}
                         onChange={contentText}
                     />
-                </InputGroup>
+                </InputGroupCustom>
+                <InputGroupCustom>
+                    <InputGroup.Text>내용</InputGroup.Text>
+                    <Form.Control 
+                        type="text"
+                        name="content"
+                        value={scheduleContent}
+                        onChange={contentText}
+                    />
+                </InputGroupCustom>
 
                 {editingItem ? (
                     <div>

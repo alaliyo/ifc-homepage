@@ -1,10 +1,14 @@
-import { ListGroup } from "react-bootstrap";
+import { InputGroup, ListGroup } from "react-bootstrap";
 import styled from "styled-components";
 
 export const FormBox = styled.form`
     width: 600px;
     margin: 20px auto;
     text-align: end;
+`;
+
+export const InputGroupCustom = styled(InputGroup)`
+    margin-bottom: 10px;
 `;
 
 export const NavBox = styled.nav`
@@ -20,7 +24,7 @@ export const NavBox = styled.nav`
 `;
 
 export const NavItem = styled.div`
-    padding: 15px;
+    padding: 5px 15px;
     color: #525252;
     font-size: 17px;
     font-weight: 900; 

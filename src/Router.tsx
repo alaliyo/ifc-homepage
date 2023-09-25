@@ -48,13 +48,13 @@ import BulletinBoard from "./admin/pages/BulletinBoard";
 import AdminHistory from "./admin/components/BulletinBoard/AdminHistory";
 import AdminYear from "./admin/components/BulletinBoard/AdminYear";
 import AdminServers from "./admin/components/BulletinBoard/AdminServers";
+import AdminYoutube from "./admin/components/BulletinBoard/AdminYoutube";
 
 import User from "./admin/pages/User";
 
 import Maintain from "./admin/pages/Maintain";
 
 import Manual from "./admin/pages/Manual";
-
 
 const router = createBrowserRouter([
     {
@@ -207,6 +207,10 @@ const router = createBrowserRouter([
                     {
                         path: "year",
                         element: <AdminYear />,
+                    },
+                    {
+                        path: "youtube",
+                        element: <AdminYoutube />,
                     },
                     {
                         path: "servers",

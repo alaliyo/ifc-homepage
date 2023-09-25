@@ -6,6 +6,7 @@ export interface ScheduleDataprops {
     title: string;
     date: string;
     id: number;
+    content: string;
 }
 
 // 연간계획 DATA GET
