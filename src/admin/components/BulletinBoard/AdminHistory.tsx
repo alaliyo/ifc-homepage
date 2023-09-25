@@ -9,7 +9,7 @@ import Pagination from "../../../components/Common/Pagination";
 
 function AdminHistory() {
     const historyData = HistoryData();
-    const [histroyDate, setHistroyDate] = useState<string>("");
+    const [histroyDate, setHistroyDate] = useState("");
     const [histroyContent, setHistroyContent] = useState("");
     const [arrIndex, setArrIndex] = useState(0);
     const [editingItem, setEditingItem] = useState<{ id: number; date: string; content: string } | null>(null);
@@ -209,17 +209,11 @@ function AdminHistory() {
 
                     {editingItem ? (
                         <div>
-                            <Button variant="outline-success" onClick={putHistory}>
-                                수정
-                            </Button>
-                            <Button variant="outline-danger" onClick={cancelEdit}>
-                                취소
-                            </Button>
+                            <Button variant="outline-success" onClick={putHistory}>수정</Button>
+                            <Button variant="outline-danger" onClick={cancelEdit}>취소</Button>
                         </div>
                     ) : (
-                        <Button variant="outline-secondary" type='submit'>
-                            완료
-                        </Button>
+                        <Button variant="outline-secondary" type='submit'>완료</Button>
                     )}
                 </FormBox>
             </div>

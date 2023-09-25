@@ -5,7 +5,7 @@ function Pagination({ data, arrIndex, currentPage, setCurrentPage, postsPerPage 
     const [totalPages, setTotalPages] = useState(1);
     
     const calculateTotalPages = () => {
-        if (data && arrIndex !== null) {
+        if (data && arrIndex !== null && data.length > 0) {
             const totalPages = Math.max(1, Math.ceil(data[arrIndex].contentsArr.length / postsPerPage));
             setTotalPages(totalPages);
         } else if (data) {
