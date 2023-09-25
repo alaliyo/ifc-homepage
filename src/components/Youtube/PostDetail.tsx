@@ -1,60 +1,44 @@
 import { useEffect, useState } from 'react';
 import { useOutletContext, useParams, Link, useMatch } from 'react-router-dom';
 import styled from 'styled-components';
-
-interface PostsData { //데이터 타입
-    postId: number,
-    title: string,
-    url: string,
-    date: string,
-    bibleVerse:string,
-}
-
-interface Props { //props 타입
-    krData: Array<PostsData>;
-    enData: Array<PostsData>;
-}
+import { YoutubeDataProps } from '../../utils/dbService';
+import { DateProps } from './YoutubeProps';
 
 function PostDetail() {
-    const { krData, enData } = useOutletContext<Props>();
+    const { getData, arrIndex } = useOutletContext<DateProps>();
     const { postsId } = useParams(); // url의 post id 값
-    const [post, setPost] = useState<PostsData>(); // id 값 비교 상세 데이터 들고옴
+    const [post, setPost] = useState<YoutubeDataProps>(); // id 값 비교 상세 데이터 들고옴
     const match = useMatch('/youtube/detail/kr/:postsId');
-    const currentUrl = match?.pathname || '/youtube/detail/en/';
-    const [flexibleData, setFlexibleData] = useState<PostsData[]>();
-    
-    // 데이터 조회 hook
-    useEffect(() => {
-        const postObj = flexibleData?.find(obj => obj.postId === Number(postsId))
-        setPost(postObj)
-    }, [flexibleData, postsId]);
+    const currentUrl = match?.pathname;
 
-    // 한국 또는 영어 date 조회
     useEffect(() => {
-        if (currentUrl === '/youtube/detail/en/') {
-            setFlexibleData(enData);
-        } else {
-            setFlexibleData(krData);
+        if (getData && getData.length > 0) {
+            const postObj = getData[arrIndex].contentsArr.find((obj) => obj.id === Number(postsId));
+            setPost(postObj);
         }
-    }, [currentUrl, enData, krData]);
+    }, [getData, arrIndex, postsId]);
 
-    return(
+    return (
         <PostDetailBox>
             <LinkBox>
-                <Link to={currentUrl === '/youtube/detail/en/' ? '/youtube/en-posts' : '/youtube/kr-posts'}>←목록으로</Link>
+                <Link to={currentUrl === '/youtube/detail/kr/' ? '/youtube/youtube-kr' : '/youtube/youtube-en'}>←목록으로</Link>
             </LinkBox>
-            <PostBox>
-                <iframe
-                    width="100%"
-                    height="100%"
-                    src={post?.url}
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen>
-                </iframe>
-            </PostBox>
-            <h4>제목: {post?.title}</h4>
-            <h5>말씀: {post?.bibleVerse}</h5>
+            {post && (
+                <>
+                    <PostBox>
+                        <iframe
+                            width="100%"
+                            height="100%"
+                            src={post.url}
+                            title="YouTube video player"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowFullScreen
+                        ></iframe>
+                    </PostBox>
+                    <h4>제목: {post.title}</h4>
+                    <h5>말씀: {post.bible}</h5>
+                </>
+            )}
         </PostDetailBox>
     );
 }
@@ -104,5 +88,5 @@ const LinkBox = styled.div`
 
 const PostBox = styled.div`
     width: 100%;
-    aspect-ratio: 16 / 9; /* 16:9 비율을 유지 */
+    aspect-ratio: 16 / 9;
 `;

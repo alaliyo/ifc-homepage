@@ -10,11 +10,12 @@ function Youtube() {
     const [getData, setGetData] = useState<YoutubeDataArrayProps[]>([]);
     const { windowWidth } = useOutletContext<YoutubeProps>(); // 웹 width 크기
     const location = useLocation().pathname.split('/')[2];
+    const [arrIndex, setArrIndex] = useState(0);
     const linkInfoArr = [
         {title: '한국', LinkUrl: 'youtube-kr'},
         {title: '영어', LinkUrl: 'youtube-en'},
     ]
-    console.log(getData);
+
     // GET
     useEffect(() => {
         const fetchData = async () => {
@@ -39,6 +40,8 @@ function Youtube() {
                 <Outlet context={{
                     getData: getData,
                     windowWidth: windowWidth,
+                    arrIndex: arrIndex,
+                    setArrIndex: setArrIndex,
                 }} />
             </YoutubeBox>
         </PageBody>

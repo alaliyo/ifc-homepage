@@ -5,16 +5,12 @@ import Search from "../Common/Search";
 import Pagination from "../Common/Pagination";
 import { NavBox, NavItem } from "../Common/CommonStyled";
 import { YoutubeDataArrayProps } from "../../utils/dbService";
-
-interface DateProps {
-    getData: YoutubeDataArrayProps[]
-};
+import { DateProps } from "./YoutubeProps";
 
 function KrPosts() {
-    const { getData } = useOutletContext<DateProps>();
+    const { getData, arrIndex, setArrIndex } = useOutletContext<DateProps>();
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResult, setSearchResult] = useState<YoutubeDataArrayProps[] | undefined>(); // 검색 결과를 저장할 배열
-    const [arrIndex, setArrIndex] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
 
