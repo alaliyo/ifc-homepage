@@ -14,7 +14,7 @@ function YearSchedule() {
     const yearScheduleData = YearScheduleData();
     const [showModal, setShowModal] = useState(false);
     const [eventData, setEventData] = useState<ScheduleDataprops | null>(null);
-
+    
     // 글 클릭 시 핸들러 (상세 Modal)
     const handleEventClick = (e: { event: { id: string; }; }) => {
         const eventId = Number(e.event.id);

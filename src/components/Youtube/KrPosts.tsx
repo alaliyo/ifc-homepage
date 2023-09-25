@@ -1,66 +1,74 @@
 import { useState } from "react";
 import { Link, useOutletContext } from 'react-router-dom';
-import { PostsBox, Writin, PostsHeader, Title, PostsBody } from './YoutubeStyled';
+import { PostsBox, PostsHeader, Title, PostsBody} from './YoutubeStyled';
 import Search from "../Common/Search";
-import { ArrayProps, YoutubeProps } from "./YoutubeProps";
 import Pagination from "../Common/Pagination";
+import { NavBox, NavItem } from "../Common/CommonStyled";
+import { YoutubeDataArrayProps } from "../../utils/dbService";
+
+interface DateProps {
+    getData: YoutubeDataArrayProps[]
+};
 
 function KrPosts() {
-    const { krData } = useOutletContext<ArrayProps>();
-    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
-    const [postsPerPage] = useState(10); // 한 페이지당 보여질 게시물 수
-    const { loggedIn } = useOutletContext<YoutubeProps>();
+    const { getData } = useOutletContext<DateProps>();
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchResult, setSearchResult] = useState<ArrayProps>(); // 검색 결과를 저장할 배열
+    const [searchResult, setSearchResult] = useState<YoutubeDataArrayProps[] | undefined>(); // 검색 결과를 저장할 배열
+    const [arrIndex, setArrIndex] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(10);
 
     // 페이징 DATA
     const getPostsForCurrentPage = () => {
-        const startIndex = (currentPage - 1) * postsPerPage;
-        const endIndex = startIndex + postsPerPage;
-        // 검색 결과가 있다면 검색 결과를 사용하고, 없다면 postsDate를 사용
-        const targetPosts = searchResult ? searchResult.postsData : krData;
-        return targetPosts.slice(startIndex, endIndex);
+        if (getData && getData.length > 0) {
+            const startIndex = (currentPage - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
+            const DataSort = getData[arrIndex].contentsArr.sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)));
+            return DataSort.slice(startIndex, endIndex);
+        }
+        return [];
+    };
+
+    const arrIndexChange = (i: number) => {
+        setArrIndex(i)
     };
     
     return(
         <PostsBox>
-            {loggedIn && <Writin to="/youtube/kr-post/writin" >글 작성</Writin> }
             <PostsHeader>
                 <Title>한국</Title>
+                {/* 
                 <Search
-                    postsData={krData}
+                    postsData={getData}
                     searchQuery={searchQuery}
                     searchResult={searchResult}
                     setSearchQuery={setSearchQuery}
                     setSearchResult={setSearchResult}
-                 />
+                />
+                */}
             </PostsHeader>
+
+            <NavBox>
+                {getData && getData.map((obj, i) => (
+                    <NavItem key={i} onClick={() => arrIndexChange(i)}>{obj.date}</NavItem>
+                ))}
+            </NavBox>
+            
             <PostsBody>
-                {searchResult ? (
-                    searchResult.postsData.map((obj, i) => (
-                        <Link key={obj.postId} to={`/youtube/detail/kr/${obj.postId}`}>
-                            <div>{obj.title}</div>
-                            <div>
-                                <span>{obj.bibleVerse}</span>
-                                <span>{obj.date}</span>
-                            </div>
-                        </Link>
-                    ))
-                ) : (
-                    getPostsForCurrentPage().map((obj, i) => (
-                        <Link key={obj.postId} to={`/youtube/detail/kr/${obj.postId}`}>
-                            <div>{obj.title}</div>
-                            <div>
-                                <span>{obj.bibleVerse}</span>
-                                <span>{obj.date}</span>
-                            </div>
-                        </Link>
-                    ))
-                )}
+            {getPostsForCurrentPage().map((obj, i) => (
+                    <Link key={i} to={`/youtube/detail/en/${obj.id}`}>
+                        <div>{obj.title}</div>
+                        <div>
+                            <span>{obj.bible}</span>
+                            <span>{obj.date}</span>
+                        </div>
+                    </Link>
+                ))}
             </PostsBody>
+
             <Pagination 
-                data={krData}
-                arrIndex={null}
+                data={getData}
+                arrIndex={arrIndex}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
                 postsPerPage={postsPerPage}

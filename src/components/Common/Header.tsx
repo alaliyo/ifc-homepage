@@ -66,9 +66,9 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
                         <li><LinkStyled to='/schedule/weekly'>주보</LinkStyled></li>
                     </HeaderWrapper>
 
-                    <HeaderWrapper label='유튜브' to='/youtube/kr-posts'>
-                        <li><LinkStyled to='/youtube/kr-posts'>한국</LinkStyled></li>
-                        <li><LinkStyled to='/youtube/en-posts'>영어</LinkStyled></li>
+                    <HeaderWrapper label='유튜브' to='/youtube/youtube-kr'>
+                        <li><LinkStyled to='/youtube/youtube-kr'>한국</LinkStyled></li>
+                        <li><LinkStyled to='/youtube/youtube-en'>영어</LinkStyled></li>
                     </HeaderWrapper>
                     
                     <HeaderWrapper label='행사' to='/event-story/post'>

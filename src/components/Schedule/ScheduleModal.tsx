@@ -9,15 +9,18 @@ function ScheduleModal({eventData, showModal, setShowModal}: any) {
                 <Modal.Title>조회</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <ModalData>{eventData?.title}</ModalData>
-                <ModalData>{eventData?.date}</ModalData>
-                {eventData.content && <ModalData>{eventData.content}</ModalData>}
-                {eventData?.url && (
-                    <ModalData>
-                        <Link to={'/event-story/post/' + eventData.url}>게시물보기</Link>
-                    </ModalData>
+                {eventData && (
+                    <>
+                        <ModalData>{eventData?.title}</ModalData>
+                        <ModalData>{eventData?.date}</ModalData>
+                        {eventData.content && <ModalData>{eventData.content}</ModalData>}
+                        {eventData?.url && (
+                            <ModalData>
+                                <Link to={'/event-story/post/' + eventData.url}>게시물보기</Link>
+                            </ModalData>
+                        )}
+                    </>
                 )}
-                
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => setShowModal(false)}>

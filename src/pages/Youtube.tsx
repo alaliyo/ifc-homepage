@@ -1,49 +1,33 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Outlet, useOutletContext } from 'react-router-dom';
-import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
-import { dbService } from '../firebase';
+import { Outlet, useOutletContext, useLocation } from 'react-router-dom';
 import { PageBody } from './PageStyled';
 import PageNav from "../components/Common/PageNav";
-import { DataProps, YoutubeProps } from "../components/Youtube/YoutubeProps";
+import { YoutubeProps } from "../components/Youtube/YoutubeProps";
+import { YoutubeData, YoutubeDataArrayProps } from "../utils/dbService";
 
 function Youtube() {
-    const [krData, setkrDate] = useState<Array<DataProps>>([]); //게시물
-    const [enData, setEnDate] = useState<Array<DataProps>>([]); //게시물
+    const [getData, setGetData] = useState<YoutubeDataArrayProps[]>([]);
     const { windowWidth } = useOutletContext<YoutubeProps>(); // 웹 width 크기
-    const { loggedIn } = useOutletContext<YoutubeProps>(); // 로드인 여부
+    const location = useLocation().pathname.split('/')[2];
     const linkInfoArr = [
-        {title: '한국', LinkUrl: 'kr-posts'},
-        {title: '영어', LinkUrl: 'en-posts'},
+        {title: '한국', LinkUrl: 'youtube-kr'},
+        {title: '영어', LinkUrl: 'youtube-en'},
     ]
-    
-    // Get 게시물
+    console.log(getData);
+    // GET
     useEffect(() => {
-        const q = query(
-            collection(dbService, "youtobe-kr-posts"),
-            orderBy("date", "desc")
-        );
-        onSnapshot(q, (snapshot) => {
-            const postsArr: any = snapshot.docs.map((doc) => ({
-                ...doc.data(),
-            }));
-            setkrDate(postsArr);
-        });
-    }, [])
-
-    // Get 게시물
-    useEffect(() => {
-        const q = query(
-            collection(dbService, "youtobe-en-posts"),
-            orderBy("date", "desc")
-        );
-        onSnapshot(q, (snapshot) => {
-            const postsArr: any = snapshot.docs.map((doc) => ({
-                ...doc.data(),
-            }));
-            setEnDate(postsArr);
-        });
-    }, [])
+        const fetchData = async () => {
+            try {
+                const youtubeData = await YoutubeData(location);
+                setGetData(youtubeData ? youtubeData: []);
+            } catch (error) {
+                console.error("데이터를 불러오는 중 오류 발생:", error);
+            }
+        };
+        
+        fetchData();
+    }, [location]);
     
     return(
         <PageBody>
@@ -53,10 +37,8 @@ function Youtube() {
                     LinkInfo={linkInfoArr}
                 />
                 <Outlet context={{
-                    krData: krData,
-                    enData: enData,
+                    getData: getData,
                     windowWidth: windowWidth,
-                    loggedIn: loggedIn,
                 }} />
             </YoutubeBox>
         </PageBody>

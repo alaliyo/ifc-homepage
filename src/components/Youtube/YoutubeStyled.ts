@@ -35,8 +35,6 @@ export const Title = styled.p`
 `;
 
 export const PostsBody = styled.div`
-    border-top: 2px solid gray;
-
     a {
         display: block;
         text-decoration: none;

@@ -18,7 +18,7 @@ function AdminYoutube() {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
     const [editingItem, setEditingItem] = useState<YoutubeDataProps | null>(null);
-    
+
     const DropdownChange = (e: any) => {
         setDBPath(e.target.value);
     };
@@ -123,6 +123,9 @@ function AdminYoutube() {
             setTitle("");
             setBible("");
             setYoutubeUrl("");
+
+            const youtubeData = await YoutubeData(DBPath);
+            setGetData(youtubeData ? youtubeData : []);
         } catch (error) {
             return alert("새로고침 후 다시 시도해주세요" + error);
         }
@@ -148,6 +151,8 @@ function AdminYoutube() {
                         }
         
                         alert("게시물 삭제되었습니다.");
+                        const youtubeData = await YoutubeData(DBPath);
+                        setGetData(youtubeData ? youtubeData : []);
                     }
                 }
             } catch (error) {
@@ -157,6 +162,23 @@ function AdminYoutube() {
         }
     };
 
+    // 게시물 수정 버튼
+    const editSchedule = (item: YoutubeDataProps) => {
+        setEditingItem(item);
+        setDate(item.date);
+        setTitle(item.title);
+        setBible(item.bible);
+        setYoutubeUrl(item.url);
+    };
+
+    const cancelEdit = () => {
+        setEditingItem(null);
+        setDate("");
+        setTitle("");
+        setBible("");
+        setYoutubeUrl("");
+    };
+    
     // PUT
     const putYoutube = async () => {
         if (!editingItem) return;
@@ -191,6 +213,9 @@ function AdminYoutube() {
                     setTitle("");
                     setBible("");
                     setYoutubeUrl("");
+
+                    const youtubeData = await YoutubeData(DBPath);
+                    setGetData(youtubeData ? youtubeData : []);
                 }
             }
         } catch (error) {
@@ -252,7 +277,16 @@ function AdminYoutube() {
                         onChange={TextChange}
                     />
                 </InputGroup>
-                <Button variant="outline-secondary" type='submit'>완료</Button>
+                {editingItem ? (
+                    <div>
+                        <Button variant="outline-success" onClick={putYoutube}>
+                            수정
+                        </Button>
+                        <Button variant="outline-danger" onClick={cancelEdit}>
+                            취소
+                        </Button>
+                    </div>
+                ) : <Button variant="outline-secondary" type='submit'>완료</Button>}
             </FormBox>
 
             <NavBox>
@@ -269,7 +303,7 @@ function AdminYoutube() {
                                 <Button 
                                     variant="outline-secondary"
                                     size="sm"
-                                    onClick={() => setEditingItem(obj)}
+                                    onClick={() => editSchedule(obj)}
                                 >
                                     수정
                                 </Button>

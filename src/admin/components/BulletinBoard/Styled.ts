@@ -24,7 +24,7 @@ export const NavBox = styled.nav`
 `;
 
 export const NavItem = styled.div`
-    padding: 5px 15px;
+    padding: 10px 15px;
     color: #525252;
     font-size: 17px;
     font-weight: 900; 

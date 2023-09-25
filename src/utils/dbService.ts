@@ -66,7 +66,6 @@ export function HistoryData() {
 
 
 // 설교영상 DATE GET
-
 export interface YoutubeDataProps {
     id: number;
     title: string;

@@ -95,3 +95,24 @@ export const GoBun = styled.button`
         padding: 0;;
     }
 `;
+
+export const NavBox = styled.nav`
+    text-align: start;
+    height: auto;
+    width: 100%;
+    border-bottom: 1px solid gray;
+    padding: 0;
+    margin: auto;
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+`;
+
+export const NavItem = styled.div`
+    padding: 10px 15px;
+    color: #525252;
+    font-size: 17px;
+    font-weight: 900; 
+    white-space: nowrap;
+    cursor: pointer;
+`;

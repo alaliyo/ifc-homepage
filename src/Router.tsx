@@ -126,11 +126,11 @@ const router = createBrowserRouter([
                         element: <Youtube />,
                         children: [
                             {
-                                path: 'kr-posts',
+                                path: 'youtube-kr',
                                 element: <KrPosts />,
                             },
                             {
-                                path: 'En-posts',
+                                path: 'youtube-en',
                                 element: <EnPosts />,
                             },
                             {
