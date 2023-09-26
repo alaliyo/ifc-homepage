@@ -1,16 +1,31 @@
 import { useEffect, useState } from "react";
 import { GoBun, PageNumber, PaginationBox } from "./CommonStyled";
 
-function Pagination({ data, arrIndex, currentPage, setCurrentPage, postsPerPage } : any) {
+function Pagination({ 
+    data,
+    arrIndex,
+    currentPage,
+    setCurrentPage,
+    postsPerPage
+} : any) {
     const [totalPages, setTotalPages] = useState(1);
     
     const calculateTotalPages = () => {
-        if (data && arrIndex !== null && data.length > 0) {
-            const totalPages = Math.max(1, Math.ceil(data[arrIndex].contentsArr.length / postsPerPage));
+        if (data && data.length > 0) {
+            let totalDataLength = 0;
+            
+            if (data[arrIndex].contentsArr !== undefined) {
+                if (data[arrIndex].contentsArr && data[arrIndex].contentsArr.length > 0) {
+                    totalDataLength = data[arrIndex].contentsArr.length;
+                }
+            } else {
+                totalDataLength = data.length;
+            }
+            console.log(totalDataLength, arrIndex)
+            const totalPages = Math.max(1, Math.ceil(totalDataLength / postsPerPage));
             setTotalPages(totalPages);
-        } else if (data) {
-            const totalPages = Math.max(1, Math.ceil(data.length / postsPerPage));
-            setTotalPages(totalPages);
+        } else {
+            setTotalPages(1);
         }
     };
     
@@ -20,29 +35,35 @@ function Pagination({ data, arrIndex, currentPage, setCurrentPage, postsPerPage 
 
     useEffect(() => {
         calculateTotalPages();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data, arrIndex]);
-    
+    }, [data, arrIndex, postsPerPage]);
+
     const PostsPageDowon = () => {
-        currentPage > 1 && setCurrentPage((e: number) => e -= 1);
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
     };
 
     const PostsPageUp = () => {
-        currentPage < totalPages && setCurrentPage((e: number) => e += 1);
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
     };
-    // 페이징 끝
 
     return (
         <PaginationBox>
             <GoBun onClick={PostsPageDowon}>◀</GoBun>
             {Array.from({ length: totalPages }, (_, i) => (
-                <PageNumber key={i + 1} active={i + 1 === currentPage} onClick={() => handlePageChange(i + 1)}>
+                <PageNumber
+                    key={i + 1}
+                    active={i + 1 === currentPage}
+                    onClick={() => handlePageChange(i + 1)}
+                >
                     {i + 1}
                 </PageNumber>
             ))}
             <GoBun onClick={PostsPageUp}>▶</GoBun>
         </PaginationBox>
     );
-};
+}
 
 export default Pagination;

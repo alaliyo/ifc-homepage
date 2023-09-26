@@ -24,7 +24,6 @@ import Youtube from './pages/Youtube';
 import KrPosts from "./components/Youtube/KrPosts";
 import EnPosts from "./components/Youtube/EnPosts";
 import PostDetail from "./components/Youtube/PostDetail";
-import WritinPost from "./components/Youtube/WritinPost";
 
 
 import Ministry from './pages/Ministry';
@@ -136,10 +135,6 @@ const router = createBrowserRouter([
                             {
                                 path: 'detail/:category/:postsId',
                                 element: <PostDetail />,
-                            },
-                            {
-                                path: ':category/writin',
-                                element: <WritinPost />
                             },
                         ],
                     },

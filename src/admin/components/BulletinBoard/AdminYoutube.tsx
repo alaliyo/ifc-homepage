@@ -18,7 +18,7 @@ function AdminYoutube() {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
     const [editingItem, setEditingItem] = useState<YoutubeDataProps | null>(null);
-
+    
     const DropdownChange = (e: any) => {
         setDBPath(e.target.value);
     };
@@ -123,9 +123,6 @@ function AdminYoutube() {
             setTitle("");
             setBible("");
             setYoutubeUrl("");
-
-            const youtubeData = await YoutubeData(DBPath);
-            setGetData(youtubeData ? youtubeData : []);
         } catch (error) {
             return alert("새로고침 후 다시 시도해주세요" + error);
         }
@@ -151,8 +148,6 @@ function AdminYoutube() {
                         }
         
                         alert("게시물 삭제되었습니다.");
-                        const youtubeData = await YoutubeData(DBPath);
-                        setGetData(youtubeData ? youtubeData : []);
                     }
                 }
             } catch (error) {
@@ -168,7 +163,7 @@ function AdminYoutube() {
         setDate(item.date);
         setTitle(item.title);
         setBible(item.bible);
-        setYoutubeUrl(item.url);
+        setYoutubeUrl(item.url)
     };
 
     const cancelEdit = () => {
@@ -178,7 +173,7 @@ function AdminYoutube() {
         setBible("");
         setYoutubeUrl("");
     };
-    
+
     // PUT
     const putYoutube = async () => {
         if (!editingItem) return;
@@ -213,9 +208,6 @@ function AdminYoutube() {
                     setTitle("");
                     setBible("");
                     setYoutubeUrl("");
-
-                    const youtubeData = await YoutubeData(DBPath);
-                    setGetData(youtubeData ? youtubeData : []);
                 }
             }
         } catch (error) {
@@ -277,6 +269,7 @@ function AdminYoutube() {
                         onChange={TextChange}
                     />
                 </InputGroup>
+
                 {editingItem ? (
                     <div>
                         <Button variant="outline-success" onClick={putYoutube}>
@@ -286,7 +279,9 @@ function AdminYoutube() {
                             취소
                         </Button>
                     </div>
-                ) : <Button variant="outline-secondary" type='submit'>완료</Button>}
+                ) : (
+                    <Button variant="outline-secondary" type='submit'>완료</Button>
+                )}
             </FormBox>
 
             <NavBox>

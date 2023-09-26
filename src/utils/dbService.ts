@@ -81,7 +81,7 @@ export interface YoutubeDataArrayProps {
 
 export async function YoutubeData(collectionPath: string): Promise<YoutubeDataArrayProps[]> {
     try {
-        const q = query(collection(dbService, collectionPath), orderBy("date", "asc"));
+        const q = query(collection(dbService, collectionPath), orderBy("date", "desc"));
         const querySnapshot = await getDocs(q);
         const pastorsData: YoutubeDataArrayProps[] = querySnapshot.docs.map((doc) => ({
             id: doc.id,

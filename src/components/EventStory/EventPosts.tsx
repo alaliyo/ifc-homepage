@@ -22,11 +22,20 @@ function EventPosts() {
     const { loggedIn } = useOutletContext<EventPostProps>();
     const { posts } = useOutletContext<EventPostProps>();
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchResult, setSearchResult] = useState<EventPostProps | undefined>(); // 검색 결과를 저장할 배열
+    const [searchResult, setSearchResult] = useState<PostProps[] | undefined>(); // 검색 결과를 저장할 배열
     
     const getPostsForCurrentPage = () => {
-        const targetPosts = searchResult ? searchResult.postsData : posts;
+        const targetPosts = searchResult ? searchResult : posts;
         return targetPosts;
+    };
+
+    // 검색 실행
+    const handleSearch = () => {
+        const filteredData = posts.filter((item) =>
+            item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.date.toLowerCase().includes(searchQuery)
+        );
+        setSearchResult(filteredData);
     };
 
     return(
@@ -35,31 +44,19 @@ function EventPosts() {
             <PostsHeader>
                 <Title>게시물</Title>
                 <Search
-                    postsData={posts}
                     searchQuery={searchQuery}
-                    searchResult={searchResult}
                     setSearchQuery={setSearchQuery}
-                    setSearchResult={setSearchResult}
+                    handleSearch={handleSearch}
                 />
             </PostsHeader>
             <CardsBox>
-                {searchResult ? (
-                    getPostsForCurrentPage().map((e, i) => (
-                        <PostCard
-                            key={i}
-                            post={e}
-                            num={i}
-                        />
-                    ))
-                ):(
-                    posts.map((e, i) => (
-                        <PostCard
-                            key={i}
-                            post={e}
-                            num={i}
-                        />
-                    ))
-                )}
+                {posts && posts.length > 0 && getPostsForCurrentPage().map((e: any, i) => (
+                    <PostCard
+                        key={i}
+                        post={e}
+                        num={i}
+                    />
+                ))}
             </CardsBox>
         </>
     );

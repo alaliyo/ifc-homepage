@@ -4,48 +4,56 @@ import { PostsBox, PostsHeader, Title, PostsBody} from './YoutubeStyled';
 import Search from "../Common/Search";
 import Pagination from "../Common/Pagination";
 import { NavBox, NavItem } from "../Common/CommonStyled";
-import { YoutubeDataArrayProps } from "../../utils/dbService";
-
-interface DateProps {
-    getData: YoutubeDataArrayProps[]
-};
+import { YoutubeDataProps } from "../../utils/dbService";
+import { DateProps } from "./YoutubeProps";
 
 function EnPosts() {
-    const { getData } = useOutletContext<DateProps>();
-    const [searchQuery, setSearchQuery] = useState('');
-    const [searchResult, setSearchResult] = useState<YoutubeDataArrayProps[] | undefined>(); // 검색 결과를 저장할 배열
-    const [arrIndex, setArrIndex] = useState(0);
+    const { getData, arrIndex, setArrIndex } = useOutletContext<DateProps>();
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResult, setSearchResult] = useState<YoutubeDataProps[] | undefined>(undefined);
     
     // 페이징 DATA
     const getPostsForCurrentPage = () => {
-        if (getData && getData.length > 0) {
+        const dataToUse = searchResult || (getData && getData[arrIndex]?.contentsArr);
+        if (dataToUse && dataToUse.length > 0) {
             const startIndex = (currentPage - 1) * postsPerPage;
             const endIndex = startIndex + postsPerPage;
-            const DataSort = getData[arrIndex].contentsArr.sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)));
-            return DataSort.slice(startIndex, endIndex);
+            const DataSort = dataToUse.sort((a, b) =>
+                Number(new Date("20" + b.date)) - Number(new Date("20" + a.date)
+            )
+        );
+        return DataSort.slice(startIndex, endIndex);
         }
         return [];
-    }; 
-
+    };
+    
     const arrIndexChange = (i: number) => {
         setArrIndex(i)
+    };
+
+    // 검색 실행
+    const handleSearch = () => {
+        const dataToSearch = getData[arrIndex]?.contentsArr || getData;
+        const filteredData = dataToSearch.filter((item) =>
+            item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.date.toLowerCase().includes(searchQuery) || 
+            item.bible.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setSearchResult(filteredData);
+        setCurrentPage(1);
     };
     
     return(
         <PostsBox>
             <PostsHeader>
                 <Title>영어</Title>
-                {/* 
                 <Search
-                    postsData={getData}
                     searchQuery={searchQuery}
-                    searchResult={searchResult}
                     setSearchQuery={setSearchQuery}
-                    setSearchResult={setSearchResult}
+                    handleSearch={handleSearch}
                 />
-                */}
             </PostsHeader>
 
             <NavBox>
@@ -55,7 +63,7 @@ function EnPosts() {
             </NavBox>
             
             <PostsBody>
-                {getPostsForCurrentPage().map((obj, i) => (
+                {getData && getData.length > 0 && getPostsForCurrentPage().map((obj, i) => (
                     <Link key={i} to={`/youtube/detail/en/${obj.id}`}>
                         <div>{obj.title}</div>
                         <div>
@@ -66,7 +74,7 @@ function EnPosts() {
                 ))}
             </PostsBody>
             <Pagination 
-                data={getData}
+                data={searchResult && searchResult.length > 0 ? searchResult :  getData}
                 arrIndex={arrIndex}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}

@@ -21,7 +21,7 @@ function Youtube() {
         const fetchData = async () => {
             try {
                 const youtubeData = await YoutubeData(location);
-                setGetData(youtubeData ? youtubeData: []);
+                setGetData(youtubeData ? youtubeData : []);
             } catch (error) {
                 console.error("데이터를 불러오는 중 오류 발생:", error);
             }

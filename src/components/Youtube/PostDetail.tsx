@@ -1,29 +1,43 @@
 import { useEffect, useState } from 'react';
-import { useOutletContext, useParams, Link, useMatch } from 'react-router-dom';
+import { useParams, Link, useMatch, useLocation, useOutletContext } from 'react-router-dom';
 import styled from 'styled-components';
-import { YoutubeDataProps } from '../../utils/dbService';
+import { YoutubeData, YoutubeDataArrayProps, YoutubeDataProps } from '../../utils/dbService';
 import { DateProps } from './YoutubeProps';
 
 function PostDetail() {
-    const { getData, arrIndex } = useOutletContext<DateProps>();
-    const { postsId } = useParams(); // url의 post id 값
+    const [getData, setGetData] = useState<YoutubeDataArrayProps[]>([]);
+    const { arrIndex } = useOutletContext<DateProps>();
     const [post, setPost] = useState<YoutubeDataProps>(); // id 값 비교 상세 데이터 들고옴
     const match = useMatch('/youtube/detail/kr/:postsId');
     const currentUrl = match?.pathname;
+    const location = useLocation().pathname.split("/");
 
+    // GET
     useEffect(() => {
-        if (getData && getData.length > 0) {
-            const postObj = getData[arrIndex].contentsArr.find((obj) => obj.id === Number(postsId));
-            setPost(postObj);
+        const fetchData = async () => {
+            try {
+                const youtubeData = await YoutubeData(location[3] === "kr" ? "youtube-kr" : "youtube-en");
+                setGetData(youtubeData ? youtubeData : []);
+            } catch (error) {
+                console.error("데이터를 불러오는 중 오류 발생:", error);
+            }
+        };
+        
+        fetchData();
+    }, []);
+    
+    useEffect(() => {
+        if (getData.length > 0) {
+            setPost(getData[arrIndex].contentsArr.find(e => e.id === Number(location[4])));
         }
-    }, [getData, arrIndex, postsId]);
-
+    }, [getData]);
+    
     return (
         <PostDetailBox>
             <LinkBox>
                 <Link to={currentUrl === '/youtube/detail/kr/' ? '/youtube/youtube-kr' : '/youtube/youtube-en'}>←목록으로</Link>
             </LinkBox>
-            {post && (
+            {getData.length > 0 && post && (
                 <>
                     <PostBox>
                         <iframe
