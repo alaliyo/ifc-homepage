@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { FormBox, ListGroupItem, ListGroupStyled, NavBox, NavItem } from "./Styled";
 import { Button, Form, InputGroup } from "react-bootstrap";
-import { deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { dbService } from "../../../firebase";
 import styled from "styled-components";
-import { YoutubeData, YoutubeDataProps, YoutubeDataArrayProps } from "../../../utils/dbService";
+import { YoutubeData, YoutubeDataProps, YoutubeDataArrayProps, CommonPost } from "../../../utils/dbService";
 import Pagination from "../../../components/Common/Pagination";
 
 function AdminYoutube() {
     const [getData, setGetData] = useState<YoutubeDataArrayProps[] | undefined>();
     const [DBPath, setDBPath] = useState("youtube-kr");
-    const [date, setDate] = useState("");
-    const [title, setTitle] = useState("");
-    const [bible, setBible] = useState("");
+    const [youtubeDate, setYoutubeDate] = useState("");
+    const [youtubeTitle, setYoutubeTitle] = useState("");
+    const [youtubeBible, setYoutubeBible] = useState("");
     const [youtubeUrl, setYoutubeUrl] = useState("");
     const [arrIndex, setArrIndex] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
@@ -43,11 +43,11 @@ function AdminYoutube() {
             target: { name, value}
         } = e;
         if (name === "date") {
-            setDate(value);
+            setYoutubeDate(value);
         } else if (name === "title") {
-            setTitle(value);
+            setYoutubeTitle(value);
         } else if (name === "bible") {
-            setBible(value);
+            setYoutubeBible(value);
         } else if (name === "url") {
             setYoutubeUrl(value);
         }
@@ -65,68 +65,34 @@ function AdminYoutube() {
         };
         
         fetchData();
-    }, [DBPath]);
+    }, [DBPath, youtubeDate]);
 
     // POST
     const postYoutube = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
-        if (date === "") {
+        if (youtubeDate === "") {
             return alert("날짜를 입력해 주세요.");
-        } else if (title === "") {
+        } else if (youtubeTitle === "") {
             return alert("제목을 입력해 주세요.");
-        } else if (bible === "") {
+        } else if (youtubeBible === "") {
             return alert("성경 구절을 입력해 주세요.");
         } else if (youtubeUrl === "") {
             return alert("영상 url을 입력해 주세요.");
         }
 
         try {
-            const year = new Date(date).getFullYear();
-            const nowDate = Date.now();
-            const decadDocRef = doc(dbService, DBPath, `${year}`);
-            const deacadDocSnap = await getDoc(decadDocRef);
-
-            if (deacadDocSnap.exists()) {
-                // 데이터가 이미 존재하는 경우 배열에 내용 추가
-                const yearData = deacadDocSnap.data();
-                yearData.contentsArr.push({
-                    id: nowDate,
-                    date: date,
-                    title: title,
-                    bible: bible,
-                    url: youtubeUrl,
-                });
-
-                // 기존 데이터 업데이트
-                await updateDoc(decadDocRef, {
-                    contentsArr: yearData.contentsArr,
-                });
-            } else {
-                // 데이터가 없는 경우 새로운 데이터 생성
-                await setDoc(decadDocRef, {
-                date: year,
-                contentsArr: [
-                    {
-                        id: nowDate,
-                        date: date,
-                        title: title,
-                        bible: bible,
-                        url: youtubeUrl,
-                    }
-                ]
-                });
-            }
-
-            alert("게시물 작성이 완료 되었습니다.");
-            setDate("");
-            setTitle("");
-            setBible("");
+            const data = { date: youtubeDate, title: youtubeTitle, bible: youtubeBible, url:youtubeUrl };
+            const year = new Date(youtubeDate).getFullYear();
+            CommonPost(data, DBPath, year);
+            setYoutubeDate("");
+            setYoutubeTitle("");
+            setYoutubeBible("");
             setYoutubeUrl("");
         } catch (error) {
-            return alert("새로고침 후 다시 시도해주세요" + error);
+            return alert("새로 고침 후 작성 및 본사에 문의해주세요." + error);
         }
-    };
+    }
 
     // DELETE
     const deleteYoutube = async (id: number, title: string) => {
@@ -160,17 +126,17 @@ function AdminYoutube() {
     // 게시물 수정 버튼
     const editSchedule = (item: YoutubeDataProps) => {
         setEditingItem(item);
-        setDate(item.date);
-        setTitle(item.title);
-        setBible(item.bible);
+        setYoutubeDate(item.date);
+        setYoutubeTitle(item.title);
+        setYoutubeBible(item.bible);
         setYoutubeUrl(item.url)
     };
 
     const cancelEdit = () => {
         setEditingItem(null);
-        setDate("");
-        setTitle("");
-        setBible("");
+        setYoutubeDate("");
+        setYoutubeTitle("");
+        setYoutubeBible("");
         setYoutubeUrl("");
     };
 
@@ -189,9 +155,9 @@ function AdminYoutube() {
                         if (item.id === editingItem.id) {
                             return {
                                 ...item,
-                                date: date,
-                                title: title,
-                                bible: bible,
+                                date: youtubeDate,
+                                title: youtubeTitle,
+                                bible: youtubeBible,
                                 url: youtubeUrl,
                             };
                         }
@@ -204,9 +170,9 @@ function AdminYoutube() {
 
                     alert("연혁 수정되었습니다.");
                     setEditingItem(null);
-                    setDate("");
-                    setTitle("");
-                    setBible("");
+                    setYoutubeDate("");
+                    setYoutubeTitle("");
+                    setYoutubeBible("");
                     setYoutubeUrl("");
                 }
             }
@@ -231,13 +197,13 @@ function AdminYoutube() {
                     <Form.Control aria-label="First name"
                         type="date"
                         name="date"
-                        value={date}
+                        value={youtubeDate}
                         onChange={TextChange}
                     />
                     <Form.Control aria-label="Last name"
                         type="text"
                         name="date"
-                        value={date}
+                        value={youtubeDate}
                         onChange={TextChange}
                         placeholder="예) 2023-01-01"
                     />
@@ -248,14 +214,14 @@ function AdminYoutube() {
                     <Form.Control 
                         type="text"
                         name="title"
-                        value={title}
+                        value={youtubeTitle}
                         onChange={TextChange}
                     />
                     <InputGroup.Text>성경</InputGroup.Text>
                     <Form.Control 
                         type="text"
                         name="bible"
-                        value={bible}
+                        value={youtubeBible}
                         onChange={TextChange}
                     />
                 </InputGroup>

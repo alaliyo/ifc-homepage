@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { Button, Form, InputGroup } from "react-bootstrap";
-import { YearScheduleData } from "../../../utils/dbService";
+import { CommonPost, YearScheduleData } from "../../../utils/dbService";
 import { ChildTitle } from "../../style/CommonStyled";
 import { FormBox, ListGroupStyled, ListGroupItem, NavBox, NavItem, InputGroupCustom } from "./Styled";
 import { dbService } from "../../../firebase";
@@ -53,51 +53,20 @@ function AdminYear() {
         if (scheduleDate === "") {
             return alert("날짜를 입력해 주세요.");
         } else if (scheduleTitle === "") {
-            return alert("내용을 입력해 주세요.");
+            return alert("제목을 입력해 주세요.");
         }
 
         try {
+            const data = { date: scheduleDate, title: scheduleTitle, content: scheduleContent };
             const year = new Date(scheduleDate).getFullYear();
-            const nowDate = Date.now();
-            const yearDocRef = doc(dbService, "year-schedules", `${year}`);
-            const yearDocSnap = await getDoc(yearDocRef);
-
-            if (yearDocSnap.exists()) {
-                // 데이터가 이미 존재하는 경우 배열에 내용 추가
-                const yearData = yearDocSnap.data();
-                yearData.contentsArr.push({
-                    id: nowDate,
-                    date: scheduleDate,
-                    title: scheduleTitle,
-                    content: scheduleContent,
-                });
-
-                // 기존 데이터 업데이트
-                await updateDoc(yearDocRef, {
-                    contentsArr: yearData.contentsArr,
-                });
-            } else {
-                // 데이터가 없는 경우 새로운 데이터 생성
-                await setDoc(yearDocRef, {
-                date: year,
-                contentsArr: [
-                    {
-                        id: nowDate,
-                        date: scheduleDate,
-                        title: scheduleTitle,
-                        content: scheduleContent,
-                    }
-                ]
-                });
-            }
+            CommonPost(data, "year-schedules", year);
             setScheduleDate("");
             setScheduleTitle("");
             setScheduleContent("");
-            alert("연중계획이 추가 되었습니다.");
         } catch (error) {
-            return alert("새로고침 후 다시 시도해주세요" + error);
+            return alert("새로 고침 후 작성 및 본사에 문의해주세요." + error);
         }
-    };
+    }
 
     // DELETE
     const deleteSchedule = async (id: number, title: string) => {
