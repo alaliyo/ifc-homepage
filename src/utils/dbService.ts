@@ -121,3 +121,49 @@ export function PastorsData() {
 
     return pastorsData;
 }
+
+
+// COMMON POST
+export const CommonPost = async (collectionName: string, date: any) => {
+    try {
+        const decad = Math.floor(new Date(histroyDate).getFullYear() / 10) * 10;
+        const nowDate = Date.now();
+        const decadDocRef = doc(dbService, 'history', `${decad}`);
+        const deacadDocSnap = await getDoc(decadDocRef);
+        const obj: any = {
+            id: nowDate,
+            content: histroyContent
+        };
+        
+        if (histroyDate) obj.date = histroyDate;
+
+        if (deacadDocSnap.exists()) {
+            // 데이터가 이미 존재하는 경우 배열에 내용 추가
+            const yearData = deacadDocSnap.data();
+            yearData.contentsArr.push(obj);
+
+            // 기존 데이터 업데이트
+            await updateDoc(decadDocRef, {
+                contentsArr: yearData.contentsArr,
+            });
+        } else {
+            // 데이터가 없는 경우 새로운 데이터 생성
+            await setDoc(decadDocRef, {
+            date: decad,
+            contentsArr: [
+                {
+                    id: nowDate,
+                    date: histroyDate,
+                    content: histroyContent,
+                }
+            ]
+            });
+        }
+
+        alert("연혁 작성이 완료 되었습니다.");
+        setHistroyDate("");
+        setHistroyContent("");
+    } catch (error) {
+        return alert("새로고침 후 다시 시도해주세요" + error);
+    }
+};
