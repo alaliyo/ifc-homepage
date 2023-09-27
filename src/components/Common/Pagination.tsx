@@ -21,7 +21,7 @@ function Pagination({
             } else {
                 totalDataLength = data.length;
             }
-            console.log(totalDataLength, arrIndex)
+            
             const totalPages = Math.max(1, Math.ceil(totalDataLength / postsPerPage));
             setTotalPages(totalPages);
         } else {
@@ -35,6 +35,7 @@ function Pagination({
 
     useEffect(() => {
         calculateTotalPages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, arrIndex, postsPerPage]);
 
     const PostsPageDowon = () => {

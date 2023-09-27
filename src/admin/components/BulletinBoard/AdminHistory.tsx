@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { Button, Form, InputGroup } from "react-bootstrap";
-import { CommonPost, HistoryData } from "../../../utils/dbService";
+import { CommonDel, CommonPost, CommonPut, HistoryData } from "../../../utils/dbService";
 import { ChildTitle } from "../../style/CommonStyled";
-import { dbService } from "../../../firebase";
 import { FormBox, ListGroupItem, ListGroupStyled, NavBox, NavItem } from "./Styled";
 import Pagination from "../../../components/Common/Pagination";
 
@@ -15,7 +13,7 @@ function AdminHistory() {
     const [editingItem, setEditingItem] = useState<{ id: number; date: string; content: string } | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
-
+    
     // 페이징 DATA
     const getPostsForCurrentPage = () => {
         if (historyData) {
@@ -53,42 +51,18 @@ function AdminHistory() {
             return alert("내용을 입력해 주세요.");
         }
 
-        try {
-            const data = { date: histroyDate, content: histroyContent };
-            const year = Math.floor(new Date(histroyDate).getFullYear() / 10) * 10;
-            CommonPost(data, "history", year);
-            setHistroyDate("");
-            setHistroyContent("");
-        } catch (error) {
-            return alert("새로 고침 후 작성 및 본사에 문의해주세요." + error);
-        }
-    }
+        const data = { date: histroyDate, content: histroyContent };
+        const year = Math.floor(new Date(histroyDate).getFullYear() / 10) * 10;
+        CommonPost(data, "history", year);
+        setHistroyDate("");
+        setHistroyContent("");
+    };
 
-    // DELETE
+    // DEL
     const deleteHistory = async (id: number, content: string) => {
         if (window.confirm(`"${content}" 연혁을 삭제하시겠습니까?`)) {
-            try {
-                if (historyData) {
-                    const yearDocRef = doc(dbService, 'history', `${historyData[arrIndex].date}`);
-                    const yearDocSnap = await getDoc(yearDocRef);
-        
-                    if (yearDocSnap.exists()) {
-                        const yearData = yearDocSnap.data();
-                        const updatedContents = yearData.contentsArr.filter((item: any) => item.id !== id);
-        
-                        if (updatedContents.length === 0) {
-                            setArrIndex(0);
-                            await deleteDoc(yearDocRef);
-                        } else {
-                            await updateDoc(yearDocRef, {contentsArr: updatedContents});
-                        }
-        
-                        alert("연혁 삭제가 완료되었습니다.");
-                    }
-                }
-            } catch (error) {
-                console.error("에러 발생: ", error);
-                alert("연혁 삭제에 실패했습니다.");
+            if (historyData) {
+                CommonDel("history", `${historyData[arrIndex].date}`, id, setArrIndex);
             }
         }
     };
@@ -108,39 +82,10 @@ function AdminHistory() {
 
     // PUT
     const putHistory = async () => {
-        if (!editingItem) return;
-
-        try {
-            if (historyData) {
-                const yearDocRef = doc(dbService, 'history', `${historyData[arrIndex].date}`);
-                const yearDocSnap = await getDoc(yearDocRef);
-
-                if (yearDocSnap.exists()) {
-                    const yearData = yearDocSnap.data();
-                    const updatedContents = yearData.contentsArr.map((item: any) => {
-                        if (item.id === editingItem.id) {
-                            return {
-                                ...item,
-                                date: histroyDate,
-                                content: histroyContent,
-                            };
-                        }
-                        return item;
-                    });
-
-                    await updateDoc(yearDocRef, {
-                        contentsArr: updatedContents,
-                    });
-
-                    alert("연혁 수정이 완료되었습니다.");
-                    setEditingItem(null);
-                    setHistroyDate("");
-                    setHistroyContent("");
-                }
-            }
-        } catch (error) {
-            console.error("에러 발생: ", error);
-            alert("연혁 수정에 실패했습니다.");
+        if (historyData) {
+            const data = { date: histroyDate, content: histroyContent };
+            CommonPut(editingItem, "history", `${historyData[arrIndex].date}`, data);
+            cancelEdit()
         }
     };
 

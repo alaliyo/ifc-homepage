@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { Button, Form, InputGroup } from "react-bootstrap";
-import { CommonPost, YearScheduleData } from "../../../utils/dbService";
+import { CommonDel, CommonPost, CommonPut, YearScheduleData } from "../../../utils/dbService";
 import { ChildTitle } from "../../style/CommonStyled";
 import { FormBox, ListGroupStyled, ListGroupItem, NavBox, NavItem, InputGroupCustom } from "./Styled";
-import { dbService } from "../../../firebase";
 import Pagination from "../../../components/Common/Pagination";
 
 function AdminYear() {
@@ -16,7 +14,7 @@ function AdminYear() {
     const [editingItem, setEditingItem] = useState<{ id: number; date: string; title: string } | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
-    
+    console.log(yearScheduleData);
     // 페이징 DATA
     const getPostsForCurrentPage = () => {
         if (yearScheduleData) {
@@ -56,43 +54,19 @@ function AdminYear() {
             return alert("제목을 입력해 주세요.");
         }
 
-        try {
-            const data = { date: scheduleDate, title: scheduleTitle, content: scheduleContent };
-            const year = new Date(scheduleDate).getFullYear();
-            CommonPost(data, "year-schedules", year);
-            setScheduleDate("");
-            setScheduleTitle("");
-            setScheduleContent("");
-        } catch (error) {
-            return alert("새로 고침 후 작성 및 본사에 문의해주세요." + error);
-        }
+        const year = new Date(scheduleDate).getFullYear();
+        const data = { date: scheduleDate, title: scheduleTitle, content: scheduleContent };
+        CommonPost(data, "year-schedules", year);
+        setScheduleDate("");
+        setScheduleTitle("");
+        setScheduleContent("");
     }
 
-    // DELETE
-    const deleteSchedule = async (id: number, title: string) => {
-        if (window.confirm(`"${title}" 게시물을 삭제하시겠습니까?`)) {
-            try {
-                if (yearScheduleData) {
-                    const yearDocRef = doc(dbService, "year-schedules", `${yearScheduleData[arrIndex].date}`);
-                    const yearDocSnap = await getDoc(yearDocRef);
-                    
-                    if (yearDocSnap.exists()) {
-                        const yearData = yearDocSnap.data();
-                        const updatedContents = yearData.contentsArr.filter((item: any) => item.id !== id);
-        
-                        if (updatedContents.length === 0) {
-                            setArrIndex(0);
-                            await deleteDoc(yearDocRef);
-                        } else {
-                            await updateDoc(yearDocRef, {contentsArr: updatedContents});
-                        }
-        
-                        alert("게시물 삭제가 완료되었습니다.");
-                    }
-                }
-            } catch (error) {
-                console.error("에러 발생: ", error);
-                alert("게시물 삭제에 실패했습니다.");
+    // DEL
+    const deleteSchedule = async (id: number, content: string) => {
+        if (window.confirm(`"${content}" 연혁을 삭제하시겠습니까?`)) {
+            if (yearScheduleData) {
+                CommonDel("year-schedules", `${yearScheduleData[arrIndex].date}`, id, setArrIndex);
             }
         }
     };
@@ -111,47 +85,16 @@ function AdminYear() {
         setScheduleTitle("");
         setScheduleContent("");
     };
-    
+
     // PUT
     const putSchedule = async () => {
-        if (!editingItem) return;
-
-        try {
-            if (yearScheduleData) {
-                const yearDocRef = doc(dbService, "year-schedules", `${yearScheduleData[arrIndex].date}`);
-                const yearDocSnap = await getDoc(yearDocRef);
-
-                if (yearDocSnap.exists()) {
-                    const yearData = yearDocSnap.data();
-                    const updatedContents = yearData.contentsArr.map((item: any) => {
-                        if (item.id === editingItem.id) {
-                            return {
-                                ...item,
-                                date: scheduleDate,
-                                title: scheduleTitle,
-                                content: scheduleContent
-                            };
-                        }
-                        return item;
-                    });
-
-                    await updateDoc(yearDocRef, {
-                        contentsArr: updatedContents,
-                    });
-
-                    alert("연혁 수정이 완료되었습니다.");
-                    setEditingItem(null);
-                    setScheduleDate("");
-                    setScheduleTitle("");
-                    setScheduleContent("");
-                }
-            }
-        } catch (error) {
-            console.error("에러 발생: ", error);
-            alert("연혁 수정에 실패했습니다.");
+        if (yearScheduleData) {
+            const data = { date: scheduleDate, title: scheduleTitle, content: scheduleContent };
+            CommonPut(editingItem, "year-schedules", `${yearScheduleData[arrIndex].date}`, data);
+            cancelEdit();
         }
     };
-
+ 
     return(
         <div>
             <ChildTitle>연중계획</ChildTitle>

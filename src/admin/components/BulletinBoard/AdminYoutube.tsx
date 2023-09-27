@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { FormBox, ListGroupItem, ListGroupStyled, NavBox, NavItem } from "./Styled";
 import { Button, Form, InputGroup } from "react-bootstrap";
-import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
-import { dbService } from "../../../firebase";
 import styled from "styled-components";
-import { YoutubeData, YoutubeDataProps, YoutubeDataArrayProps, CommonPost } from "../../../utils/dbService";
+import { YoutubeData, YoutubeDataProps, YoutubeDataArrayProps, CommonPost, CommonDel, CommonPut } from "../../../utils/dbService";
 import Pagination from "../../../components/Common/Pagination";
 
 function AdminYoutube() {
@@ -18,6 +16,7 @@ function AdminYoutube() {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
     const [editingItem, setEditingItem] = useState<YoutubeDataProps | null>(null);
+    const [loding, setLoding] = useState(false);
     
     const DropdownChange = (e: any) => {
         setDBPath(e.target.value);
@@ -65,7 +64,7 @@ function AdminYoutube() {
         };
         
         fetchData();
-    }, [DBPath, youtubeDate]);
+    }, [DBPath, youtubeDate, loding]);
 
     // POST
     const postYoutube = async (e: { preventDefault: () => void; }) => {
@@ -81,44 +80,21 @@ function AdminYoutube() {
             return alert("영상 url을 입력해 주세요.");
         }
 
-        try {
-            const data = { date: youtubeDate, title: youtubeTitle, bible: youtubeBible, url:youtubeUrl };
-            const year = new Date(youtubeDate).getFullYear();
-            CommonPost(data, DBPath, year);
-            setYoutubeDate("");
-            setYoutubeTitle("");
-            setYoutubeBible("");
-            setYoutubeUrl("");
-        } catch (error) {
-            return alert("새로 고침 후 작성 및 본사에 문의해주세요." + error);
-        }
+        const data = { date: youtubeDate, title: youtubeTitle, bible: youtubeBible, url:youtubeUrl };
+        const year = new Date(youtubeDate).getFullYear();
+        CommonPost(data, DBPath, year);
+        setYoutubeDate("");
+        setYoutubeTitle("");
+        setYoutubeBible("");
+        setYoutubeUrl("");
     }
 
-    // DELETE
-    const deleteYoutube = async (id: number, title: string) => {
-        if (window.confirm(`"${title}" 게시물을 삭제하시겠습니까?`)) {
-            try {
-                if (getData) {
-                    const yearDocRef = doc(dbService, DBPath, `${getData[arrIndex].date}`);
-                    const yearDocSnap = await getDoc(yearDocRef);
-                    
-                    if (yearDocSnap.exists()) {
-                        const yearData = yearDocSnap.data();
-                        const updatedContents = yearData.contentsArr.filter((item: any) => item.id !== id);
-        
-                        if (updatedContents.length === 0) {
-                            setArrIndex(0);
-                            await deleteDoc(yearDocRef);
-                        } else {
-                            await updateDoc(yearDocRef, {contentsArr: updatedContents});
-                        }
-        
-                        alert("게시물 삭제되었습니다.");
-                    }
-                }
-            } catch (error) {
-                console.error("에러 발생: ", error);
-                alert("게시물 삭제에 실패했습니다.");
+    // DEL
+    const deleteYoutube = async (id: number, content: string) => {
+        if (window.confirm(`"${content}" 연혁을 삭제하시겠습니까?`)) {
+            if (getData) {
+                CommonDel(DBPath, `${getData[arrIndex].date}`, id, setArrIndex);
+                setLoding(e => !e)
             }
         }
     };
@@ -142,43 +118,10 @@ function AdminYoutube() {
 
     // PUT
     const putYoutube = async () => {
-        if (!editingItem) return;
-
-        try {
-            if (getData) {
-                const yearDocRef = doc(dbService, DBPath, `${getData[arrIndex].date}`);
-                const yearDocSnap = await getDoc(yearDocRef);
-
-                if (yearDocSnap.exists()) {
-                    const yearData = yearDocSnap.data();
-                    const updatedContents = yearData.contentsArr.map((item: any) => {
-                        if (item.id === editingItem.id) {
-                            return {
-                                ...item,
-                                date: youtubeDate,
-                                title: youtubeTitle,
-                                bible: youtubeBible,
-                                url: youtubeUrl,
-                            };
-                        }
-                        return item;
-                    });
-
-                    await updateDoc(yearDocRef, {
-                        contentsArr: updatedContents,
-                    });
-
-                    alert("연혁 수정되었습니다.");
-                    setEditingItem(null);
-                    setYoutubeDate("");
-                    setYoutubeTitle("");
-                    setYoutubeBible("");
-                    setYoutubeUrl("");
-                }
-            }
-        } catch (error) {
-            console.error("에러 발생: ", error);
-            alert("연혁 수정에 실패했습니다.");
+        if (getData) {
+            const data = { date: youtubeDate, title: youtubeTitle, bible: youtubeBible, url:youtubeUrl };
+            CommonPut(editingItem, DBPath, `${getData[arrIndex].date}`, data);
+            cancelEdit();
         }
     };
 

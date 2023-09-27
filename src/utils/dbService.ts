@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { dbService } from "../firebase";
 
@@ -21,7 +21,7 @@ export function YearScheduleData() {
     useEffect(() => {
         const q = query(
             collection(dbService, "year-schedules"),
-            orderBy("date", "asc")
+            orderBy("date", "desc")
         );
         
         onSnapshot(q, (snapshot) => {
@@ -123,7 +123,7 @@ export function PastorsData() {
 }
 
 
-// COMMON POST
+// Common POST
 export const CommonPost = async (
     data: any,
     collectionName: string,
@@ -158,5 +158,72 @@ export const CommonPost = async (
         alert("작성이 완료");
     } catch (error) {
         return alert("새로고침 후 다시 시도해주세요" + error);
+    }
+};
+
+
+// Common DELETE
+export const CommonDel = async (
+    documentName: string,
+    collectionName: string,
+    id: number,
+    setArrIndex: any,
+) => {
+    try {
+        const yearDocRef = doc(dbService, documentName, collectionName);
+        const yearDocSnap = await getDoc(yearDocRef);
+        
+        if (yearDocSnap.exists()) {
+            const yearData = yearDocSnap.data();
+            const updatedContents = yearData.contentsArr.filter((item: any) => item.id !== id);
+
+            if (updatedContents.length === 0) {
+                setArrIndex(0);
+                await deleteDoc(yearDocRef);
+            } else {
+                await updateDoc(yearDocRef, {contentsArr: updatedContents});
+            }
+            alert("연혁 삭제가 완료되었습니다.");
+        }
+    } catch (error) {
+        console.error("에러 발생: ", error);
+        alert("연혁 삭제에 실패했습니다.");
+    }
+};
+
+
+// PUT
+export const CommonPut = async (
+    editingItem: any,
+    documentName: string,
+    collectionName: string,
+    data: any,
+) => {
+    if (!editingItem) return;
+
+    try {
+        const yearDocRef = doc(dbService, documentName, collectionName);
+        const yearDocSnap = await getDoc(yearDocRef);
+        if (yearDocSnap.exists()) {
+            const yearData = yearDocSnap.data();
+            const updatedContents = yearData.contentsArr.map((item: any) => {
+                if (item.id === editingItem.id) {
+                    return {
+                        ...item,
+                        ...data
+                    };
+                }
+                return item;
+            });
+
+            await updateDoc(yearDocRef, {
+                contentsArr: updatedContents,
+            });
+
+            alert("연혁 수정이 완료되었습니다.");
+        }
+    } catch (error) {
+        console.error("에러 발생: ", error);
+        alert("연혁 수정에 실패했습니다." + error);
     }
 };
