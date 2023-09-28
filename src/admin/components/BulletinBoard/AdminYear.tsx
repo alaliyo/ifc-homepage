@@ -14,10 +14,10 @@ function AdminYear() {
     const [editingItem, setEditingItem] = useState<{ id: number; date: string; title: string } | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
-    console.log(yearScheduleData);
+    
     // 페이징 DATA
     const getPostsForCurrentPage = () => {
-        if (yearScheduleData) {
+        if (yearScheduleData && yearScheduleData.length > 0) {
             const startIndex = (currentPage - 1) * postsPerPage;
             const endIndex = startIndex + postsPerPage;
             const DataSort = yearScheduleData[arrIndex].contentsArr.sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)));
@@ -56,7 +56,7 @@ function AdminYear() {
 
         const year = new Date(scheduleDate).getFullYear();
         const data = { date: scheduleDate, title: scheduleTitle, content: scheduleContent };
-        CommonPost(data, "year-schedules", year);
+        await CommonPost(data, "year-schedules", year);
         setScheduleDate("");
         setScheduleTitle("");
         setScheduleContent("");
@@ -90,7 +90,7 @@ function AdminYear() {
     const putSchedule = async () => {
         if (yearScheduleData) {
             const data = { date: scheduleDate, title: scheduleTitle, content: scheduleContent };
-            CommonPut(editingItem, "year-schedules", `${yearScheduleData[arrIndex].date}`, data);
+            await CommonPut(editingItem, "year-schedules", `${yearScheduleData[arrIndex].date}`, data);
             cancelEdit();
         }
     };
@@ -145,9 +145,7 @@ function AdminYear() {
                         </Button>
                     </div>
                 ) : (
-                    <Button variant="outline-secondary" type='submit'>
-                        완료
-                    </Button>
+                    <Button variant="outline-secondary" type='submit'>완료</Button>
                 )}
             </FormBox>
 

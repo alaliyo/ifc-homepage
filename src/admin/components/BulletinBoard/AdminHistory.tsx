@@ -16,7 +16,7 @@ function AdminHistory() {
     
     // 페이징 DATA
     const getPostsForCurrentPage = () => {
-        if (historyData) {
+        if (historyData && historyData.length > 0) {
             const startIndex = (currentPage - 1) * postsPerPage;
             const endIndex = startIndex + postsPerPage;
             const DataSort = historyData[arrIndex].contentsArr.sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)));
@@ -53,7 +53,7 @@ function AdminHistory() {
 
         const data = { date: histroyDate, content: histroyContent };
         const year = Math.floor(new Date(histroyDate).getFullYear() / 10) * 10;
-        CommonPost(data, "history", year);
+        await CommonPost(data, "history", year);
         setHistroyDate("");
         setHistroyContent("");
     };
@@ -62,7 +62,7 @@ function AdminHistory() {
     const deleteHistory = async (id: number, content: string) => {
         if (window.confirm(`"${content}" 연혁을 삭제하시겠습니까?`)) {
             if (historyData) {
-                CommonDel("history", `${historyData[arrIndex].date}`, id, setArrIndex);
+                await CommonDel("history", `${historyData[arrIndex].date}`, id, setArrIndex);
             }
         }
     };
@@ -84,7 +84,7 @@ function AdminHistory() {
     const putHistory = async () => {
         if (historyData) {
             const data = { date: histroyDate, content: histroyContent };
-            CommonPut(editingItem, "history", `${historyData[arrIndex].date}`, data);
+            await CommonPut(editingItem, "history", `${historyData[arrIndex].date}`, data);
             cancelEdit()
         }
     };
@@ -92,46 +92,44 @@ function AdminHistory() {
     return(
         <div>
             <ChildTitle>연혁</ChildTitle>
+            
+            <FormBox onSubmit={postHistory}>
+                <InputGroup className="mb-3">
+                    <InputGroup.Text>날짜</InputGroup.Text>
+                    <Form.Control aria-label="First name"
+                        type="date"
+                        name="date"
+                        value={histroyDate}
+                        onChange={contentText}
+                    />
+                    <Form.Control aria-label="Last name"
+                        type="text"
+                        name="date"
+                        onChange={contentText}
+                        value={histroyDate}
+                        placeholder="예) 2023-01-01"
+                    />
+                </InputGroup>
 
-            <div>
-                <FormBox onSubmit={postHistory}>
-                    <InputGroup className="mb-3">
-                        <InputGroup.Text>날짜</InputGroup.Text>
-                        <Form.Control aria-label="First name"
-                            type="date"
-                            name="date"
-                            value={histroyDate}
-                            onChange={contentText}
-                        />
-                        <Form.Control aria-label="Last name"
-                            type="text"
-                            name="date"
-                            onChange={contentText}
-                            value={histroyDate}
-                            placeholder="예) 2023-01-01"
-                        />
-                    </InputGroup>
+                <InputGroup className="mb-3">
+                    <InputGroup.Text>내용</InputGroup.Text>
+                    <Form.Control 
+                        type="text"
+                        name="content"
+                        value={histroyContent}
+                        onChange={contentText}
+                    />
+                </InputGroup>
 
-                    <InputGroup className="mb-3">
-                        <InputGroup.Text>내용</InputGroup.Text>
-                        <Form.Control 
-                            type="text"
-                            name="content"
-                            value={histroyContent}
-                            onChange={contentText}
-                        />
-                    </InputGroup>
-
-                    {editingItem ? (
-                        <div>
-                            <Button variant="outline-success" onClick={putHistory}>수정</Button>
-                            <Button variant="outline-danger" onClick={cancelEdit}>취소</Button>
-                        </div>
-                    ) : (
-                        <Button variant="outline-secondary" type='submit'>완료</Button>
-                    )}
-                </FormBox>
-            </div>
+                {editingItem ? (
+                    <div>
+                        <Button variant="outline-success" onClick={putHistory}>수정</Button>
+                        <Button variant="outline-danger" onClick={cancelEdit}>취소</Button>
+                    </div>
+                ) : (
+                    <Button variant="outline-secondary" type='submit'>완료</Button>
+                )}
+            </FormBox>
 
             <NavBox>
                 {historyData && historyData[0].contentsArr.length > 0 && historyData.map((obj, i) => (

@@ -82,7 +82,7 @@ function AdminYoutube() {
 
         const data = { date: youtubeDate, title: youtubeTitle, bible: youtubeBible, url:youtubeUrl };
         const year = new Date(youtubeDate).getFullYear();
-        CommonPost(data, DBPath, year);
+        await CommonPost(data, DBPath, year);
         setYoutubeDate("");
         setYoutubeTitle("");
         setYoutubeBible("");
@@ -120,7 +120,7 @@ function AdminYoutube() {
     const putYoutube = async () => {
         if (getData) {
             const data = { date: youtubeDate, title: youtubeTitle, bible: youtubeBible, url:youtubeUrl };
-            CommonPut(editingItem, DBPath, `${getData[arrIndex].date}`, data);
+            await CommonPut(editingItem, DBPath, `${getData[arrIndex].date}`, data);
             cancelEdit();
         }
     };

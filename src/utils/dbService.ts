@@ -2,7 +2,7 @@ import { collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query
 import { useEffect, useState } from "react";
 import { dbService } from "../firebase";
 
-// 연간계획 DATA GET
+// 연간계획 GET
 export interface ScheduleDataprops {
     title: string;
     date: string;
@@ -37,7 +37,7 @@ export function YearScheduleData() {
 }
 
 
-// 연혁 DATE GET
+// 연혁 GET
 export interface HistoryDataPoops {
     date: number;
     contentsArr: Array<{content: string, date: string, id: number}>
@@ -65,7 +65,7 @@ export function HistoryData() {
 }
 
 
-// 설교영상 DATE GET
+// 설교영상 GET
 export interface YoutubeDataProps {
     id: number;
     title: string;
@@ -95,7 +95,41 @@ export async function YoutubeData(collectionPath: string): Promise<YoutubeDataAr
 }
 
 
-// 섬김이 DATE GET
+// 주보 GET
+export interface WeekDataPoops {
+    date: string;
+    id: number;
+    imgUrls: Array<string>;
+}
+
+export interface WeekDataArrayPoops {
+    date: number;
+    contentsArr: Array<WeekDataPoops>
+}
+
+export function WeeklyData() {
+    const [weeklyData, setWeeklyData] = useState<WeekDataArrayPoops[]>();
+
+    useEffect(() => {
+        const q = query(
+            collection(dbService, "week"),
+            orderBy("date", "desc")
+        );
+        
+        onSnapshot(q, (snapshot) => {
+            const historyArr: any = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setWeeklyData(historyArr);
+        });
+    }, []);
+
+    return weeklyData;
+}
+
+
+// 섬김이 GET
 export interface PastorsDataPoops {
     separationText: string;
     detail: Array<{name: string, img: string, id: number}>
@@ -155,7 +189,7 @@ export const CommonPost = async (
             });
         }
 
-        alert("작성이 완료");
+        alert("작성이 완료되었습니다.");
     } catch (error) {
         return alert("새로고침 후 다시 시도해주세요" + error);
     }
@@ -183,16 +217,15 @@ export const CommonDel = async (
             } else {
                 await updateDoc(yearDocRef, {contentsArr: updatedContents});
             }
-            alert("연혁 삭제가 완료되었습니다.");
+            alert("삭제가 되었습니다.");
         }
     } catch (error) {
-        console.error("에러 발생: ", error);
-        alert("연혁 삭제에 실패했습니다.");
+        return alert("새로고침 후 다시 시도해주세요" + error);
     }
 };
 
 
-// PUT
+// Common PUT
 export const CommonPut = async (
     editingItem: any,
     documentName: string,
@@ -220,10 +253,9 @@ export const CommonPut = async (
                 contentsArr: updatedContents,
             });
 
-            alert("연혁 수정이 완료되었습니다.");
+            alert("수정이 완료되었습니다.");
         }
     } catch (error) {
-        console.error("에러 발생: ", error);
-        alert("연혁 수정에 실패했습니다." + error);
+        return alert("새로고침 후 다시 시도해주세요" + error);
     }
 };

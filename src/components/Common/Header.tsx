@@ -63,7 +63,7 @@ function Header({ WindowSize, loggedIn }: HeaderProps ) {
                     <HeaderWrapper label='교회일정' to='/schedule/worship-time'>
                         <li><LinkStyled to='/schedule/worship-time'>예배시간</LinkStyled></li>
                         <li><LinkStyled to='/schedule/year'>연중계획</LinkStyled></li>
-                        <li><LinkStyled to='/schedule/weekly'>주보</LinkStyled></li>
+                        <li><LinkStyled to='/schedule/weekly/list'>주보</LinkStyled></li>
                     </HeaderWrapper>
 
                     <HeaderWrapper label='유튜브' to='/youtube/youtube-kr'>

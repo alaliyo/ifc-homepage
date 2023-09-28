@@ -37,6 +37,8 @@ import EventPosts from "./components/EventStory/EventPosts";
 import EventPostDetail from "./components/EventStory/EventPostDetail";
 import EventWritin from "./components/EventStory/EventWritin";
 import Weekly from "./components/Schedule/Weekly";
+import WeeklyList from "./components/Schedule/WeeklyList";
+import WeeklyDetail from "./components/Schedule/WeeklyDetail";
 
 
 import AdminPage from "./admin/AdminPage";
@@ -48,6 +50,7 @@ import AdminHistory from "./admin/components/BulletinBoard/AdminHistory";
 import AdminYear from "./admin/components/BulletinBoard/AdminYear";
 import AdminServers from "./admin/components/BulletinBoard/AdminServers";
 import AdminYoutube from "./admin/components/BulletinBoard/AdminYoutube";
+import AdminWeekly from "./admin/components/BulletinBoard/AdminWeekly";
 
 import User from "./admin/pages/User";
 
@@ -117,6 +120,16 @@ const router = createBrowserRouter([
                             {
                                 path: 'weekly',
                                 element: <Weekly />,
+                                children: [
+                                    {
+                                        path: "list",
+                                        element: <WeeklyList />,
+                                    },
+                                    {
+                                        path: ":postId",
+                                        element: <WeeklyDetail />,
+                                    },
+                                ]
                             },
                         ],
                     },
@@ -210,6 +223,10 @@ const router = createBrowserRouter([
                     {
                         path: "servers",
                         element: <AdminServers />,
+                    },
+                    {
+                        path: "weekly",
+                        element: <AdminWeekly />,
                     },
                 ]
             },

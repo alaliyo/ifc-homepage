@@ -13,7 +13,7 @@ function Schedule() {
     const linkInfoArr = [
         {title: '예배시간', LinkUrl: 'worship-time'},
         {title: '연중계획', LinkUrl: 'year'},
-        {title: '주보', LinkUrl: 'weekly'},
+        {title: '주보', LinkUrl: 'weekly/list'},
     ]
 
     return(

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link, useMatch, useLocation, useOutletContext } from 'react-router-dom';
+import { Link, useMatch, useLocation, useOutletContext } from 'react-router-dom';
 import styled from 'styled-components';
 import { YoutubeData, YoutubeDataArrayProps, YoutubeDataProps } from '../../utils/dbService';
 import { DateProps } from './YoutubeProps';
@@ -24,13 +24,13 @@ function PostDetail() {
         };
         
         fetchData();
-    }, []);
+    }, [location]);
     
     useEffect(() => {
         if (getData.length > 0) {
             setPost(getData[arrIndex].contentsArr.find(e => e.id === Number(location[4])));
         }
-    }, [getData]);
+    }, [arrIndex, getData, location]);
     
     return (
         <PostDetailBox>
