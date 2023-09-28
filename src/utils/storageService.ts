@@ -1,11 +1,16 @@
 import { storage } from "../firebase";
 import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import imageCompression from 'browser-image-compression';
 
 // common Upload image
 export const uploadImage = async (weekDate: string, imgs: Array<File>) => {
     const imageUrlPromises: Promise<string>[] = [];
     const allowedExtensions = ['.jpg', '.png', '.jpeg'];
     const fileExtension = imgs.map((e: { name: string; }) => e.name.substring(e.name.lastIndexOf('.')).toLowerCase());
+    const options = { 
+        maxSizeMB: 0.6, 
+        maxWidthOrHeight: 1000
+    }
 
     for (const e of fileExtension) {
         if (!allowedExtensions.includes(e)) {
@@ -14,7 +19,7 @@ export const uploadImage = async (weekDate: string, imgs: Array<File>) => {
     }
 
     for (let i = 0; i < imgs.length; i++) {
-        const image = imgs[i];
+        const image = await imageCompression(imgs[i], options);
         const storageRef = ref(storage, `week/${weekDate}_${i}.png`);
         
         try {

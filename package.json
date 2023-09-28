@@ -19,6 +19,7 @@
     "@types/react-dom": "^18.0.11",
     "@types/react-query": "^1.2.9",
     "@types/swiper": "^6.0.0",
+    "browser-image-compression": "^2.0.2",
     "firebase": "^9.19.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
