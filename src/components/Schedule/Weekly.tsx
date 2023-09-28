@@ -80,7 +80,6 @@ const FormStyled = styled.form`
     width: 400px;
     margin: 50px auto;
     display: flex block;
-    align-items: center;
 
     @media screen and (max-width: 768px) {
         width: 90%;
