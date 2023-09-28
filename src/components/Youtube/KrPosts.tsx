@@ -60,15 +60,15 @@ function KrPosts() {
             </NavBox>
             
             <PostsBody>
-            {getPostsForCurrentPage().map((obj, i) => (
-                <Link key={i} to={`/youtube/detail/kr/${obj.id}`}>
-                    <div>{obj.title}</div>
-                    <div>
-                        <span>{obj.bible}</span>
-                        <span>{obj.date}</span>
-                    </div>
-                </Link>
-            ))}
+                {getData.length > 0 && getPostsForCurrentPage().map((obj, i) => (
+                    <Link key={i} to={`/youtube/detail/kr/${obj.id}`}>
+                        <div>{obj.title}</div>
+                        <div>
+                            <span>{obj.bible}</span>
+                            <span>{obj.date}</span>
+                        </div>
+                    </Link>
+                ))}
             </PostsBody>
 
             <Pagination 

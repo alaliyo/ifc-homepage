@@ -1,16 +1,11 @@
 import { OutletBox, PageBody } from "./PageStyled";
-import { Outlet, useOutletContext } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { dbService } from "../firebase";
 import styled from "styled-components";
 
-interface EventProps {
-    loggedIn: boolean;
-}
-
 function EventStory() {
-    const { loggedIn } = useOutletContext<EventProps>();
     const [posts, setPosts] = useState([]);
 
     // Get 게시물
@@ -32,7 +27,6 @@ function EventStory() {
         <PageBody>
             <OutletBoxstyle>
                 <Outlet context={{
-                    loggedIn: loggedIn,
                     posts: posts,
                 }} />
             </OutletBoxstyle>

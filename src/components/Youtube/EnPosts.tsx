@@ -70,6 +70,7 @@ function EnPosts() {
                     </Link>
                 ))}
             </PostsBody>
+            
             <Pagination 
                 data={searchResult && searchResult.length > 0 ? searchResult :  getData}
                 arrIndex={arrIndex}

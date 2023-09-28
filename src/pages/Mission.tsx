@@ -1,24 +1,22 @@
 import { ChildBox, OutletBox, PageBody } from './PageStyled';
-import { Outlet, useOutletContext } from "react-router-dom";
-import NavMission from "../components/Mission/NavMission";
-
-interface MissionProps { // props 타입
-    loggedIn: boolean;
-    windowWidth: number;
-}
+import { Outlet } from "react-router-dom";
+import PageNav from '../components/Common/PageNav';
 
 function Mission() {
-    const { loggedIn, windowWidth } = useOutletContext<MissionProps>();
-
+    const linkInfoArr = [
+        {title: "선교", LinkUrl: "/mission/overseas"},
+        {title: "전도", LinkUrl: "/mission/domestic"},
+    ]
+    
     return(
         <PageBody>
             <ChildBox>
-                <NavMission />
+                <PageNav
+                    title='일정'
+                    LinkInfo={linkInfoArr}
+                />
                 <OutletBox> 
-                    <Outlet context={{
-                        loggedIn: loggedIn,
-                        windowWidth: windowWidth,
-                    }} />
+                    <Outlet />
                 </OutletBox>
             </ChildBox>
         </PageBody>

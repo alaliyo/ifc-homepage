@@ -3,6 +3,7 @@ import { Body, ChildTitle } from '../Common/CommonStyled';
 import { Nav } from 'react-bootstrap';
 import { useState } from 'react';
 import { HistoryData } from '../../utils/dbService';
+import CommonSpinner from '../Common/CommonSpinner';
 
 function History() {
   const historyData = HistoryData();
@@ -11,32 +12,35 @@ function History() {
   const decadIndexChange = (index: number) => {
     setDecadIndex(index)
   }
-
+  
   return(
       <Body>
         <ChildTitle>교회 연혁</ChildTitle>
-        <Nav fill variant="tabs" defaultActiveKey="/home">
-          {historyData && historyData.map((obj, i) => (
-            <Nav.Item key={obj.date}>
-              <NavLink onClick={() => decadIndexChange(i)}>{obj.date}s</NavLink>
-            </Nav.Item>
-          ))}
-        </Nav>
-        <DecadBox>
-          <h2>{historyData && historyData[decadIndex].date}s</h2>
-          <Line></Line>
-        </DecadBox>
-        <div>
-          {historyData && historyData[decadIndex].contentsArr
-            .sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)))
-            .map((obj, i) => (
-              <HistoryBox key={i}>
-                <HistoryDate>{obj.date.replaceAll("-", ".")}</HistoryDate>
-                <HistoryContent>{obj.content}</HistoryContent>
-              </HistoryBox>              
-            ))
-          }
+        {historyData ? (<>
+          <Nav fill variant="tabs" defaultActiveKey="/home">
+            {historyData.map((obj, i) => (
+              <Nav.Item key={obj.date}>
+                <NavLink onClick={() => decadIndexChange(i)}>{obj.date}s</NavLink>
+              </Nav.Item>
+            ))}
+          </Nav>
+          <DecadBox>
+            <h2>{historyData && historyData[decadIndex].date}s</h2>
+            <Line></Line>
+          </DecadBox>
+          <div>
+            {historyData && historyData[decadIndex].contentsArr
+              .sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)))
+              .map((obj, i) => (
+                <HistoryBox key={i}>
+                  <HistoryDate>{obj.date.replaceAll("-", ".")}</HistoryDate>
+                  <HistoryContent>{obj.content}</HistoryContent>
+                </HistoryBox>              
+              ))
+            }
         </div>
+          </>) : <CommonSpinner />
+        }
       </Body>
     );
 }

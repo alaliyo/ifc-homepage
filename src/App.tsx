@@ -1,6 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { authService } from './firebase';
 import { Spinner } from 'react-bootstrap';
 import Header from './components/Common/Header';
 import Footer from './components/Common/Footer';
@@ -9,7 +8,6 @@ import styled, { createGlobalStyle } from 'styled-components';
 function Root() {
   const [windowWidth, setwindowWidth] = useState(window.innerWidth); //웹 넓이 
   const [init, setInit] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
   const location = useLocation().pathname;
 
   //웹 넓이에 반응
@@ -32,12 +30,7 @@ function Root() {
 
   // 로그인 확인
   useEffect(() => {
-    authService.onAuthStateChanged((user) => {
-      if (user) {
-        setLoggedIn(true);
-      }
-      setInit(true);
-    })
+    setInit(true);
   }, []);
 
   return (
@@ -45,11 +38,10 @@ function Root() {
       {init ? (<>
         <GlobalStyle />
         {location === '/login' ? null : 
-          <Header WindowSize={windowWidth} loggedIn={loggedIn} />
+          <Header WindowSize={windowWidth} />
         }
         <Outlet context={{
           windowWidth: windowWidth,
-          loggedIn: loggedIn,
         }} />
         <Footer />
       </>) : (

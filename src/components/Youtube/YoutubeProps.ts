@@ -16,7 +16,6 @@ export interface ArrayProps {
 
 export interface YoutubeProps {
     windowWidth: number;
-    loggedIn: boolean;
 }
 
 export interface DateProps {

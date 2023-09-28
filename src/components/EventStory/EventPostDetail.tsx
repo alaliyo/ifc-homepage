@@ -13,7 +13,6 @@ interface PostProps {
 }
 
 interface EventPostProps {
-    loggedIn: boolean;
     posts: Array<PostProps>;
 }
 

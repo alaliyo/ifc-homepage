@@ -13,13 +13,11 @@ interface PostProps {
 }
 
 interface EventPostProps {
-    loggedIn: boolean;
     posts: Array<PostProps>;
     postsData: Array<PostProps>;
 }
 
 function EventPosts() {
-    const { loggedIn } = useOutletContext<EventPostProps>();
     const { posts } = useOutletContext<EventPostProps>();
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResult, setSearchResult] = useState<PostProps[] | undefined>(); // 검색 결과를 저장할 배열
@@ -40,7 +38,6 @@ function EventPosts() {
 
     return(
         <>
-            {loggedIn && <Writin to="writin">글 작성</Writin>}
             <PostsHeader>
                 <Title>게시물</Title>
                 <Search
