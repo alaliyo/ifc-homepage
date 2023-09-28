@@ -56,7 +56,7 @@ function Weekly() {
                     <FormStyled onSubmit={handleCertificationSubmit}>
                         <InputGroup>
                             <InputGroup.Text >
-                                인증번호
+                                인증
                             </InputGroup.Text>
                             <Form.Control
                                 type="password"
@@ -81,8 +81,12 @@ const FormStyled = styled.form`
     margin: 50px auto;
     display: flex block;
     align-items: center;
+
+    @media screen and (max-width: 768px) {
+        width: 90%;
+    }
 `;
 
 const ButtonStyled = styled(Button)`
-    width: 60px;
+    width: 65px;
 `;
