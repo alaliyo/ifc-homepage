@@ -53,6 +53,7 @@ import AdminYoutube from "./admin/components/BulletinBoard/AdminYoutube";
 import AdminWeekly from "./admin/components/BulletinBoard/AdminWeekly";
 
 import User from "./admin/pages/User";
+import Certification from "./admin/components/User/Certification";
 
 import Maintain from "./admin/pages/Maintain";
 
@@ -233,6 +234,12 @@ const router = createBrowserRouter([
             {
                 path: "user",
                 element: <User />,
+                children: [
+                    {
+                        path: "certification",
+                        element: <Certification />,
+                    },
+                ]
             },
             {
                 path: "maintain",

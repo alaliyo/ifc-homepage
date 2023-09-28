@@ -156,6 +156,31 @@ export function PastorsData() {
     return pastorsData;
 }
 
+// 인증 GET
+export interface CertificationPoops {
+    id: string;
+    password: string;
+}
+
+export function CertificationData() {
+    const [certificationData, setCertificationData] = useState<CertificationPoops[]>();
+
+    useEffect(() => {
+        const q = query(
+            collection(dbService, "certification"),
+        );
+        
+        onSnapshot(q, (snapshot) => {
+            const pastorsArr: any = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setCertificationData(pastorsArr);
+        });
+    }, []);
+
+    return certificationData;
+}
 
 // Common POST
 export const CommonPost = async (

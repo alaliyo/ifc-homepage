@@ -1,12 +1,20 @@
+import { Outlet } from "react-router-dom";
+import AdminNav from "../AdminNav";
 import { useLogInChack } from "../hooks/Chack";
-import { AdminPageBox } from "../style/CommonStyled";
+import { AdminPageBox, LayoutBox } from "../style/CommonStyled";
 
 function User() {
     useLogInChack();
+    const LinkInfo = [
+        {LinkUrl: "certification", title:"인증"},
+    ];
     
     return(
         <AdminPageBox>
-            <h1>회원관리</h1>
+            <AdminNav LinkInfo={LinkInfo}/>
+            <LayoutBox>
+                <Outlet />
+            </LayoutBox>
         </AdminPageBox>
     )
 }

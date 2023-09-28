@@ -50,6 +50,7 @@ function WeeklyList() {
                     handleSearch={handleSearch}
                 />
             </SearchBox>
+            
             <NavBox>
                 {getData && getData.map((obj, i) => (
                     <NavItem key={i} onClick={() => arrIndexChange(i)}>{obj.date}</NavItem>
@@ -63,6 +64,7 @@ function WeeklyList() {
                     </Link>
                 ))}
             </PostsBody>
+
             <Pagination 
                 data={searchResult && searchResult.length > 0 ? searchResult :  getData}
                 arrIndex={arrIndex}
