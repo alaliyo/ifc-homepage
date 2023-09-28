@@ -79,7 +79,7 @@ export default Weekly;
 const FormStyled = styled.form`
     width: 400px;
     margin: 50px auto;
-    display: flex block;
+    display: flex;
 
     @media screen and (max-width: 768px) {
         width: 90%;
