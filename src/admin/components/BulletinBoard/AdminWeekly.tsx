@@ -2,16 +2,15 @@ import { Button, Form, InputGroup } from "react-bootstrap";
 import { ChildTitle } from "../../style/CommonStyled";
 import { FormBox, ListGroupItem, ListGroupStyled, NavBox, NavItem } from "./Styled";
 import { useState } from "react";
-import { CommonPost, WeeklyData, WeekDataPoops, CommonDel } from "../../../utils/dbService";
+import { CommonPost, WeeklyData, WeekDataPoops, CommonDel, CommonPutImg } from "../../../utils/dbService";
 import { DeleteImages, uploadImage } from '../../../utils/storageService';
 import Pagination from "../../../components/Common/Pagination";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { dbService } from "../../../firebase";
 
 function AdminWeek() {
     const weeklyData = WeeklyData();
     const [weeklyDate, setWeeklyDate] = useState("");
     const [imgs, setImgs] = useState<Array<File>>([]);
+    const [urls, setUrls] = useState<Array<string>>([])
     const [arrIndex, setArrIndex] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
@@ -55,10 +54,10 @@ function AdminWeek() {
             return alert("사진을 첨부해 주세요.");
         }
 
-        const imageUrls = await uploadImage(weeklyDate, imgs);
+        const imageUrls = await uploadImage("weekly", weeklyDate, imgs);
         const year = new Date(weeklyDate).getFullYear();
         const data = { date: weeklyDate, imgUrls: imageUrls };
-        await CommonPost(data, "week", year);
+        await CommonPost(data, "weekly", year);
         setWeeklyDate("");
         setImgs([]);
     };
@@ -67,7 +66,7 @@ function AdminWeek() {
     const deleteWeek = async (id: number, date: string, imgUrls: Array<string>) => {
         if (window.confirm(`"${date}" 주보를 삭제하시겠습니까?`)) {
             if (weeklyData) {
-                CommonDel("week", `${weeklyData[arrIndex].date}`, id, setArrIndex);
+                CommonDel("weekly", `${weeklyData[arrIndex].date}`, id, setArrIndex);
                 DeleteImages(imgUrls);
             }
         }
@@ -77,57 +76,21 @@ function AdminWeek() {
     const editSchedule = (item: WeekDataPoops) => {
         setEditingItem(item);
         setWeeklyDate(item.date);
+        setUrls(item.imgUrls);
     };
 
     const cancelEdit = () => {
         setEditingItem(null);
         setWeeklyDate("");
+        setUrls([]);
     };
 
     // PUT
     const putWeek = async () => {
-        if (!editingItem) return;
-        
-        if (weeklyData && weeklyData.length > 0) {
-            try {
-                const yearDocRef = doc(dbService, "week", weeklyData[arrIndex].date.toString());
-                const yearDocSnap = await getDoc(yearDocRef);
-                if (yearDocSnap.exists()) {
-                    const yearData = yearDocSnap.data();
-                    const updatedContents = yearData.contentsArr.map(async (item: any) => {
-                        if (item.id === editingItem.id) {
-                            if (imgs.length > 0) {
-                                const imageUrls = await uploadImage(weeklyDate, imgs);
-                                DeleteImages(editingItem.imgUrls);
-                                return {
-                                    ...item,
-                                    date: weeklyDate,
-                                    imgUrls: imageUrls,
-                                };
-                            } else {
-                                return {
-                                    ...item,
-                                    date: weeklyDate,
-                                };
-                            }  
-                        }
-                        return item;
-                    });
-        
-                    const updatedContentsData = await Promise.all(updatedContents);
-
-                    await updateDoc(yearDocRef, {
-                        contentsArr: updatedContentsData,
-                    });
-        
-                    alert("수정이 완료되었습니다.");
-
-                    setWeeklyDate("");
-                    setImgs([]);
-                }
-            } catch (error) {
-                return alert("새로고침 후 다시 시도해주세요" + error);
-            }
+        if (weeklyData) {
+            const data = {date: weeklyDate, imgUrls: urls};
+            CommonPutImg(editingItem, "weekly", `${weeklyData[arrIndex].date}`, data, imgs);
+            cancelEdit();
         }
     };
 

@@ -3,7 +3,7 @@ import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage
 import imageCompression from 'browser-image-compression';
 
 // common Upload image
-export const uploadImage = async (weekDate: string, imgs: Array<File>) => {
+export const uploadImage = async (folder: string, weekDate: string, imgs: Array<File>) => {
     const imageUrlPromises: Promise<string>[] = [];
     const allowedExtensions = ['.jpg', '.png', '.jpeg'];
     const fileExtension = imgs.map((e: { name: string; }) => e.name.substring(e.name.lastIndexOf('.')).toLowerCase());
@@ -20,7 +20,7 @@ export const uploadImage = async (weekDate: string, imgs: Array<File>) => {
 
     for (let i = 0; i < imgs.length; i++) {
         const image = await imageCompression(imgs[i], options);
-        const storageRef = ref(storage, `week/${weekDate}_${i}.png`);
+        const storageRef = ref(storage, `${folder}/${weekDate}_${i}.png`);
         
         try {
             await uploadBytes(storageRef, image);

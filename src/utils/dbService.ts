@@ -1,6 +1,7 @@
 import { collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { dbService } from "../firebase";
+import { DeleteImages, uploadImage } from "./storageService";
 
 // 연간계획 GET
 export interface ScheduleDataprops {
@@ -112,7 +113,7 @@ export function WeeklyData() {
 
     useEffect(() => {
         const q = query(
-            collection(dbService, "week"),
+            collection(dbService, "weekly"),
             orderBy("date", "desc")
         );
         
@@ -130,17 +131,25 @@ export function WeeklyData() {
 
 
 // 섬김이 GET
-export interface PastorsDataPoops {
-    separationText: string;
-    detail: Array<{name: string, img: string, id: number}>
+export interface ServersDataPoops {
+    name: string;
+    imgUrls: Array<string>;
+    id: number;
 }
 
-export function PastorsData() {
-    const [pastorsData, setPastorsData] = useState<PastorsDataPoops[]>();
+export interface ServersDataArrayPoops {
+    id: number
+    title: string;
+    separationText: string;
+    contentsArr: Array<ServersDataPoops>
+}
+
+export function ServersData() {
+    const [serversData, setServersData] = useState<ServersDataArrayPoops[]>();
 
     useEffect(() => {
         const q = query(
-            collection(dbService, "pastors"),
+            collection(dbService, "servers"),
             orderBy("id", "asc")
         );
         
@@ -149,11 +158,11 @@ export function PastorsData() {
                 id: doc.id,
                 ...doc.data(),
             }));
-            setPastorsData(pastorsArr);
+            setServersData(pastorsArr);
         });
     }, []);
 
-    return pastorsData;
+    return serversData;
 }
 
 // 인증 GET
@@ -250,7 +259,7 @@ export const CommonDel = async (
 };
 
 
-// Common PUT
+// Common PUT 이미지 없음
 export const CommonPut = async (
     editingItem: any,
     documentName: string,
@@ -276,6 +285,55 @@ export const CommonPut = async (
 
             await updateDoc(yearDocRef, {
                 contentsArr: updatedContents,
+            });
+
+            alert("수정이 완료되었습니다.");
+        }
+    } catch (error) {
+        return alert("새로고침 후 다시 시도해주세요" + error);
+    }
+};
+
+
+// Common PUT 이미지 있음
+export const CommonPutImg = async (
+    editingItem: any,
+    documentName: string,
+    collectionName: string,
+    data: any,
+    imgs: Array<File>,
+) => {
+    if (!editingItem) return;
+    
+    try {
+        const yearDocRef = doc(dbService, documentName, collectionName);
+        const yearDocSnap = await getDoc(yearDocRef);
+        if (yearDocSnap.exists()) {
+            const yearData = yearDocSnap.data();
+            const updatedContents = yearData.contentsArr.map(async (item: any) => {
+                if (item.id === editingItem.id) {
+                    if (imgs.length > 0) {
+                        DeleteImages(editingItem.imgUrls);
+                        const imageUrls = await uploadImage(documentName, data.name, imgs);
+                        return {
+                            ...item,
+                            ...data,
+                            imgUrls: imageUrls,
+                        };
+                    } else {
+                        return {
+                            ...item,
+                            ...data,
+                        };
+                    }  
+                }
+                return item;
+            });
+
+            const updatedContentsData = await Promise.all(updatedContents);
+
+            await updateDoc(yearDocRef, {
+                contentsArr: updatedContentsData,
             });
 
             alert("수정이 완료되었습니다.");

@@ -1,24 +1,24 @@
 import { Card } from 'react-bootstrap';
 import { CardBox, CardFrame, CardText, SeparationText, CardBody } from './IntroStyled';
 import { Body, ChildTitle } from '../Common/CommonStyled';
-import { PastorsData } from '../../utils/dbService';
+import { ServersData } from '../../utils/dbService';
 
 function Pastors() {
-    const pastorsData = PastorsData()
-
+    const serversData = ServersData();
+    
     return(
         <Body>
             <ChildTitle>교역자 소개</ChildTitle>
-            {pastorsData && pastorsData.slice(0, 2).map((obj, i) => (
+            {serversData && serversData.slice(0, 2).map((arr, i) => (
                 <div key={i}>
-                    <SeparationText>{obj.separationText}</SeparationText>
+                    <SeparationText>{arr.separationText}</SeparationText>
                     <CardBox>
-                    {obj.detail.map((detailobj, j) => (
+                    {arr.contentsArr.map((obj, j) => (
                         <CardFrame key={j}>
                             <Card>
-                                <Card.Img variant="top" src={detailobj.img} />
+                                <Card.Img variant="top" src={obj.imgUrls[0]} />
                                 <CardBody>
-                                    <CardText>{detailobj.name}</CardText>
+                                    <CardText>{obj.name}</CardText>
                                 </CardBody>
                             </Card>
                         </CardFrame>
