@@ -37,7 +37,7 @@ const PostTitle = styled.h4`
 
 const PostImg = styled.img`
     width: 90%;
-    margin: 0 auto;
+    margin: 0 auto 20px auto;
     display: block;
 
     @media screen and (max-width: 768px) {
