@@ -40,7 +40,7 @@ function Weekly() {
         // 인증 번호를 로컬 스토리지에 저장하고 인증 상태를 변경합니다.
         localStorage.setItem("weekly-certification", certification);
     }
-
+    
     return(
         <Body>
             <ChildTitle>주보</ChildTitle>

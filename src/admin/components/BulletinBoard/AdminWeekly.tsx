@@ -26,7 +26,7 @@ function AdminWeek() {
         }
         return [];
     };
-
+    console.log();
     const arrIndexChange = (i: number) => {
         setArrIndex(i)
     };
@@ -56,7 +56,7 @@ function AdminWeek() {
 
         const imageUrls = await uploadImage("weekly", weeklyDate, imgs);
         const year = new Date(weeklyDate).getFullYear();
-        const data = { date: weeklyDate, imgUrls: imageUrls };
+        const data = { name: weeklyDate, date: weeklyDate, imgUrls: imageUrls };
         await CommonPost(data, "weekly", year);
         setWeeklyDate("");
         setImgs([]);
@@ -88,7 +88,7 @@ function AdminWeek() {
     // PUT
     const putWeek = async () => {
         if (weeklyData) {
-            const data = {date: weeklyDate, imgUrls: urls};
+            const data = { name: weeklyDate, date: weeklyDate, imgUrls: urls };
             CommonPutImg(editingItem, "weekly", `${weeklyData[arrIndex].date}`, data, imgs);
             cancelEdit();
         }

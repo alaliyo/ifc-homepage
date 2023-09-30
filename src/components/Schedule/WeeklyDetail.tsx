@@ -14,15 +14,41 @@ function WeeklyDetail() {
             setPost(getData[arrIndex].contentsArr.find(e => e.id === Number(postId)));
         }
     }, [arrIndex, getData, postId])
+
+    const onClickPage = (url: string) => {
+        window.open(url, '_blank');
+    }
     
     return(
         <div>
             {post && (
                 <>
                     <PostTitle>{post.date} 주보</PostTitle>
-                    {post.imgUrls.map(url => (
-                        <PostImg src={url} alt="새로고침" />
-                    ))}
+                    <br />
+                    <h5>한국</h5>
+                    <PostImgBox>
+                        {post.imgUrls.slice(2, 4).map((url, i) => (
+                            <PostImg
+                                key={i}
+                                src={url}
+                                onClick={() => onClickPage(url)}
+                                alt="새로고침"
+                            />
+                        ))}
+                    </PostImgBox>
+                    <br />
+                    <br />
+                    <h5>외국</h5>
+                    <PostImgBox>
+                        {post.imgUrls.slice(0, 2).map((url, i) => (
+                            <PostImg
+                                key={i}
+                                src={url}
+                                onClick={() => onClickPage(url)}
+                                alt="새로고침"
+                            />
+                        ))}
+                    </PostImgBox>
                 </>
             )}
         </div>
@@ -35,12 +61,14 @@ const PostTitle = styled.h4`
     text-align: center;
 `;
 
-const PostImg = styled.img`
-    width: 90%;
-    margin: 0 auto 20px auto;
-    display: block;
+const PostImgBox = styled.div`
+    width: 100%;
+    overflow-x: scroll;
+    display: flex;
+`;
 
-    @media screen and (max-width: 768px) {
-        width: 95%;
-    }
+const PostImg = styled.img`
+    width: 100%;
+    margin: 0 20px;
+    cursor: pointer;
 `;

@@ -8,8 +8,8 @@ export const uploadImage = async (folder: string, weekDate: string, imgs: Array<
     const allowedExtensions = ['.jpg', '.png', '.jpeg'];
     const fileExtension = imgs.map((e: { name: string; }) => e.name.substring(e.name.lastIndexOf('.')).toLowerCase());
     const options = { 
-        maxSizeMB: 0.6, 
-        maxWidthOrHeight: 1000
+        maxSizeMB: 1, 
+        maxWidthOrHeight: 1500
     }
 
     for (const e of fileExtension) {
