@@ -97,19 +97,19 @@ export async function YoutubeData(collectionPath: string): Promise<YoutubeDataAr
 
 
 // 주보 GET
-export interface WeekDataPoops {
+export interface WeeklyDataPoops {
     date: string;
     id: number;
     imgUrls: Array<string>;
 }
 
-export interface WeekDataArrayPoops {
+export interface WeeklyDataArrayPoops {
     date: number;
-    contentsArr: Array<WeekDataPoops>
+    contentsArr: Array<WeeklyDataPoops>
 }
 
 export function WeeklyData() {
-    const [weeklyData, setWeeklyData] = useState<WeekDataArrayPoops[]>();
+    const [weeklyData, setWeeklyData] = useState<WeeklyDataArrayPoops[]>();
 
     useEffect(() => {
         const q = query(
@@ -189,6 +189,41 @@ export function CertificationData() {
     }, []);
 
     return certificationData;
+}
+
+// 게시물 GET
+export interface EventStoryDataProps {
+    id: number;
+    title: string;
+    date: string;
+    content?: string;
+    imgUrls: Array<string>;
+}
+
+export interface EventStoryDataArrayProps {
+    date: number;
+    contentsArr: Array<EventStoryDataProps>
+}
+
+export function EventStoryData() {
+    const [eventStoryData, setEventStoryData] = useState<EventStoryDataArrayProps[]>();
+
+    useEffect(() => {
+        const q = query(
+            collection(dbService, "event-story"),
+            orderBy("date", "desc")
+        );
+        
+        onSnapshot(q, (snapshot) => {
+            const historyArr: any = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setEventStoryData(historyArr);
+        });
+    }, []);
+
+    return eventStoryData;
 }
 
 // Common POST

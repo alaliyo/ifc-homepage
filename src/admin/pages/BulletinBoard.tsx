@@ -9,6 +9,7 @@ const LinkInfo = [
     {LinkUrl: "youtube", title:"유튜브"},
     {LinkUrl: "weekly", title:"주보"},
     {LinkUrl: "servers", title:"섬김이"},
+    {LinkUrl: "event-story", title:"게시물"},
 ];
 
 function BulletinBoard() {

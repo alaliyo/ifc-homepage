@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Body, ChildTitle } from "../Common/CommonStyled";
-import { CertificationData, WeekDataArrayPoops, WeeklyData } from "../../utils/dbService";
+import { CertificationData, WeeklyDataArrayPoops, WeeklyData } from "../../utils/dbService";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import styled from "styled-components";
 
 export interface DataProps {
-    getData: WeekDataArrayPoops[];
+    getData: WeeklyDataArrayPoops[];
     arrIndex: number;
     setArrIndex: any;
 };
@@ -37,7 +37,6 @@ function Weekly() {
     }
 
     const handleCertificationSubmit = () => {
-        // 인증 번호를 로컬 스토리지에 저장하고 인증 상태를 변경합니다.
         localStorage.setItem("weekly-certification", certification);
     }
     
@@ -64,7 +63,7 @@ function Weekly() {
                                 onChange={onChange}
                             />
                         </InputGroup>
-                        <ButtonStyled variant="outline-secondary">
+                        <ButtonStyled type="submit" variant="outline-secondary">
                             완료
                         </ButtonStyled>
                     </FormStyled>

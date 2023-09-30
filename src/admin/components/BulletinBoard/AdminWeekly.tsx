@@ -2,20 +2,22 @@ import { Button, Form, InputGroup } from "react-bootstrap";
 import { ChildTitle } from "../../style/CommonStyled";
 import { FormBox, ListGroupItem, ListGroupStyled, NavBox, NavItem } from "./Styled";
 import { useState } from "react";
-import { CommonPost, WeeklyData, WeekDataPoops, CommonDel, CommonPutImg } from "../../../utils/dbService";
+import { CommonPost, WeeklyData, WeeklyDataPoops, CommonDel, CommonPutImg } from "../../../utils/dbService";
 import { DeleteImages, uploadImage } from '../../../utils/storageService';
 import Pagination from "../../../components/Common/Pagination";
+import Loading from "../Common/Loading";
 
 function AdminWeek() {
     const weeklyData = WeeklyData();
     const [weeklyDate, setWeeklyDate] = useState("");
     const [imgs, setImgs] = useState<Array<File>>([]);
-    const [urls, setUrls] = useState<Array<string>>([])
+    const [urls, setUrls] = useState<Array<string>>([]);
     const [arrIndex, setArrIndex] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
-    const [editingItem, setEditingItem] = useState<WeekDataPoops | null>(null);
-    
+    const [editingItem, setEditingItem] = useState<WeeklyDataPoops | null>(null);
+    const [loadingBoolen, setLoadingBoolen] = useState(false);
+
     // 페이징 DATA
     const getPostsForCurrentPage = () => {
         if (weeklyData && weeklyData.length > 0) {
@@ -26,7 +28,7 @@ function AdminWeek() {
         }
         return [];
     };
-    console.log();
+    
     const arrIndexChange = (i: number) => {
         setArrIndex(i)
     };
@@ -53,11 +55,12 @@ function AdminWeek() {
         } else if (imgs.length === 0) {
             return alert("사진을 첨부해 주세요.");
         }
-
+        setLoadingBoolen(true);
         const imageUrls = await uploadImage("weekly", weeklyDate, imgs);
         const year = new Date(weeklyDate).getFullYear();
         const data = { name: weeklyDate, date: weeklyDate, imgUrls: imageUrls };
         await CommonPost(data, "weekly", year);
+        setLoadingBoolen(false);
         setWeeklyDate("");
         setImgs([]);
     };
@@ -73,7 +76,7 @@ function AdminWeek() {
     };
 
     // 게시물 수정 버튼
-    const editSchedule = (item: WeekDataPoops) => {
+    const editSchedule = (item: WeeklyDataPoops) => {
         setEditingItem(item);
         setWeeklyDate(item.date);
         setUrls(item.imgUrls);
@@ -88,8 +91,10 @@ function AdminWeek() {
     // PUT
     const putWeek = async () => {
         if (weeklyData) {
+            setLoadingBoolen(true);
             const data = { name: weeklyDate, date: weeklyDate, imgUrls: urls };
             CommonPutImg(editingItem, "weekly", `${weeklyData[arrIndex].date}`, data, imgs);
+            setLoadingBoolen(false);
             cancelEdit();
         }
     };
@@ -177,6 +182,8 @@ function AdminWeek() {
                 setCurrentPage={setCurrentPage}
                 postsPerPage={postsPerPage}
             />
+
+            {loadingBoolen && <Loading />}
         </div>
     )
 }

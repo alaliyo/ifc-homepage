@@ -19,7 +19,7 @@ function EventStory() {
             const postsArr: any = snapshot.docs.map((doc) => ({
                 ...doc.data(),
             }));
-            setPosts(postsArr.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id));
+            setPosts(postsArr);
         });
     }, []);
 

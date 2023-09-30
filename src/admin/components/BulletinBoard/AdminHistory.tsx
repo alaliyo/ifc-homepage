@@ -4,6 +4,7 @@ import { CommonDel, CommonPost, CommonPut, HistoryData } from "../../../utils/db
 import { ChildTitle } from "../../style/CommonStyled";
 import { FormBox, ListGroupItem, ListGroupStyled, NavBox, NavItem } from "./Styled";
 import Pagination from "../../../components/Common/Pagination";
+import Loading from "../Common/Loading";
 
 function AdminHistory() {
     const historyData = HistoryData();
@@ -13,6 +14,7 @@ function AdminHistory() {
     const [editingItem, setEditingItem] = useState<{ id: number; date: string; content: string } | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
+    const [loadingBoolen, setLoadingBoolen] = useState(false);
     
     // 페이징 DATA
     const getPostsForCurrentPage = () => {
@@ -51,9 +53,11 @@ function AdminHistory() {
             return alert("내용을 입력해 주세요.");
         }
 
+        setLoadingBoolen(true);
         const data = { date: histroyDate, content: histroyContent };
         const year = Math.floor(new Date(histroyDate).getFullYear() / 10) * 10;
         await CommonPost(data, "history", year);
+        setLoadingBoolen(false);
         setHistroyDate("");
         setHistroyContent("");
     };
@@ -83,9 +87,11 @@ function AdminHistory() {
     // PUT
     const putHistory = async () => {
         if (historyData) {
+            setLoadingBoolen(true);
             const data = { date: histroyDate, content: histroyContent };
             await CommonPut(editingItem, "history", `${historyData[arrIndex].date}`, data);
-            cancelEdit()
+            setLoadingBoolen(false);
+            cancelEdit();
         }
     };
 
@@ -169,6 +175,8 @@ function AdminHistory() {
                 setCurrentPage={setCurrentPage}
                 postsPerPage={postsPerPage}
             />
+
+            {loadingBoolen && <Loading />}
         </div>
     )
 }

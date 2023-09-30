@@ -4,6 +4,7 @@ import { Button, Form, InputGroup } from "react-bootstrap";
 import styled from "styled-components";
 import { YoutubeData, YoutubeDataProps, YoutubeDataArrayProps, CommonPost, CommonDel, CommonPut } from "../../../utils/dbService";
 import Pagination from "../../../components/Common/Pagination";
+import Loading from "../Common/Loading";
 
 function AdminYoutube() {
     const [getData, setGetData] = useState<YoutubeDataArrayProps[] | undefined>();
@@ -16,7 +17,7 @@ function AdminYoutube() {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
     const [editingItem, setEditingItem] = useState<YoutubeDataProps | null>(null);
-    const [loding, setLoding] = useState(false);
+    const [loadingBoolen, setLoadingBoolen] = useState(false);
     
     const DropdownChange = (e: any) => {
         setDBPath(e.target.value);
@@ -64,7 +65,7 @@ function AdminYoutube() {
         };
         
         fetchData();
-    }, [DBPath, youtubeDate, loding]);
+    }, [DBPath, youtubeDate, loadingBoolen]);
 
     // POST
     const postYoutube = async (e: { preventDefault: () => void; }) => {
@@ -80,9 +81,11 @@ function AdminYoutube() {
             return alert("영상 url을 입력해 주세요.");
         }
 
+        setLoadingBoolen(true);
         const data = { date: youtubeDate, title: youtubeTitle, bible: youtubeBible, url:youtubeUrl };
         const year = new Date(youtubeDate).getFullYear();
         await CommonPost(data, DBPath, year);
+        setLoadingBoolen(false);
         setYoutubeDate("");
         setYoutubeTitle("");
         setYoutubeBible("");
@@ -93,8 +96,9 @@ function AdminYoutube() {
     const deleteYoutube = async (id: number, content: string) => {
         if (window.confirm(`"${content}" 연혁을 삭제하시겠습니까?`)) {
             if (getData) {
+                setLoadingBoolen(true);
                 CommonDel(DBPath, `${getData[arrIndex].date}`, id, setArrIndex);
-                setLoding(e => !e)
+                setLoadingBoolen(false);
             }
         }
     };
@@ -119,8 +123,10 @@ function AdminYoutube() {
     // PUT
     const putYoutube = async () => {
         if (getData) {
+            setLoadingBoolen(true);
             const data = { date: youtubeDate, title: youtubeTitle, bible: youtubeBible, url:youtubeUrl };
             await CommonPut(editingItem, DBPath, `${getData[arrIndex].date}`, data);
+            setLoadingBoolen(false);
             cancelEdit();
         }
     };
@@ -231,6 +237,8 @@ function AdminYoutube() {
                 setCurrentPage={setCurrentPage}
                 postsPerPage={postsPerPage}
             />
+
+            {loadingBoolen && <Loading />}
         </div>
     );
 }

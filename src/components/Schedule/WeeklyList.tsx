@@ -1,5 +1,5 @@
 import { Link, useOutletContext } from "react-router-dom";
-import { WeekDataPoops } from "../../utils/dbService";
+import { WeeklyDataPoops } from "../../utils/dbService";
 import { useState } from "react";
 import { DataProps } from "./Weekly";
 import Search from "../Common/Search";
@@ -13,7 +13,7 @@ function WeeklyList() {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchResult, setSearchResult] = useState<WeekDataPoops[] | undefined>(undefined);
+    const [searchResult, setSearchResult] = useState<WeeklyDataPoops[] | undefined>(undefined);
     
     // 페이징 DATA
     const getPostsForCurrentPage = () => {

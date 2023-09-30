@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import { DataProps } from "./Weekly";
-import { WeekDataPoops } from "../../utils/dbService";
+import { WeeklyDataPoops } from "../../utils/dbService";
 import styled from "styled-components";
+import { Carousel } from "react-bootstrap";
 
 function WeeklyDetail() {
     const { getData, arrIndex } = useOutletContext<DataProps>();
     const { postId } = useParams();
-    const [post, setPost] = useState<WeekDataPoops>();
+    const [post, setPost] = useState<WeeklyDataPoops>();
     
     useEffect(() => {
         if (getData) {
@@ -25,30 +26,34 @@ function WeeklyDetail() {
                 <>
                     <PostTitle>{post.date} 주보</PostTitle>
                     <br />
-                    <h5>한국</h5>
-                    <PostImgBox>
+                    <h5>한국 주보</h5>
+                    <Carousel variant="dark">
                         {post.imgUrls.slice(2, 4).map((url, i) => (
-                            <PostImg
-                                key={i}
-                                src={url}
-                                onClick={() => onClickPage(url)}
-                                alt="새로고침"
-                            />
+                            <Carousel.Item key={i} interval={50000}>
+                                <PostImg
+                                    key={i}
+                                    src={url}
+                                    onClick={() => onClickPage(url)}
+                                    alt="새로고침"
+                                />
+                            </Carousel.Item>
                         ))}
-                    </PostImgBox>
+                    </Carousel>
                     <br />
                     <br />
-                    <h5>외국</h5>
-                    <PostImgBox>
+                    <h5>English bulletin</h5>
+                    <Carousel variant="dark">
                         {post.imgUrls.slice(0, 2).map((url, i) => (
-                            <PostImg
-                                key={i}
-                                src={url}
-                                onClick={() => onClickPage(url)}
-                                alt="새로고침"
-                            />
+                            <Carousel.Item key={i} interval={50000}>
+                                <PostImg
+                                    key={i}
+                                    src={url}
+                                    onClick={() => onClickPage(url)}
+                                    alt="새로고침"
+                                />
+                            </Carousel.Item>
                         ))}
-                    </PostImgBox>
+                    </Carousel>
                 </>
             )}
         </div>
@@ -59,12 +64,6 @@ export default WeeklyDetail;
 
 const PostTitle = styled.h4`
     text-align: center;
-`;
-
-const PostImgBox = styled.div`
-    width: 100%;
-    overflow-x: scroll;
-    display: flex;
 `;
 
 const PostImg = styled.img`

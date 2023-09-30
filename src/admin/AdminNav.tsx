@@ -23,6 +23,7 @@ const NavBox = styled.nav`
     background-color: #555555;
     width: 150px;
     text-align: center;
+    height: 100vh;
 
     a {
         color: white;

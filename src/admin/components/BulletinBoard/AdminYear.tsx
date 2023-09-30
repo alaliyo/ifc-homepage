@@ -4,6 +4,7 @@ import { CommonDel, CommonPost, CommonPut, YearScheduleData } from "../../../uti
 import { ChildTitle } from "../../style/CommonStyled";
 import { FormBox, ListGroupStyled, ListGroupItem, NavBox, NavItem, InputGroupCustom } from "./Styled";
 import Pagination from "../../../components/Common/Pagination";
+import Loading from "../Common/Loading";
 
 function AdminYear() {
     const yearScheduleData = YearScheduleData();
@@ -14,6 +15,7 @@ function AdminYear() {
     const [editingItem, setEditingItem] = useState<{ id: number; date: string; title: string } | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
+    const [loadingBoolen, setLoadingBoolen] = useState(false);
     
     // 페이징 DATA
     const getPostsForCurrentPage = () => {
@@ -54,9 +56,11 @@ function AdminYear() {
             return alert("제목을 입력해 주세요.");
         }
 
+        setLoadingBoolen(true);
         const year = new Date(scheduleDate).getFullYear();
         const data = { date: scheduleDate, title: scheduleTitle, content: scheduleContent };
         await CommonPost(data, "year-schedules", year);
+        setLoadingBoolen(false);
         setScheduleDate("");
         setScheduleTitle("");
         setScheduleContent("");
@@ -89,8 +93,10 @@ function AdminYear() {
     // PUT
     const putSchedule = async () => {
         if (yearScheduleData) {
+            setLoadingBoolen(true);
             const data = { date: scheduleDate, title: scheduleTitle, content: scheduleContent };
             await CommonPut(editingItem, "year-schedules", `${yearScheduleData[arrIndex].date}`, data);
+            setLoadingBoolen(false);
             cancelEdit();
         }
     };
@@ -186,6 +192,8 @@ function AdminYear() {
                 setCurrentPage={setCurrentPage}
                 postsPerPage={postsPerPage}
             />
+
+            {loadingBoolen && <Loading />}
         </div>
     );
 }

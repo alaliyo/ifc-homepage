@@ -14,5 +14,5 @@ export const useLogInChack = () => {
 
         // 컴포넌트가 언마운트될 때 리스너를 정리합니다.
         return () => unsubscribe();
-    }, []);
+    }, [navigate]);
 }

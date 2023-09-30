@@ -6,6 +6,7 @@ import { Button, Form, InputGroup } from "react-bootstrap";
 import { DeleteImages, uploadImage } from "../../../utils/storageService";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { dbService } from "../../../firebase";
+import Loading from "../Common/Loading";
 
 function AdminServers() {
     const serversData = ServersData();
@@ -16,6 +17,7 @@ function AdminServers() {
     const [arrIndex, setArrIndex] = useState(0);
     const [editingItem, setEditingItem] = useState<ServersDataPoops | null>(null);
     const [DBPath, setDBPath] = useState("cooperative-pastor");
+    const [loadingBoolen, setLoadingBoolen] = useState(false);
     
     const DropdownChange = (e: any) => {
         const selectedIndex = e.target.selectedIndex;
@@ -57,6 +59,7 @@ function AdminServers() {
             return alert("이미지를 첨부해주세요.")
         } 
         try {
+            setLoadingBoolen(true);
             const decadDocRef = doc(dbService, "servers", `${DBPath}`);
             const imageUrl = await uploadImage("servers", serversName, serversImg);
             const deacadDocSnap = await getDoc(decadDocRef);
@@ -74,6 +77,7 @@ function AdminServers() {
             }
     
             alert("작성이 완료되었습니다.");
+            setLoadingBoolen(false);
             setServersId(0);
             setServersName("");
             setServersImg([]);
@@ -110,8 +114,10 @@ function AdminServers() {
     // PUT
     const putServers = async () => {
         if (serversData) {
+            setLoadingBoolen(true);
             const data = {id: serversId, name: serversName, imgUrls: urls}
             CommonPutImg(editingItem, "servers", `${serversData[arrIndex].title}`, data, serversImg)
+            setLoadingBoolen(false);
             cancelEdit();
         }
     };
@@ -201,6 +207,8 @@ function AdminServers() {
                     </ListGroupItem>
                 ))} 
             </ListGroupStyled>
+
+            {loadingBoolen && <Loading />}
         </div>
     )
 }

@@ -50,6 +50,7 @@ import AdminYear from "./admin/components/BulletinBoard/AdminYear";
 import AdminServers from "./admin/components/BulletinBoard/AdminServers";
 import AdminYoutube from "./admin/components/BulletinBoard/AdminYoutube";
 import AdminWeekly from "./admin/components/BulletinBoard/AdminWeekly";
+import AdminEventStory from "./admin/components/BulletinBoard/AdminEventStory";
 
 import User from "./admin/pages/User";
 import Certification from "./admin/components/User/Certification";
@@ -223,6 +224,10 @@ const router = createBrowserRouter([
                     {
                         path: "weekly",
                         element: <AdminWeekly />,
+                    },
+                    {
+                        path: "event-story",
+                        element: <AdminEventStory />,
                     },
                 ]
             },
