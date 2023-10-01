@@ -27,7 +27,7 @@ function Home() {
                     {Resize > 450 ? (<>
                         <Sermon Resize={Resize} onClick={onClickNavigate}>
                             <Sermontitle>담임 목사 <br />&emsp;오전 설교</Sermontitle>
-                            <BadgeStyled bg="success"><Link to='/youtube/kr-posts'>바로 가기</Link></BadgeStyled>
+                            <BadgeStyled bg="success"><Link to='/youtube/youtube-kr'>바로 가기</Link></BadgeStyled>
                         </Sermon>
                         <IntroBox>
                             <div>
