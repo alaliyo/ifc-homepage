@@ -77,7 +77,7 @@ export interface YoutubeDataProps {
 
 export interface YoutubeDataArrayProps {
     date: number;
-    contentsArr: Array<YoutubeDataProps>
+    contentsArr: Array<YoutubeDataProps>;
 }
 
 export async function YoutubeData(collectionPath: string): Promise<YoutubeDataArrayProps[]> {
@@ -165,32 +165,6 @@ export function ServersData() {
     return serversData;
 }
 
-// 인증 GET
-export interface CertificationPoops {
-    id: string;
-    password: string;
-}
-
-export function CertificationData() {
-    const [certificationData, setCertificationData] = useState<CertificationPoops[]>();
-
-    useEffect(() => {
-        const q = query(
-            collection(dbService, "certification"),
-        );
-        
-        onSnapshot(q, (snapshot) => {
-            const pastorsArr: any = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setCertificationData(pastorsArr);
-        });
-    }, []);
-
-    return certificationData;
-}
-
 // 게시물 GET
 export interface EventStoryDataProps {
     id: number;
@@ -224,6 +198,33 @@ export function EventStoryData() {
     }, []);
 
     return eventStoryData;
+}
+
+
+// 인증 GET
+export interface CertificationPoops {
+    id: string;
+    password: string;
+}
+
+export function CertificationData() {
+    const [certificationData, setCertificationData] = useState<CertificationPoops[]>();
+
+    useEffect(() => {
+        const q = query(
+            collection(dbService, "certification"),
+        );
+        
+        onSnapshot(q, (snapshot) => {
+            const pastorsArr: any = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setCertificationData(pastorsArr);
+        });
+    }, []);
+
+    return certificationData;
 }
 
 // Common POST

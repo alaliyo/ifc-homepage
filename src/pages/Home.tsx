@@ -16,7 +16,7 @@ function Home() {
     const navigate = useNavigate();
 
     const onClickNavigate = () => {
-        navigate('/youtube/kr-posts')
+        navigate('/youtube/youtube-kr')
     }
 
     return(

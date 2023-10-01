@@ -56,12 +56,12 @@ const InputBox = styled(InputGroup)`
         height: 30px;
         padding: 0 10px;
 
-        @media screen and (max-width: 650px) {
+        @media screen and (max-width: 768px) {
             padding: 0 5px;
         }
     }
     
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 480px) {
         padding-right: 10px;
         width: 70%;
     }

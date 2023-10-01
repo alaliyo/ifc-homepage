@@ -34,7 +34,6 @@ import Domestic from "./components/Mission/Domestic";
 import EventStory from "./pages/EventStory";
 import EventPosts from "./components/EventStory/EventPosts";
 import EventPostDetail from "./components/EventStory/EventPostDetail";
-import EventWritin from "./components/EventStory/EventWritin";
 import Weekly from "./components/Schedule/Weekly";
 import WeeklyList from "./components/Schedule/WeeklyList";
 import WeeklyDetail from "./components/Schedule/WeeklyDetail";
@@ -159,10 +158,6 @@ const router = createBrowserRouter([
                             {
                                 path: 'post/:postId',
                                 element: <EventPostDetail />,
-                            },
-                            {
-                                path: 'post/writin',
-                                element: <EventWritin />,
                             },
                         ],
                     },

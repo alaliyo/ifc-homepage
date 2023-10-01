@@ -1,33 +1,20 @@
 import { OutletBox, PageBody } from "./PageStyled";
 import { Outlet } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { dbService } from "../firebase";
 import styled from "styled-components";
+import { EventStoryData } from "../utils/dbService";
+import { useState } from "react";
 
 function EventStory() {
-    const [posts, setPosts] = useState([]);
-
-    // Get 게시물
-    useEffect(() => {
-        const q = query(
-            collection(dbService, "eventData"),
-            orderBy("date", "desc")
-        );
-
-        onSnapshot(q, (snapshot) => {
-            const postsArr: any = snapshot.docs.map((doc) => ({
-                ...doc.data(),
-            }));
-            setPosts(postsArr);
-        });
-    }, []);
-
+    const eventStoryData = EventStoryData();
+    const [arrIndex, setArrIndex] = useState(0);
+    
     return(
         <PageBody>
             <OutletBoxstyle>
                 <Outlet context={{
-                    posts: posts,
+                    getData: eventStoryData,
+                    arrIndex: arrIndex,
+                    setArrIndex: setArrIndex,
                 }} />
             </OutletBoxstyle>
         </PageBody>
@@ -41,15 +28,15 @@ const OutletBoxstyle = styled(OutletBox)`
     margin: 0 auto;
     padding: 20px;
 
-    @media screen and (max-width: 1017px) {
+    @media screen and (max-width: 1024px) {
         width: auto;
     }
 
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 768px) {
         padding: 15px;
     }
 
-    @media screen and (max-width: 450px) {
+    @media screen and (max-width: 480px) {
         padding: 15px 0;
     }
 `;

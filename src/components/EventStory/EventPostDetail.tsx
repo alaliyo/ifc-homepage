@@ -2,24 +2,13 @@ import { useEffect, useState } from 'react'
 import { Link, useOutletContext, useParams } from "react-router-dom";
 import { Modal } from 'react-bootstrap';
 import styled from "styled-components";
-
-interface PostProps {
-    postId: number;
-    title: string;
-    detail: string;
-    img: string[];
-    date: string;
-    url: string;
-}
-
-interface EventPostProps {
-    posts: Array<PostProps>;
-}
+import { DataProps } from './EventStoryType';
+import { EventStoryDataProps } from '../../utils/dbService';
 
 function EventPostDetail() {
-    const { posts } = useOutletContext<EventPostProps>();
+    const { getData, arrIndex } = useOutletContext<DataProps>();
     const { postId } = useParams(); // url의 post id 값
-    const [post, setPost] = useState<PostProps | undefined>();
+    const [post, setPost] = useState<EventStoryDataProps>();
     const [showModal, setShowModal] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string>('');
     
@@ -33,70 +22,56 @@ function EventPostDetail() {
     };
 
     useEffect(() => {
-        const foundPost = posts.find((e) => e.postId === Number(postId));
-        if (foundPost) {
-            setPost(foundPost);
+        if (getData) {
+            const foundPost = getData[arrIndex].contentsArr.find((e) => e.id === Number(postId));
+            if (foundPost) {
+                setPost(foundPost);
+            }
         }
-    }, [posts, postId]);
+    }, [arrIndex, getData, postId]);
 
     return(
-        <EventPostDetailBox>
+        <div>
             <ListLink to='/event-story/post'>←목록으로</ListLink>
-            {post !== undefined ? (<>
-                <DetailHeader>
-                    <PostTitle>제목: {post.title}</PostTitle>
-                    <PostDate>{post.date}</PostDate>
-                </DetailHeader>
-                <hr />
-                <DetailBody>
-                    <DetailText>{post.detail}</DetailText>
-                    <br />
-                    {post.url && (
-                        <DetailIframe
-                            width="100%"
-                            height="100%"
-                            src={post?.url}
-                            title="YouTube video player"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowFullScreen>
-                        </DetailIframe>
-                    )}
+            {post && (
+                <>
+                    <DetailHeader>
+                        <PostTitle>제목: {post.title}</PostTitle>
+                        <PostDate>{post.date}</PostDate>
+                    </DetailHeader>
+                    <hr />
+                    <div>
+                        {post.content && <DetailText>{post.content}</DetailText>}
+                        <br />
 
-                    {post.img.length > 1 ? (
-                        <ImgBox>
-                            {post.img.map((e, i) => (
-                                <DetailImg key={i} src={e} onClick={() => openModal(e)} />
-                            ))}
-                            
-                        </ImgBox>
-                    ) : (
-                        <OneImg src={post.img[0]} onClick={() => openModal(post.img[0])} />
-                    )}
-                </DetailBody>
-            </>) : (
-                null
+                        {post.imgUrls && (
+                            <ImgBox>
+                                {post.imgUrls.map((e, i) => (
+                                    <DetailImg key={i} src={e} onClick={() => openModal(e)} />
+                                ))}
+                                
+                            </ImgBox>
+                        )}
+                    </div>
+                </>
             )}
             <ModalStyle show={showModal} onHide={closeModal} centered>
                 <ModalHeader closeButton>
                 </ModalHeader>
                 <img src={selectedImage} alt="이미지 오류 새로고침하세요." />
             </ModalStyle>
-        </EventPostDetailBox>
+        </div>
     );
 }
 
 export default EventPostDetail;
-
-const EventPostDetailBox = styled.div`
-    
-`;
 
 const ListLink = styled(Link)`
     color: #3636368d;
     font-weight: 900;
     text-decoration: none;
 
-    @media screen and (max-width: 450px) {
+    @media screen and (max-width: 480px) {
         margin-left: 10px;
     }
 `;
@@ -110,7 +85,7 @@ const DetailHeader = styled.header`
         margin-bottom: 5px;
     }
 
-    @media screen and (max-width: 450px) {
+    @media screen and (max-width: 480px) {
         padding: 0 10px;
     }
 `
@@ -119,7 +94,7 @@ const PostTitle = styled.p`
     font-size: 25px;
     font-weight: 900;
 
-    @media screen and (max-width: 650px){
+    @media screen and (max-width: 768px){
         font-size: 17px;
     }
 `;
@@ -129,20 +104,16 @@ const PostDate = styled.p`
     font-weight: 900;
     color: gray;
 
-    @media screen and (max-width: 650px){
+    @media screen and (max-width: 768px){
         font-size: 15px;
     }
-`;
-
-const DetailBody = styled.div`
-    
 `;
 
 const ImgBox = styled.div`
     display: flex;
     flex-wrap: wrap;
     
-    @media screen and (max-width: 500px){
+    @media screen and (max-width: 480px){
         display: block;
     }
 `;
@@ -155,7 +126,7 @@ const DetailImg = styled.img`
     margin-bottom: 10px;
     object-fit: cover;
 
-    @media screen and (max-width: 800px){
+    @media screen and (max-width: 7680px){
         height: 210px;
     }
 
@@ -163,7 +134,11 @@ const DetailImg = styled.img`
         height: 180px;
     }
 
-    @media screen and (max-width: 500px){
+    @media screen and (max-width: 600px){
+        height: 160px;
+    }
+
+    @media screen and (max-width: 480px){
         width: 95%;
         height: 250px;
     }
@@ -177,33 +152,13 @@ const DetailImg = styled.img`
     }
 `;
 
-const OneImg = styled.img`
-    width: 95%;
-    margin: 0 auto;
-    display: block;
-    margin-bottom: 10px;
-`;
-
 const DetailText = styled.p`
     margin: 5px 20px;
     font-size: 20px;
     font-weight: 900;
-    @media screen and (max-width: 650px){
-        font-size: 15px;
-    }
-`
 
-const DetailIframe = styled.iframe`
-    width: 100%;
-    height: 400px;
-    @media screen and (max-width: 650px) {
-        height: 330px;
-    }
-    @media screen and (max-width: 550px) {
-        height: 300px;
-    }
-    @media screen and (max-width: 400px) {
-        height: 200px;
+    @media screen and (max-width: 768px){
+        font-size: 15px;
     }
 `;
 

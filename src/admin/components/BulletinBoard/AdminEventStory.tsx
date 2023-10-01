@@ -73,7 +73,7 @@ function AdminEventStory() {
 
         setLoadingBoolen(true)
         const imageUrls = await uploadImage("event-story", `${postDate}/${postTitle}`, imgs);
-        const year = new Date(postDate).getFullYear();
+        const year5 = Math.floor(new Date(postDate).getFullYear() / 5) * 5;
         const data: Props = { title: postTitle, date: postDate, imgUrls: imageUrls };
         
         if (postContent.length > 0) {
@@ -81,7 +81,7 @@ function AdminEventStory() {
             data.content = LineBreaks;
         }
         
-        await CommonPost(data, "event-story", year);
+        await CommonPost(data, "event-story", year5);
         setLoadingBoolen(false)
         setPostDate("");
         setPostTitle("");
@@ -140,7 +140,7 @@ function AdminEventStory() {
     return(
         <div>
             <ChildTitle>게시물</ChildTitle>
-
+            
             <FormBox>
                 <InputGroupCustom>
                     <InputGroup.Text>날짜</InputGroup.Text>

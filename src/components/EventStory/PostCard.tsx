@@ -2,17 +2,10 @@ import styled from "styled-components";
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import useHandleResize from "../../hooks/useHandleResize";
-
-interface PostProps {
-    postId: number;
-    title: string;
-    detail: string;
-    img: any;
-    date: string;
-};
+import { EventStoryDataProps } from "../../utils/dbService";
 
 interface PostCardProps {
-    post: PostProps;
+    post: EventStoryDataProps;
     num: number;
 };
 
@@ -20,10 +13,10 @@ function PostCard({ post, num }: PostCardProps) {
     const handleResize = useHandleResize();
     
     return(
-        handleResize > 501 ? (
-            <CardStyle style={{ width: '14rem' }}>
-                <LinkStyle to={`${post.postId}`}>
-                    <CardImg variant="top" src={post.img[0]} />
+        handleResize > 481 ? (
+            <CardStyle style={{ width: handleResize > 768 ? "14rem" : "12.5rem" }}>
+                <LinkStyle to={`${post.id}`}>
+                    <CardImg variant="top" src={post.imgUrls[0]} />
                     <Card.Body>
                         <CardTitle>{num + 1}. {post.title}</CardTitle>
                         <PostDate>{post.date}</PostDate>
@@ -32,11 +25,13 @@ function PostCard({ post, num }: PostCardProps) {
             </CardStyle>
         ):(
             <SecondCard>
-                <LinkStyle to={`${post.postId}`}>
-                    <SecondImg src={post.img[0]} />
+                <LinkStyle to={`${post.id}`}>
+                    <SecondImg src={post.imgUrls[0]} />
                     <SecondTextBox>
-                        <CardTitle>{num + 1}. {post.title}</CardTitle>
-                        <SecondContent>{post.detail}</SecondContent>
+                        <div>
+                            <CardTitle>{num + 1}. {post.title}</CardTitle>
+                            {post.content && <SecondContent>{post.content}</SecondContent> }
+                        </div>
                         <PostDate>{post.date}</PostDate>
                     </SecondTextBox>
                 </LinkStyle>
@@ -49,10 +44,6 @@ export default PostCard;
 
 const CardStyle = styled(Card)`
     margin: 12px;
-
-    @media screen and (max-width: 650px){
-        margin: 12px auto;
-    }
 `;
 
 const LinkStyle = styled(Link)`
@@ -64,7 +55,7 @@ const LinkStyle = styled(Link)`
         transition: .3s;
     }
 
-    @media screen and (max-width: 500px){
+    @media screen and (max-width: 480px){
         display: flex;
     }
 `;
@@ -81,11 +72,7 @@ const CardTitle = styled(Card.Title)`
     -webkit-box-orient: vertical;
     overflow: hidden;
 
-    @media screen and (max-width: 450px) {
-        font-size: 15px;
-    }
-
-    @media screen and (max-width: 400px) {
+    @media screen and (max-width: 480px) {
         font-size: 14px;
     }
 `;
@@ -94,14 +81,6 @@ const PostDate = styled.div`
     font-size: 14px;
     color: gray;
     text-align: right;
-
-    @media screen and (max-width: 450px) {
-        font-size: 13px;
-    }
-
-    @media screen and (max-width: 350px) {
-        font-size: 12px;
-    }
 `;
 
 const SecondCard = styled.div`
@@ -110,7 +89,7 @@ const SecondCard = styled.div`
     margin: 10px 0;
     border-radius: 10px;
 
-    @media screen and (max-width: 450px) {
+    @media screen and (max-width: 480px) {
         width: 100%;
         margin: 8px 0;
     }
@@ -121,13 +100,9 @@ const SecondImg = styled.img`
     height: 120px;
     border-radius: 10px;
 
-    @media screen and (max-width: 400px) {
+    @media screen and (max-width: 480px) {
         width: 45%;
         height: 110px;
-    }
-
-    @media screen and (max-width: 350px) {
-        height: 100px;
     }
 `;
 
@@ -135,12 +110,12 @@ const SecondTextBox = styled.div`
     width: 60%;
     padding: 10px;
 
-    @media screen and (max-width: 400px) {
+    @media screen and (max-width: 480px) {
         width: 55%;
-    }
-
-    @media screen and (max-width: 350px) {
         padding: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 `;
 
@@ -153,7 +128,7 @@ const SecondContent = styled.p`
     -webkit-box-orient: vertical;
     overflow: hidden;
 
-    @media screen and (max-width: 400px) {
+    @media screen and (max-width: 480px) {
         font-size: 13px;
     }
 `;

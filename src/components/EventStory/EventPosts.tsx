@@ -3,39 +3,45 @@ import PostCard from "./PostCard";
 import { Link, useOutletContext } from "react-router-dom";
 import Search from "../Common/Search";
 import { useState } from "react";
-
-interface PostProps {
-    postId: number;
-    title: string;
-    detail: string;
-    img: string;
-    date: string;
-}
-
-interface EventPostProps {
-    posts: Array<PostProps>;
-    postsData: Array<PostProps>;
-}
+import { EventStoryDataProps } from "../../utils/dbService";
+import { DataProps } from "./EventStoryType";
+import { NavBox, NavItem } from "../Common/CommonStyled";
+import Pagination from "../Common/Pagination";
 
 function EventPosts() {
-    const { posts } = useOutletContext<EventPostProps>();
+    const { getData, arrIndex, setArrIndex } = useOutletContext<DataProps>();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(12);
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchResult, setSearchResult] = useState<PostProps[] | undefined>(); // 검색 결과를 저장할 배열
+    const [searchResult, setSearchResult] = useState<EventStoryDataProps[] | undefined>(); // 검색 결과를 저장할 배열
     
+    // 페이징 DATA
     const getPostsForCurrentPage = () => {
-        const targetPosts = searchResult ? searchResult : posts;
-        return targetPosts;
+        const dataToUse = searchResult || (getData && getData[arrIndex]?.contentsArr);
+        if (dataToUse && dataToUse.length > 0) {
+            const startIndex = (currentPage - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
+            const DataSort = dataToUse.sort((a, b) => Number(new Date(b.date)) - Number(new Date(a.date)));
+            return DataSort.slice(startIndex, endIndex);
+        }
+        return [];
+    };
+
+    const arrIndexChange = (i: number) => {
+        setArrIndex(i)
     };
 
     // 검색 실행
     const handleSearch = () => {
-        const filteredData = posts.filter((item) =>
+        const dataToSearch = getData[arrIndex]?.contentsArr || getData;
+        const filteredData = dataToSearch.filter((item) =>
             item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             item.date.toLowerCase().includes(searchQuery)
         );
         setSearchResult(filteredData);
+        setCurrentPage(1);
     };
-
+    
     return(
         <>
             <PostsHeader>
@@ -46,15 +52,32 @@ function EventPosts() {
                     handleSearch={handleSearch}
                 />
             </PostsHeader>
-            <CardsBox>
-                {posts && posts.length > 0 && getPostsForCurrentPage().map((e: any, i) => (
-                    <PostCard
-                        key={i}
-                        post={e}
-                        num={i}
-                    />
+
+            <NavBox>
+                {getData && getData.map((obj, i) => (
+                    <NavItem key={i} onClick={() => arrIndexChange(i)}>{obj.date}</NavItem>
                 ))}
+            </NavBox>
+            
+            <CardsBox>
+                {getData && getPostsForCurrentPage().length > 0 &&
+                    getPostsForCurrentPage().map((e: any, i) => (
+                        <PostCard
+                            key={i}
+                            post={e}
+                            num={i}
+                        />
+                    )
+                )}
             </CardsBox>
+
+            <Pagination 
+                data={searchResult && searchResult.length > 0 ? searchResult :  getData}
+                arrIndex={arrIndex}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                postsPerPage={postsPerPage}
+            />
         </>
     );
 }
@@ -71,7 +94,7 @@ const PostsHeader = styled.header`
     display: flex;
     justify-content: space-between;
 
-    @media screen and (max-width: 450px) {
+    @media screen and (max-width: 480px) {
         padding: 0 10px;
     }
 `;
@@ -81,12 +104,12 @@ const Title = styled.p`
     font-size: 30px;
     font-weight: 900;
 
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 768px) {
         width: 80px;
         font-size: 20px;
     }
 
-    @media screen and (max-width: 450px) {
+    @media screen and (max-width: 480px) {
         width: 60px;
         font-size: 18px;
     }
@@ -98,11 +121,11 @@ const CardsBox = styled.div`
     display: flex;
     flex-wrap: wrap;
 
-    @media screen and (max-width: 650px){
+    @media screen and (max-width: 768px){
         padding: 5px 0px;
     }
 
-    @media screen and (max-width: 500px){
+    @media screen and (max-width: 480px){
         display: block;
         padding: 10px 20px;
         display: flex;
