@@ -53,12 +53,17 @@ function Header({ WindowSize }: HeaderProps ) {
                         <li><LinkStyled to='/youtube/youtube-kr'>한국</LinkStyled></li>
                         <li><LinkStyled to='/youtube/youtube-en'>영어</LinkStyled></li>
                     </HeaderWrapper>
-                    
-                    <HeaderWrapper label='게시물' to='/event-story/post'>
-                    </HeaderWrapper>
 
-                    <HeaderWrapper label='사역' to='/ministry'>
+                    <HeaderWrapper label='기관 및 학교' to='/ministry/senior'>
+                        <li><LinkStyled to='/ministry/senior'>실버회</LinkStyled></li>
+                        <li><LinkStyled to='/ministry/men'>남선교회</LinkStyled></li>
+                        <li><LinkStyled to='/ministry/women'>여선교회</LinkStyled></li>
+                        <li><LinkStyled to='/ministry/multicultural'>다문화</LinkStyled></li>
+                        <li><LinkStyled to='/ministry/youth'>유스그룹</LinkStyled></li>
+                        <li><LinkStyled to='/ministry/children'>주일학교</LinkStyled></li>
                     </HeaderWrapper>
+                    
+                    <HeaderWrapper label='앨범' to='/event-story/post'></HeaderWrapper>
                 </NavBox>
             )}
         </HeaderBox>
@@ -149,7 +154,7 @@ const NavBox = styled.nav`
 
 const LinkStyled = styled(Link)`
     display: block;
-    padding: 5px 0;
+    padding: 10px 0;
     text-align: center;
     font-weight: 900;
     color: #cecece;

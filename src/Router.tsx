@@ -22,6 +22,12 @@ import EnPosts from "./components/Youtube/EnPosts";
 import PostDetail from "./components/Youtube/PostDetail";
 
 import Ministry from './pages/Ministry';
+import Senior from "./components/Ministry/Senior";
+import Men from "./components/Ministry/Men";
+import Women from "./components/Ministry/Women";
+import Youth from "./components/Ministry/Youth";
+import Children from "./components/Ministry/Children";
+import Multicultural from "./components/Ministry/Multicultural";
 
 import EventStory from "./pages/EventStory";
 import EventPosts from "./components/EventStory/EventPosts";
@@ -64,7 +70,7 @@ const router = createBrowserRouter([
                 element: <PageLayout />,
                 children: [
                     {
-                        path: `introduction`,
+                        path: 'introduction',
                         element: <Introduction />,
                         children: [
                             {
@@ -94,7 +100,7 @@ const router = createBrowserRouter([
                         ],
                     },
                     {
-                        path: `schedule`,
+                        path: 'schedule',
                         element: <Schedule />,
                         children: [
                             {
@@ -122,7 +128,7 @@ const router = createBrowserRouter([
                         ],
                     },
                     {
-                        path: `youtube`,
+                        path: 'youtube',
                         element: <Youtube />,
                         children: [
                             {
@@ -140,7 +146,37 @@ const router = createBrowserRouter([
                         ],
                     },
                     {
-                        path: `event-story`,
+                        path: 'ministry',
+                        element: <Ministry />,
+                        children: [
+                            {
+                                path: 'senior',
+                                element: <Senior />,
+                            },
+                            {
+                                path: 'men',
+                                element: <Men />,
+                            },
+                            {
+                                path: 'women',
+                                element: <Women />,
+                            },
+                            {
+                                path: 'youth',
+                                element: <Youth />,
+                            },
+                            {
+                                path: 'children',
+                                element: <Children />,
+                            },
+                            {
+                                path: 'multicultural',
+                                element: <Multicultural />,
+                            },
+                        ]
+                    },
+                    {
+                        path: 'event-story',
                         element: <EventStory />,
                         children: [
                             {
@@ -152,10 +188,6 @@ const router = createBrowserRouter([
                                 element: <EventPostDetail />,
                             },
                         ],
-                    },
-                    {
-                        path: `ministry`,
-                        element: <Ministry />,
                     },
                 ],
             },

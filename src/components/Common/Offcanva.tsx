@@ -39,11 +39,11 @@ function Offcanva() {
                 </LinkStyle>
 
                 <LinkStyle to={'/event-story/post'} onClick={onClick}>
-                    행사
+                    앨범
                 </LinkStyle>
 
-                <LinkStyle to={'/ministry'} onClick={onClick}>
-                    사역
+                <LinkStyle to={'/ministry/senior'} onClick={onClick}>
+                    기관 및 학교
                 </LinkStyle>
             </Offcanvas.Body>
         </OffcanvaBox>
@@ -59,6 +59,7 @@ const OffcanvaBtn = styled(Button)`
     --bs-btn-hover-bg: none;
     text-shadow: 1px 1px 4px #757575, -1px -1px 4px #757575;
     font-weight: 900;
+    
     &:hover{
         text-shadow: 1px 1px 3px #3d3d3d, -1px -1px 3px #3d3d3d;
     }
@@ -76,6 +77,7 @@ const LinkStyle = styled(Link)`
     margin-bottom: 10px;
     display: block;
     text-decoration: none;
+    
     :hover {
         color: white;
         font-weight: 900;

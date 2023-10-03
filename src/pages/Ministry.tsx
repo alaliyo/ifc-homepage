@@ -1,18 +1,29 @@
-import styled from "styled-components";
-import { PageBody } from './PageStyled';
+import { Outlet } from "react-router-dom";
+import { ChildBox, OutletBox, PageBody } from './PageStyled';
+import PageNav from "../components/Common/PageNav";
 
 function Ministry() {
+    const linkInfoArr = [
+        {title: '실버회', LinkUrl: 'senior'},
+        {title: '남선교회', LinkUrl: 'men'},
+        {title: '여선교회', LinkUrl: 'women'},
+        {title: '다문화', LinkUrl: 'multicultural'},
+        {title: '유스그룹', LinkUrl: 'youth'},
+        {title: '주일학교', LinkUrl: 'children'},
+    ]
     return(
         <PageBody>
-            <Title>사역 페이지 제작중입니다...</Title>
+            <ChildBox>
+                <PageNav
+                    title="기관 및 학교"
+                    LinkInfo={linkInfoArr}
+                />
+                    <OutletBox> 
+                        <Outlet/>
+                    </OutletBox>
+            </ChildBox>
         </PageBody>
     );
 }
 
 export default Ministry;
-
-const Title = styled.h2`
-    margin-top: 20px;
-    color: gray;
-    text-align: center;
-`;
