@@ -42,15 +42,9 @@ function Offcanva() {
                     행사
                 </LinkStyle>
 
-                <LinkStyle to={'/mission/overseas'} onClick={onClick}>
-                    선교
+                <LinkStyle to={'/ministry'} onClick={onClick}>
+                    사역
                 </LinkStyle>
-
-                {/* <LinkStyle to={'/ministry'} onClick={onClick}>
-                        교회 사역
-                    </LinkStyle>
-                */}
-
             </Offcanvas.Body>
         </OffcanvaBox>
       </>

@@ -54,20 +54,11 @@ function Header({ WindowSize }: HeaderProps ) {
                         <li><LinkStyled to='/youtube/youtube-en'>영어</LinkStyled></li>
                     </HeaderWrapper>
                     
-                    <HeaderWrapper label='행사' to='/event-story/post'>
+                    <HeaderWrapper label='게시물' to='/event-story/post'>
                     </HeaderWrapper>
 
-                    {/*
-                    <HeaderWrapper 
-                        label={WindowSize <= 1024 ? '사역' : '교회학교 및 훈련사역'}
-                        to='/ministry'
-                    >
+                    <HeaderWrapper label='사역' to='/ministry'>
                     </HeaderWrapper>
-                    */}
-                
-                    <HeaderWrapper label='선교 및 전도' to='/mission/overseas'>
-                    
-                    </HeaderWrapper> 
                 </NavBox>
             )}
         </HeaderBox>
@@ -148,7 +139,7 @@ const LinkBox = styled.div`
 `;
 
 const NavBox = styled.nav`
-    height: 55px;
+    height: 54px;
     background-color: #000000a0;
     box-shadow: 1px 1px 2px #808080, -1px -1px 2px #808080;
     display: flex;

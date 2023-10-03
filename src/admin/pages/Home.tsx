@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { useLogInChack } from "../hooks/Chack";
 import { AdminPageBox } from "../style/CommonStyled";
 
+
 function Home() {
     useLogInChack();
-    
+
     return(
         <AdminHomePageBox>
             <h1>홈</h1>

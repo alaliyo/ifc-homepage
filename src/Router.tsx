@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import PageLayout from "./pages/PageLayout";
 import NotFound from "./pages/NotFound";
 
-
 import Introduction from "./pages/Introduction";
 import Vision from "./components/Introductoin/Vision";
 import History from "./components/Introductoin/History";
@@ -13,23 +12,16 @@ import Pastors from "./components/Introductoin/Pastors";
 import Elder from "./components/Introductoin/Elder";
 import SketchMap from "./components/Introductoin/SketchMap";
 
-
 import Schedule from './pages/Schedule';
 import YearSchedule from "./components/Schedule/YearSchedule";
 import WorshipTime from "./components/Schedule/WorshipTime";
-
 
 import Youtube from './pages/Youtube';
 import KrPosts from "./components/Youtube/KrPosts";
 import EnPosts from "./components/Youtube/EnPosts";
 import PostDetail from "./components/Youtube/PostDetail";
 
-
 import Ministry from './pages/Ministry';
-import Mission from './pages/Mission';
-import Overseas from "./components/Mission/Overseas";
-import Domestic from "./components/Mission/Domestic";
-
 
 import EventStory from "./pages/EventStory";
 import EventPosts from "./components/EventStory/EventPosts";
@@ -160,20 +152,6 @@ const router = createBrowserRouter([
                                 element: <EventPostDetail />,
                             },
                         ],
-                    },
-                    {
-                        path: `mission`,
-                        element: <Mission />,
-                        children:[
-                            {
-                                path: 'overseas',
-                                element: <Overseas />,
-                            },
-                            {
-                                path: 'domestic',
-                                element: <Domestic />,
-                            },
-                        ]
                     },
                     {
                         path: `ministry`,
