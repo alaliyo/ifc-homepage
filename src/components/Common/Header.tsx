@@ -55,7 +55,7 @@ function Header({ WindowSize }: HeaderProps ) {
                     </HeaderWrapper>
 
                     <HeaderWrapper label='기관 및 학교' to='/ministry/senior'>
-                        <li><LinkStyled to='/ministry/senior'>실버회</LinkStyled></li>
+                        <li><LinkStyled to='/ministry/senior'>실로암</LinkStyled></li>
                         <li><LinkStyled to='/ministry/men'>남선교회</LinkStyled></li>
                         <li><LinkStyled to='/ministry/women'>여선교회</LinkStyled></li>
                         <li><LinkStyled to='/ministry/multicultural'>다문화</LinkStyled></li>

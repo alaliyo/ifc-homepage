@@ -4,7 +4,7 @@ import PageNav from "../components/Common/PageNav";
 
 function Ministry() {
     const linkInfoArr = [
-        {title: '실버회', LinkUrl: 'senior'},
+        {title: '실로암', LinkUrl: 'senior'},
         {title: '남선교회', LinkUrl: 'men'},
         {title: '여선교회', LinkUrl: 'women'},
         {title: '다문화', LinkUrl: 'multicultural'},

@@ -378,3 +378,4 @@ export const CommonPutImg = async (
         return alert("새로고침 후 다시 시도해주세요" + error);
     }
 };
+
