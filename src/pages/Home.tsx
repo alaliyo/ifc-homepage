@@ -45,7 +45,7 @@ function Home() {
                         </IntroBox>
                             <Construction>
                                 <Link to="/event-story/post">
-                                    <span>행사 페이지가 <br /> 업데이트 <br /> 되었습니다.</span>
+                                    <span>앨범 페이지가 <br /> 업데이트 <br /> 되었습니다.</span>
                                 </Link>
                             </Construction>
                     </>) : (<>
@@ -56,7 +56,7 @@ function Home() {
                             </Sermon>
                                 <Construction>
                                     <Link to="/event-story/post">
-                                        <span>행사 페이지가 <br /> 업데이트 되었습니다.</span>
+                                        <span>앨범 페이지가 <br /> 업데이트 되었습니다.</span>
                                     </Link>
                                 </Construction>
                         </ChilderBox>

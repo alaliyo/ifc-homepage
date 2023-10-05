@@ -54,13 +54,15 @@ function Header({ WindowSize }: HeaderProps ) {
                         <li><LinkStyled to='/youtube/youtube-en'>영어</LinkStyled></li>
                     </HeaderWrapper>
 
-                    <HeaderWrapper label='기관 및 학교' to='/ministry/senior'>
+                    <HeaderWrapper label='기관 및 학교' to='/ministry'>
+                        {/* 
                         <li><LinkStyled to='/ministry/senior'>실로암</LinkStyled></li>
                         <li><LinkStyled to='/ministry/men'>남선교회</LinkStyled></li>
                         <li><LinkStyled to='/ministry/women'>여선교회</LinkStyled></li>
                         <li><LinkStyled to='/ministry/multicultural'>다문화</LinkStyled></li>
                         <li><LinkStyled to='/ministry/youth'>유스그룹</LinkStyled></li>
                         <li><LinkStyled to='/ministry/children'>주일학교</LinkStyled></li>
+                        */}
                     </HeaderWrapper>
                     
                     <HeaderWrapper label='앨범' to='/event-story/post'></HeaderWrapper>

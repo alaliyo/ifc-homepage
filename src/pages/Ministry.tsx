@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { ChildBox, OutletBox, PageBody } from './PageStyled';
 import PageNav from "../components/Common/PageNav";
+import styled from "styled-components";
 
 function Ministry() {
     const linkInfoArr = [
@@ -13,6 +14,11 @@ function Ministry() {
     ]
     return(
         <PageBody>
+            <Box>
+                <h2>내년에 제작 완료됩니다.</h2>
+                <h2>기대해 주세요~~</h2>
+            </Box>
+            {/* 
             <ChildBox>
                 <PageNav
                     title="기관 및 학교"
@@ -22,8 +28,17 @@ function Ministry() {
                         <Outlet/>
                     </OutletBox>
             </ChildBox>
+            */}
         </PageBody>
     );
 }
 
 export default Ministry;
+
+const Box = styled.div`
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;

@@ -55,7 +55,7 @@ function EventPosts() {
 
             <NavBox>
                 {getData && getData.map((obj, i) => (
-                    <NavItem key={i} onClick={() => arrIndexChange(i)}>{obj.date}</NavItem>
+                    <NavItem key={i} onClick={() => arrIndexChange(i)}>{obj.date} ~ {Number(obj.date) + 5}</NavItem>
                 ))}
             </NavBox>
             
@@ -116,7 +116,6 @@ const Title = styled.p`
 `;
 
 const CardsBox = styled.div`
-    border-top: 2px solid gray;
     padding: 13px;
     display: flex;
     flex-wrap: wrap;

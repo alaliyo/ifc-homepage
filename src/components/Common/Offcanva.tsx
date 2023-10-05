@@ -38,12 +38,12 @@ function Offcanva() {
                     교회 유튜브
                 </LinkStyle>
 
-                <LinkStyle to={'/event-story/post'} onClick={onClick}>
-                    앨범
+                <LinkStyle to={'/ministry'} onClick={onClick}>
+                    기관 및 학교
                 </LinkStyle>
 
-                <LinkStyle to={'/ministry/senior'} onClick={onClick}>
-                    기관 및 학교
+                <LinkStyle to={'/event-story/post'} onClick={onClick}>
+                    앨범
                 </LinkStyle>
             </Offcanvas.Body>
         </OffcanvaBox>
