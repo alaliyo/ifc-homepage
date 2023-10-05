@@ -11,7 +11,7 @@ interface ObjProps {
 function HomeProgressBar() {
     const sizeGet = SizeGet();
     const [changeUnit, setChangeUnit] = useState<Array<ObjProps>>();
-
+    
     useEffect(() => {
         if (sizeGet) {
             const newChangeUnit = [];
