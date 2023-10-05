@@ -1,4 +1,4 @@
-import { collection, onSnapshot, query } from 'firebase/firestore';
+import { collection, doc, getDoc, onSnapshot, query, updateDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { dbService } from '../firebase';
 
@@ -9,24 +9,59 @@ export interface SizeData {
     count: number;
 }
 
-export function SizeGet(): SizeData[] | null {
-    const [dbSize, setDbSize] = useState<SizeData>();
-    const [storageSize, getStorageSize] = useState<SizeData>();
+// Size GET
+export function SizeGet(){
+    const [dbSize, setDbSize] = useState<SizeData[]>();
+
+    useEffect(() => {
+        const q = query(collection(dbService, "volume"));
+
+        onSnapshot(q, (snapshot) => {
+            const ScheduleArr: any = snapshot.docs.map((doc) => ({
+                ...doc.data(),
+            }));
+            setDbSize(ScheduleArr);
+        });
+    }, []);
+
+    return dbSize;
+}
+
+// Size +
+export const SizePlus = async (plus: number, collectionName: string) => {
+    try {
+        const yearDocRef = doc(dbService, "volume", collectionName);
+        const yearDocSnap = await getDoc(yearDocRef);
+
+        if (yearDocSnap.exists()) {
+            const yearData = yearDocSnap.data();
+            await updateDoc(yearDocRef, {
+                count: yearData,
+            });
+            
+        }
+    } catch (error) {
+        console.error(error);
+        return alert("새로고침 후 다시 시도해주세요.")
+    }
+}
+
+// Size -
+export function SizeMinus(size: number, minus: number, collectionName: string){
+    const [dbSize, setDbSize] = useState<SizeData[]>();
 
     useEffect(() => {
         const q = query(collection(dbService, 'volume'));
 
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            setDbSize(snapshot.docs[0].data() as SizeData);
-            getStorageSize(snapshot.docs[1].data() as SizeData)
+        onSnapshot(q, (snapshot) => {
+            const ScheduleArr: any = snapshot.docs.map((doc) => ({
+                ...doc.data(),
+            }));
+            setDbSize(ScheduleArr);
         });
-
-        return () => {
-            unsubscribe();
-        };
     }, []);
 
-    return dbSize && storageSize ? [dbSize, storageSize] : null;
+    return dbSize;
 }
 
 

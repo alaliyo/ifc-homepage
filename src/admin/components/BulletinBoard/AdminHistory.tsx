@@ -5,6 +5,7 @@ import { ChildTitle } from "../../style/CommonStyled";
 import { FormBox, ListGroupItem, ListGroupStyled, NavBox, NavItem } from "./Styled";
 import Pagination from "../../../components/Common/Pagination";
 import Loading from "../Common/Loading";
+import { DbdataSize } from "../../../utils/sizeUtils";
 
 function AdminHistory() {
     const historyData = HistoryData();
@@ -63,7 +64,7 @@ function AdminHistory() {
     };
 
     // DEL
-    const deleteHistory = async (id: number, content: string) => {
+    const deleteHistory = async (id: number, content: string, data: any) => {
         if (window.confirm(`"${content}" 연혁을 삭제하시겠습니까?`)) {
             if (historyData) {
                 await CommonDel("history", `${historyData[arrIndex].date}`, id, setArrIndex);
@@ -158,7 +159,7 @@ function AdminHistory() {
                                 <Button 
                                     variant="outline-danger"
                                     size="sm"
-                                    onClick={() => deleteHistory(obj.id, obj.content)}
+                                    onClick={() => deleteHistory(obj.id, obj.content, obj)}
                                 >
                                     삭제
                                 </Button>

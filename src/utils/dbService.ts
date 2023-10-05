@@ -2,6 +2,8 @@ import { collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query
 import { useEffect, useState } from "react";
 import { dbService } from "../firebase";
 import { DeleteImages, uploadImage } from "./storageService";
+import { DbdataSize } from "./sizeUtils";
+
 
 // 연간계획 GET
 export interface ScheduleDataprops {
@@ -227,6 +229,7 @@ export function CertificationData() {
     return certificationData;
 }
 
+
 // Common POST
 export const CommonPost = async (
     data: any,
@@ -280,7 +283,7 @@ export const CommonDel = async (
         if (yearDocSnap.exists()) {
             const yearData = yearDocSnap.data();
             const updatedContents = yearData.contentsArr.filter((item: any) => item.id !== id);
-
+            
             if (updatedContents.length === 0) {
                 setArrIndex(0);
                 await deleteDoc(yearDocRef);
