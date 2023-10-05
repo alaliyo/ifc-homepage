@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { SizeGet } from "../../../utils/sizeUtils";
-import styled from "styled-components";
 import { ProgressBar } from "react-bootstrap";
+import { SizeGet } from "../../../utils/sizeUtils";
 
 interface ObjProps {
     name: string;
@@ -18,13 +17,13 @@ function HomeProgressBar() {
             for (const obj of sizeGet) {
                 const objCount = obj.count;
                 const objName = obj.name;
-    
+                
                 if (objCount >= 1048576) {
-                    const changeCount = (objCount / 1048576).toFixed(3) + "GB";
+                    const changeCount = (Math.round(objCount / 1048576 * 100) / 100).toFixed(2) + "GB";
                     const changeObj = { count: changeCount, name: objName };
                     newChangeUnit.push(changeObj);
                 } else if (objCount >= 1024) {
-                    const changeCount = (objCount / 1024).toFixed(3) + "MB";
+                    const changeCount = (Math.round(objCount / 1024 * 100) / 100).toFixed(2) + "MB";
                     const changeObj = { count: changeCount, name: objName };
                     newChangeUnit.push(changeObj);
                 } else if (objCount < 1024) {
@@ -40,28 +39,26 @@ function HomeProgressBar() {
         <>
             {sizeGet && changeUnit && (
                 <div>
-                    <h3>{changeUnit[0].name}: {changeUnit[0].count} / 1GB</h3>
-                    <ProgressBarCustom
+                    <h3>{changeUnit[0].name}: {changeUnit[0].count} / 1GB ({((sizeGet[0].count / 1048576) * 100).toFixed(2)+"%"})</h3>
+                    <ProgressBar
                         animated
                         variant="danger"
-                        now={sizeGet[0].count/1048576*100}
-                    >
-                        {(sizeGet[0].count/1048576*100).toFixed(3)+"%"}
-                    </ProgressBarCustom>
+                        now={Number(((sizeGet[0].count / 1048576) * 100).toFixed(2))}
+                        label={((sizeGet[0].count / 1048576) * 100).toFixed(2)+"%"}
+                    />
                     <hr />
                 </div>
             )}
 
             {sizeGet && changeUnit && (
                 <div>
-                    <h3>{changeUnit[1].name}: {changeUnit[1].count} / 5GB</h3>
-                    <ProgressBarCustom
+                    <h3>{changeUnit[1].name}: {changeUnit[1].count} / 5GB ({((sizeGet[1].count / (1048576 * 5)) * 100).toFixed(2)+"%"})</h3>
+                    <ProgressBar
                         animated
                         variant="danger"
-                        now={sizeGet[1].count/(1048576*5)*100}
-                    >
-                        {(sizeGet[1].count/(1048576*5)*100).toFixed(3)+"%"}
-                    </ProgressBarCustom>
+                        now={Number(((sizeGet[1].count / (1048576 * 5)) * 100).toFixed(2))}
+                        label={((sizeGet[1].count / (1048576 * 5)) * 100).toFixed(2)+"%"}
+                    />
                     <hr />
                 </div>
             )}
@@ -70,11 +67,3 @@ function HomeProgressBar() {
 }
 
 export default HomeProgressBar;
-
-const ProgressBarCustom = styled(ProgressBar)`
-    font-weight: 900;
-    font-size: 15px;
-    height: 22px;
-    display: flex;
-    justify-content: center;
-`;

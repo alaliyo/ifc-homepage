@@ -56,8 +56,8 @@ function AdminWeek() {
             return alert("사진을 첨부해 주세요.");
         }
         setLoadingBoolen(true);
-        const imageUrls = await uploadImage("weekly", weeklyDate, imgs);
         const year = new Date(weeklyDate).getFullYear();
+        const imageUrls = await uploadImage("weekly", `${year}/${weeklyDate}`, imgs);
         const data = { name: weeklyDate, date: weeklyDate, imgUrls: imageUrls };
         await CommonPost(data, "weekly", year);
         setLoadingBoolen(false);

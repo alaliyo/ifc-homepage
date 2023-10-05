@@ -1,6 +1,7 @@
 import { collection, doc, getDoc, onSnapshot, query, updateDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { dbService } from '../firebase';
+import { dbService, storage } from '../firebase';
+import { deleteObject, getMetadata, ref } from 'firebase/storage';
 
 
 // DB 용량 GET
@@ -32,7 +33,7 @@ export function SizeGet(){
 export function DbdataSize(data: any) {
     const jsonString = JSON.stringify(data);
     const byteCount = new TextEncoder().encode(jsonString).length;
-    return Number((byteCount / 1024).toFixed(3));
+    return Number((Math.ceil(byteCount / 1024 * 100) / 100).toFixed(2));
 }
 
 
@@ -72,29 +73,42 @@ export function ImgsSize(images: Array<File>) {
     for (const img of images) {
         setImgsSize(e => e + Number(img.size));
     }
-    
-    return Number((imgsSize / 1024).toFixed(3));
+
+    return Number((Math.round(imgsSize / 1024 * 100) / 100).toFixed(2));
 }
 
 
 // storage 용량 산술
-export const ImgsSizeArithmetic = async (images: any, arithmetic: string) => {
+export const ImgsSizeArithmetic = async (image: any, arithmetic: string) => {
     try {
         const yearDocRef = doc(dbService, "volume", "storage");
         const yearDocSnap = await getDoc(yearDocRef);
 
         if (yearDocSnap.exists()) {
             const yearData = yearDocSnap.data();
-            const num = ImgsSize(images);
             
             if (arithmetic === "+") {
+                const fileSize = ImgsSize(image);
+                
                 await updateDoc(yearDocRef, {
-                    count: yearData.count + num,
+                    count: yearData.count + fileSize,
                 });
             } else if (arithmetic === "-") {
-                await updateDoc(yearDocRef, {
-                    count: yearData.count - num,
-                });
+                const forestRef = ref(storage, image);
+                getMetadata(forestRef)
+                    .then(async (metadata) => {
+                        const imgsSize = metadata.size;
+                        const fileSize = Number((Math.round(imgsSize / 1024 * 100) / 100).toFixed(2))
+                        
+                        await updateDoc(yearDocRef, {
+                            count: yearData.count + fileSize,
+                        });
+                        
+                        await deleteObject(image);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
             } else {
                 alert("새로고침 후 다시 시도해주세요.")
             }

@@ -1,6 +1,7 @@
 import { storage } from "../firebase";
-import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import imageCompression from 'browser-image-compression';
+import { ImgsSizeArithmetic } from "./sizeUtils";
 
 // common Upload image
 export const uploadImage = async (folder: string, weekDate: string, imgs: Array<File>) => {
@@ -8,8 +9,8 @@ export const uploadImage = async (folder: string, weekDate: string, imgs: Array<
     const allowedExtensions = ['.jpg', '.png', '.jpeg'];
     const fileExtension = imgs.map((e: { name: string; }) => e.name.substring(e.name.lastIndexOf('.')).toLowerCase());
     const options = { 
-        maxSizeMB: 1, 
-        maxWidthOrHeight: 1500
+        maxSizeMB: 600, 
+        maxWidthOrHeight: 1200
     }
 
     for (const e of fileExtension) {
@@ -39,9 +40,9 @@ export const uploadImage = async (folder: string, weekDate: string, imgs: Array<
 // common delete image
 export const DeleteImages = async (imageUrls: Array<string>) => {
     if (imageUrls && imageUrls.length > 0) {
-        imageUrls.forEach(async (imageUrls) => {
-            const storageRef = ref(storage, imageUrls);
-            await deleteObject(storageRef);
+        imageUrls.forEach(async (imageUrl) => {
+            const storageRef = ref(storage, imageUrl);
+            await ImgsSizeArithmetic(storageRef, "-");
         });
     }
 };

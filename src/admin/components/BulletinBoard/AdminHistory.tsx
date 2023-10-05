@@ -5,7 +5,6 @@ import { ChildTitle } from "../../style/CommonStyled";
 import { FormBox, ListGroupItem, ListGroupStyled, NavBox, NavItem } from "./Styled";
 import Pagination from "../../../components/Common/Pagination";
 import Loading from "../Common/Loading";
-import { DbdataSize } from "../../../utils/sizeUtils";
 
 function AdminHistory() {
     const historyData = HistoryData();
