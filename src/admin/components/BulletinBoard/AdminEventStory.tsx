@@ -210,7 +210,7 @@ function AdminEventStory() {
 
             <NavBox>
                 {eventStoryData && eventStoryData.map((obj, i) => (
-                    <NavItem key={i} onClick={() => arrIndexChange(i)}>{obj.date}</NavItem>
+                    <NavItem key={i} onClick={() => arrIndexChange(i)}>{obj.date} ~ {obj.date + 5}</NavItem>
                 ))}
             </NavBox>
 

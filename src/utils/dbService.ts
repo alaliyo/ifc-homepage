@@ -245,7 +245,7 @@ export const CommonPost = async (
             // 데이터가 이미 존재하는 경우 배열에 내용 추가
             const yearData = deacadDocSnap.data();
             yearData.contentsArr.push(data);
-            await DbdataSizeArithmetic(yearData, "+");
+            await DbdataSizeArithmetic(data, "+");
 
             await updateDoc(decadDocRef, {
                 contentsArr: yearData.contentsArr,
@@ -277,6 +277,7 @@ export const CommonDel = async (
         
         if (yearDocSnap.exists()) {
             const yearData = yearDocSnap.data();
+            const delDataObj = yearData.contentsArr.filter((item: any) => item.id === id);
             const updatedContents = yearData.contentsArr.filter((item: any) => item.id !== id);
 
             if (updatedContents.length === 0) {
@@ -284,9 +285,10 @@ export const CommonDel = async (
                 await DbdataSizeArithmetic(yearData, "-");
                 await deleteDoc(yearDocRef);
             } else {
-                const obj = { contentsArr: updatedContents };
-                await DbdataSizeArithmetic(obj, "-");
-                await updateDoc(yearDocRef, obj);
+                await DbdataSizeArithmetic(delDataObj, "-");
+                await updateDoc(yearDocRef, {
+                    contentsArr: updatedContents
+                });
             }
             alert("삭제가 되었습니다.");
         }
