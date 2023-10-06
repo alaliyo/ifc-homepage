@@ -23,7 +23,7 @@ function AdminWeek() {
         if (weeklyData && weeklyData.length > 0) {
             const startIndex = (currentPage - 1) * postsPerPage;
             const endIndex = startIndex + postsPerPage;
-            const DataSort = weeklyData[arrIndex].contentsArr.sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)));
+            const DataSort = weeklyData[arrIndex].contentsArr.sort((a, b) => Number(new Date(b.date)) - Number(new Date(a.date)));
             return DataSort.slice(startIndex, endIndex);
         }
         return [];
