@@ -49,7 +49,7 @@ function ListWeek({setEventData, setShowModal}: any) {
 
             <ListBox>
                 {yearScheduleData && yearScheduleData.map((arr, i) =>
-                    arr.contentsArr.map(data => (
+                    arr.contentsArr.sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date))).map(data => (
                         Number(data.date.split('-')[1]) === month &&
                         Number(data.date.split('-')[0]) === year && (
                             <List 
