@@ -15,6 +15,7 @@ export const NavBox = styled.nav`
         border-bottom: 1px solid gray;
         display: inline-block;
         padding: 0;
+        ::-webkit-scrollbar {display: none !important; }
     }
 
     a {

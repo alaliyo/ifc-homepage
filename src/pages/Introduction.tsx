@@ -7,8 +7,8 @@ function Introduction() {
         {title: '교회비전', LinkUrl: 'vision'},
         {title: '교회연혁', LinkUrl: 'history'},
         {title: '담임목사', LinkUrl: 'rev'},
-        {title: '교역자', LinkUrl: 'pastors'},
         {title: '장로', LinkUrl: 'elder'},
+        {title: '교역자', LinkUrl: 'pastors'},
         {title: '교회약도', LinkUrl: 'sketch-map'},
     ]
 

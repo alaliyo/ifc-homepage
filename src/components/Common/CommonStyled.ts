@@ -106,6 +106,7 @@ export const NavBox = styled.nav`
     display: flex;
     overflow-x: auto;
     white-space: nowrap;
+    ::-webkit-scrollbar {display: none !important; }
 `;
 
 export const NavItem = styled.div`
