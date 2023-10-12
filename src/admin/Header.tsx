@@ -33,7 +33,6 @@ function Header() {
                         <Link to="/admin/home">홈</Link>
                         <Link to="/admin/bulletin-board/history">게시판 관리</Link>
                         <Link to="/admin/user/certification">회원관리</Link>
-                        <Link to="/admin/maintain">유지보수</Link>
                         <Link to="/admin/manual">메뉴얼</Link>
                     </LinkBox>
                     <LogOutBtn onClick={onLogOutClick}>out</LogOutBtn>

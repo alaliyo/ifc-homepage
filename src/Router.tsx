@@ -52,8 +52,6 @@ import AdminEventStory from "./admin/components/BulletinBoard/AdminEventStory";
 import User from "./admin/pages/User";
 import Certification from "./admin/components/User/Certification";
 
-import Maintain from "./admin/pages/Maintain";
-
 import Manual from "./admin/pages/Manual";
 
 const router = createBrowserRouter([
@@ -245,10 +243,6 @@ const router = createBrowserRouter([
                         element: <Certification />,
                     },
                 ]
-            },
-            {
-                path: "maintain",
-                element: <Maintain />,
             },
             {
                 path: "manual",
