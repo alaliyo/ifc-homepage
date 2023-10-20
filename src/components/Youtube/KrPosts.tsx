@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useOutletContext } from 'react-router-dom';
-import { PostsBox, PostsHeader, Title, PostsBody} from './YoutubeStyled';
+import { PostsBox, PostsBody} from './YoutubeStyled';
 import Search from "../Common/Search";
 import Pagination from "../Common/Pagination";
 import { ChildTitle, NavBox, NavItem } from "../Common/CommonStyled";
@@ -11,7 +11,6 @@ function KrPosts() {
     const { getData, arrIndex, setArrIndex } = useOutletContext<DateProps>();
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
-    const [searchQuery, setSearchQuery] = useState('');
     const [searchResult, setSearchResult] = useState<YoutubeDataProps[] | undefined>(undefined);
 
     // 페이징 DATA
@@ -31,28 +30,26 @@ function KrPosts() {
     };
 
     // 검색 실행
-    const handleSearch = () => {
-        const dataToSearch = getData[arrIndex]?.contentsArr || getData;
-        const filteredData = dataToSearch.filter((item) =>
-            item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.date.toLowerCase().includes(searchQuery) || 
-            item.bible.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        setSearchResult(filteredData);
+    const handleSearch = (searchQuery: string) => {
+        if (searchQuery && searchQuery.length > 0) {
+            const filteredData = getData.flatMap((obj: any) =>
+                obj.contentsArr.filter((item: { title: string; date: string; bible: string; }) =>
+                item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.date.toLowerCase().includes(searchQuery) || 
+                item.bible.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+            );
+            setSearchResult(filteredData);
+        } else {
+            setSearchResult(undefined);
+        }
         setCurrentPage(1);
     };
     
     return(
         <PostsBox>
-                <ChildTitle>
-                    한국
-                </ChildTitle>
-                <Search
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                    handleSearch={handleSearch}
-                />
-
+            <ChildTitle>한국</ChildTitle>
+            <Search handleSearch={handleSearch} />
             <NavBox>
                 {getData && !searchResult && getData.map((obj, i) => (
                     <NavItem key={i} onClick={() => arrIndexChange(i)}>{obj.date}</NavItem>
@@ -60,7 +57,7 @@ function KrPosts() {
             </NavBox>
             
             <PostsBody>
-                {getData.length > 0 && getPostsForCurrentPage().map((obj, i) => (
+                {getData && getData.length > 0 && getPostsForCurrentPage().map((obj, i) => (
                     <Link key={i} to={`/youtube/detail/kr/${obj.id}`}>
                         <div>{obj.title}</div>
                         <div>

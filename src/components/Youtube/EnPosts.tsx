@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useOutletContext } from 'react-router-dom';
-import { PostsBox, PostsHeader, Title, PostsBody} from './YoutubeStyled';
+import { PostsBox, PostsBody} from './YoutubeStyled';
 import Search from "../Common/Search";
 import Pagination from "../Common/Pagination";
 import { ChildTitle, NavBox, NavItem } from "../Common/CommonStyled";
@@ -11,7 +11,6 @@ function EnPosts() {
     const { getData, arrIndex, setArrIndex } = useOutletContext<DateProps>();
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
-    const [searchQuery, setSearchQuery] = useState('');
     const [searchResult, setSearchResult] = useState<YoutubeDataProps[] | undefined>(undefined);
     
     // 페이징 DATA
