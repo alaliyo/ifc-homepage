@@ -12,7 +12,6 @@ function WeeklyList() {
     const { getData, arrIndex, setArrIndex } = useOutletContext<DataProps>();
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
-    const [searchQuery, setSearchQuery] = useState('');
     const [searchResult, setSearchResult] = useState<WeeklyDataPoops[] | undefined>(undefined);
     
     // 페이징 DATA
@@ -32,12 +31,17 @@ function WeeklyList() {
     };
     
     // 검색 실행
-    const handleSearch = () => {
-        const dataToSearch = getData[arrIndex]?.contentsArr || getData;
-        const filteredData = dataToSearch.filter((item) =>
-            item.date.toLowerCase().includes(searchQuery)
-        );
-        setSearchResult(filteredData);
+    const handleSearch = (searchQuery: string) => {
+        if (searchQuery && searchQuery.length > 0) {
+            const filteredData = getData.flatMap((obj: any) =>
+                obj.contentsArr.filter((item: { date: string; }) =>
+                    item.date.toLowerCase().includes(searchQuery)
+                )
+            );
+            setSearchResult(filteredData);
+        } else {
+            setSearchResult(undefined);
+        }
         setCurrentPage(1);
     };
 
@@ -45,14 +49,12 @@ function WeeklyList() {
         <div>
             <SearchBox>
                 <Search
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
                     handleSearch={handleSearch}
                 />
             </SearchBox>
             
             <NavBox>
-                {getData && getData.map((obj, i) => (
+                {getData && !searchResult && getData.map((obj, i) => (
                     <NavItem key={i} onClick={() => arrIndexChange(i)}>{obj.date}</NavItem>
                 ))}
             </NavBox>

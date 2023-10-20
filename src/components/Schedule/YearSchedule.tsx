@@ -34,13 +34,20 @@ function YearSchedule() {
 
     const calendarEvents = yearScheduleData?.reduce((acc, yearSchedule) => {
         const eventsForYear = yearSchedule.contentsArr.map((event) => ({
-            id: event.id.toString(), // FullCalendar의 이벤트 ID는 문자열이어야 합니다.
+            id: event.id.toString(),
             title: event.title,
-            date: event.date,
+            start: new Date(event.start),
+            end: new Date(event.end),
         }));
         return [...acc, ...eventsForYear];
-    }, [] as { id: string; title: string; date: string; }[]);
+    }, [] as { id: string; title: string; start: Date; end: Date; }[] );
     
+    const headerToolbarOptions = {
+        start: 'title',
+        center: '',
+        end: 'today prevYear,prev,next,nextYear',
+    };
+
     return (
         <Body>
             <ChildTitle>연중계획</ChildTitle>
@@ -53,6 +60,7 @@ function YearSchedule() {
                     events={calendarEvents}
                     eventDisplay="block"
                     eventClick={handleEventClickWrapper}
+                    headerToolbar={headerToolbarOptions}
                 />
             ):(
                 <ListWeek

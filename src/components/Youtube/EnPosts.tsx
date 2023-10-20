@@ -3,7 +3,7 @@ import { Link, useOutletContext } from 'react-router-dom';
 import { PostsBox, PostsHeader, Title, PostsBody} from './YoutubeStyled';
 import Search from "../Common/Search";
 import Pagination from "../Common/Pagination";
-import { NavBox, NavItem } from "../Common/CommonStyled";
+import { ChildTitle, NavBox, NavItem } from "../Common/CommonStyled";
 import { YoutubeDataProps } from "../../utils/dbService";
 import { DateProps } from "./YoutubeProps";
 
@@ -31,30 +31,28 @@ function EnPosts() {
     };
 
     // 검색 실행
-    const handleSearch = () => {
-        const dataToSearch = getData[arrIndex]?.contentsArr || getData;
-        const filteredData = dataToSearch.filter((item) =>
-            item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.date.toLowerCase().includes(searchQuery) || 
-            item.bible.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        setSearchResult(filteredData);
+    const handleSearch = (searchQuery: string) => {
+        if (searchQuery && searchQuery.length > 0) {
+            const filteredData = getData.flatMap((obj: any) =>
+                obj.contentsArr.filter((item: { title: string; date: string; bible: string; }) =>
+                item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.date.toLowerCase().includes(searchQuery) || 
+                item.bible.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+            );
+            setSearchResult(filteredData);
+        } else {
+            setSearchResult(undefined);
+        }
         setCurrentPage(1);
     };
     
     return(
         <PostsBox>
-            <PostsHeader>
-                <Title>영어</Title>
-                <Search
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                    handleSearch={handleSearch}
-                />
-            </PostsHeader>
-
+            <ChildTitle>English</ChildTitle>
+            <Search handleSearch={handleSearch} />
             <NavBox>
-                {getData && getData.map((obj, i) => (
+                {getData && !searchResult && getData.map((obj, i) => (
                     <NavItem key={i} onClick={() => arrIndexChange(i)}>{obj.date}</NavItem>
                 ))}
             </NavBox>

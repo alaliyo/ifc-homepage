@@ -3,7 +3,7 @@ import { Link, useOutletContext } from 'react-router-dom';
 import { PostsBox, PostsHeader, Title, PostsBody} from './YoutubeStyled';
 import Search from "../Common/Search";
 import Pagination from "../Common/Pagination";
-import { NavBox, NavItem } from "../Common/CommonStyled";
+import { ChildTitle, NavBox, NavItem } from "../Common/CommonStyled";
 import { YoutubeDataProps } from "../../utils/dbService";
 import { DateProps } from "./YoutubeProps";
 
@@ -44,17 +44,17 @@ function KrPosts() {
     
     return(
         <PostsBox>
-            <PostsHeader>
-                <Title>한국</Title>
+                <ChildTitle>
+                    한국
+                </ChildTitle>
                 <Search
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
                     handleSearch={handleSearch}
                 />
-            </PostsHeader>
 
             <NavBox>
-                {getData && getData.map((obj, i) => (
+                {getData && !searchResult && getData.map((obj, i) => (
                     <NavItem key={i} onClick={() => arrIndexChange(i)}>{obj.date}</NavItem>
                 ))}
             </NavBox>

@@ -92,7 +92,7 @@ function AdminWeek() {
     const putWeek = async () => {
         if (weeklyData) {
             setLoadingBoolen(true);
-            const data = { name: weeklyDate, date: weeklyDate, imgUrls: urls };
+            const data = { date: weeklyDate, imgUrls: urls };
             CommonPutImg(editingItem, "weekly", `${weeklyData[arrIndex].date}`, data, imgs);
             setLoadingBoolen(false);
             cancelEdit();

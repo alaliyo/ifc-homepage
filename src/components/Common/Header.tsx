@@ -51,7 +51,7 @@ function Header({ WindowSize }: HeaderProps ) {
 
                     <HeaderWrapper label='유튜브' to='/youtube/youtube-kr'>
                         <li><LinkStyled to='/youtube/youtube-kr'>한국</LinkStyled></li>
-                        <li><LinkStyled to='/youtube/youtube-en'>영어</LinkStyled></li>
+                        <li><LinkStyled to='/youtube/youtube-en'>English</LinkStyled></li>
                     </HeaderWrapper>
 
                     <HeaderWrapper label='기관 및 학교' to='/ministry'>

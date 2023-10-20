@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
-import { CommonDel, CommonPost, CommonPut, YearScheduleData } from "../../../utils/dbService";
+import { CommonDel, CommonPost, CommonPut, ScheduleDataprops, YearScheduleData } from "../../../utils/dbService";
 import { ChildTitle } from "../../style/CommonStyled";
 import { FormBox, ListGroupStyled, ListGroupItem, NavBox, NavItem, InputGroupCustom } from "./Styled";
 import Pagination from "../../../components/Common/Pagination";
@@ -8,11 +8,12 @@ import Loading from "../Common/Loading";
 
 function AdminYear() {
     const yearScheduleData = YearScheduleData();
-    const [scheduleDate, setScheduleDate] = useState("");
+    const [scheduleStart, setScheduleStart] = useState("");
+    const [scheduleEnd, setScheduleEnd] = useState("");
     const [scheduleTitle, setScheduleTitle] = useState("");
     const [scheduleContent, setScheduleContent] = useState("");
     const [arrIndex, setArrIndex] = useState(0);
-    const [editingItem, setEditingItem] = useState<{ id: number; date: string; title: string } | null>(null);
+    const [editingItem, setEditingItem] = useState<{ id: number; start: string; end: string; title: string } | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
     const [loadingBoolen, setLoadingBoolen] = useState(false);
@@ -22,7 +23,7 @@ function AdminYear() {
         if (yearScheduleData && yearScheduleData.length > 0) {
             const startIndex = (currentPage - 1) * postsPerPage;
             const endIndex = startIndex + postsPerPage;
-            const DataSort = yearScheduleData[arrIndex].contentsArr.sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date)));
+            const DataSort = yearScheduleData[arrIndex].contentsArr.sort((a, b) => Number(new Date(a.start)) - Number(new Date(b.start)));
             return DataSort.slice(startIndex, endIndex);
         }
         return [];
@@ -37,8 +38,10 @@ function AdminYear() {
         const {
             target: { name, value}
         } = e;
-        if (name === "date") {
-            setScheduleDate(value);
+        if (name === "start") {
+            setScheduleStart(value);
+        } else if (name === "end") {
+            setScheduleEnd(value);
         } else if (name === "title") {
             setScheduleTitle(value);
         } else if (name === "content") {
@@ -50,18 +53,19 @@ function AdminYear() {
     const postSchedule = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
-        if (scheduleDate === "") {
+        if (scheduleStart === "") {
             return alert("날짜를 입력해 주세요.");
         } else if (scheduleTitle === "") {
             return alert("제목을 입력해 주세요.");
         }
 
         setLoadingBoolen(true);
-        const year = new Date(scheduleDate).getFullYear();
-        const data = { date: scheduleDate, title: scheduleTitle, content: scheduleContent };
+        const year = new Date(scheduleStart).getFullYear();
+        const data = { start: scheduleStart, end: scheduleEnd, title: scheduleTitle, content: scheduleContent };
         await CommonPost(data, "year-schedules", year);
         setLoadingBoolen(false);
-        setScheduleDate("");
+        setScheduleStart("");
+        setScheduleEnd("");
         setScheduleTitle("");
         setScheduleContent("");
     }
@@ -76,16 +80,18 @@ function AdminYear() {
     };
     
     // 게시물 수정 버튼
-    const editSchedule = (item: { id: number; date: string; title: string; content: string; }) => {
+    const editSchedule = (item: ScheduleDataprops) => {
         setEditingItem(item);
-        setScheduleDate(item.date);
+        setScheduleStart(item.start);
+        setScheduleEnd(item.end);
         setScheduleTitle(item.title);
-        setScheduleContent(item.content);
+        item.content && setScheduleContent(item.content);
     };
 
     const cancelEdit = () => {
         setEditingItem(null);
-        setScheduleDate("");
+        setScheduleStart("");
+        setScheduleEnd("");
         setScheduleTitle("");
         setScheduleContent("");
     };
@@ -94,7 +100,7 @@ function AdminYear() {
     const putSchedule = async () => {
         if (yearScheduleData) {
             setLoadingBoolen(true);
-            const data = { date: scheduleDate, title: scheduleTitle, content: scheduleContent };
+            const data = { start: scheduleStart, end: scheduleEnd, title: scheduleTitle, content: scheduleContent };
             await CommonPut(editingItem, "year-schedules", `${yearScheduleData[arrIndex].date}`, data);
             setLoadingBoolen(false);
             cancelEdit();
@@ -107,19 +113,19 @@ function AdminYear() {
 
             <FormBox onSubmit={postSchedule}>
                 <InputGroupCustom >
-                    <InputGroup.Text>날짜</InputGroup.Text>
+                    <InputGroup.Text>시작</InputGroup.Text>
                     <Form.Control aria-label="First name"
                         type="date"
-                        name="date"
-                        value={scheduleDate}
+                        name="start"
+                        value={scheduleStart}
                         onChange={contentText}
                     />
+                    <InputGroup.Text>끝</InputGroup.Text>
                     <Form.Control aria-label="Last name"
-                        type="text"
-                        name="date"
+                        type="date"
+                        name="end"
                         onChange={contentText}
-                        value={scheduleDate}
-                        placeholder="예) 2023-01-01"
+                        value={scheduleEnd}
                     />
                 </InputGroupCustom>
                 <InputGroupCustom>
@@ -164,7 +170,7 @@ function AdminYear() {
             <ListGroupStyled>
                 {getPostsForCurrentPage().map((obj, i) => (
                     <ListGroupItem key={i}>
-                        {obj.date} {obj.title}
+                        {obj.start} {obj.title}
                         <div>                           
                             <Button 
                                 variant="outline-secondary"

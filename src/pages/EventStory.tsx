@@ -24,7 +24,7 @@ function EventStory() {
 export default EventStory;
 
 const OutletBoxstyle = styled(OutletBox)`
-    width: 1000px;
+    width: 1024px;
     margin: 0 auto;
     padding: 20px;
 

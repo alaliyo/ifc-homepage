@@ -7,9 +7,10 @@ import { DbdataSizeArithmetic } from "./sizeUtils";
 // 연간계획 GET
 export interface ScheduleDataprops {
     title: string;
-    date: string;
+    start: string;
+    end: string;
     id: number;
-    content: string;
+    content?: string;
 }
 
 export interface YearScheduleDataprops {

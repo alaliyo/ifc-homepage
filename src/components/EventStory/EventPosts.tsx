@@ -5,14 +5,13 @@ import Search from "../Common/Search";
 import { useState } from "react";
 import { EventStoryDataProps } from "../../utils/dbService";
 import { DataProps } from "./EventStoryType";
-import { NavBox, NavItem } from "../Common/CommonStyled";
+import { ChildTitle, NavBox, NavItem } from "../Common/CommonStyled";
 import Pagination from "../Common/Pagination";
 
 function EventPosts() {
     const { getData, arrIndex, setArrIndex } = useOutletContext<DataProps>();
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(12);
-    const [searchQuery, setSearchQuery] = useState('');
     const [searchResult, setSearchResult] = useState<EventStoryDataProps[] | undefined>(); // 검색 결과를 저장할 배열
     
     // 페이징 DATA
@@ -32,30 +31,29 @@ function EventPosts() {
     };
 
     // 검색 실행
-    const handleSearch = () => {
-        const dataToSearch = getData[arrIndex]?.contentsArr || getData;
-        const filteredData = dataToSearch.filter((item) =>
-            item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.date.toLowerCase().includes(searchQuery)
-        );
-        setSearchResult(filteredData);
+    const handleSearch = (searchQuery: string) => {
+        if (searchQuery && searchQuery.length > 0) {
+            const filteredData = getData.flatMap((obj: any) =>
+                obj.contentsArr.filter((item: { title: string; date: string; }) =>
+                    item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    item.date.toLowerCase().includes(searchQuery)
+                )
+            );
+            setSearchResult(filteredData);
+        } else {
+            setSearchResult(undefined);
+        }
         setCurrentPage(1);
     };
     
     return(
-        <>
-            <PostsHeader>
-                <Title>게시물</Title>
-                <Search
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                    handleSearch={handleSearch}
-                />
-            </PostsHeader>
+        <div>
+            <ChildTitle>게시물</ChildTitle>
+            <Search handleSearch={handleSearch} />
 
             <NavBox>
-                {getData && getData.map((obj, i) => (
-                    <NavItem key={i} onClick={() => arrIndexChange(i)}>{obj.date} ~ {Number(obj.date) + 5}</NavItem>
+                {getData && !searchResult && getData.map((obj, i) => (
+                    <NavItem key={i} onClick={() => arrIndexChange(i)}>{obj.date} ~ {Number(obj.date) + 4}</NavItem>
                 ))}
             </NavBox>
             
@@ -78,7 +76,7 @@ function EventPosts() {
                 setCurrentPage={setCurrentPage}
                 postsPerPage={postsPerPage}
             />
-        </>
+        </div>
     );
 }
 
@@ -88,31 +86,6 @@ export const Writin = styled(Link)`
     color: black;
     font-weight: 900;
     text-decoration: none;
-`;
-
-const PostsHeader = styled.header`
-    display: flex;
-    justify-content: space-between;
-
-    @media screen and (max-width: 480px) {
-        padding: 0 10px;
-    }
-`;
-
-const Title = styled.p`
-    width: 100px;
-    font-size: 30px;
-    font-weight: 900;
-
-    @media screen and (max-width: 768px) {
-        width: 80px;
-        font-size: 20px;
-    }
-
-    @media screen and (max-width: 480px) {
-        width: 60px;
-        font-size: 18px;
-    }
 `;
 
 const CardsBox = styled.div`

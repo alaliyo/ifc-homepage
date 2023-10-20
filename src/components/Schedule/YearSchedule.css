@@ -33,3 +33,7 @@
         font-weight: 900;
     }
 }
+
+.fc-event-time {
+    display: none;
+}

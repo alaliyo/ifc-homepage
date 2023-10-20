@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import styled from "styled-components";
 import { YearScheduleData } from "../../utils/dbService";
@@ -8,6 +8,14 @@ function ListWeek({setEventData, setShowModal}: any) {
     const date = new Date();
     const [year, setYear] = useState(date.getFullYear());
     const [month, setMonth] = useState(date.getMonth() + 1);
+    const [dateLocation, setDateLocation] = useState(`${year}-${month}`);
+
+    const dateChange = (e: any) => {
+        const newDate = new Date(e.target.value);
+        setYear(newDate.getFullYear());
+        setMonth(newDate.getMonth() + 1);
+        setDateLocation(e.target.value);
+    };
 
     const handleEventUp = () => {
         setMonth(e => e + 1);
@@ -37,10 +45,18 @@ function ListWeek({setEventData, setShowModal}: any) {
         }
     };
 
+    useEffect(() => {
+        if (month < 10) {
+            setDateLocation(`${year}-0${month}`);
+        } else {
+            setDateLocation(`${year}-${month}`);
+        }
+    }, [year, month])
+
     return(
         <ListWeekBox>
             <ListWeekHeader>
-                <h3>{year}년 {month}월</h3>
+                <Title type="month" value={dateLocation} onChange={dateChange} />
                 <HeaderBtnBox>
                     <Button variant="secondary" size="sm" onClick={handleEventDown}>◀</Button>
                     <Button variant="secondary" size="sm" onClick={handleEventUp}>▶</Button>
@@ -48,15 +64,19 @@ function ListWeek({setEventData, setShowModal}: any) {
             </ListWeekHeader>
 
             <ListBox>
-                {yearScheduleData && yearScheduleData.map((arr, i) =>
-                    arr.contentsArr.sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date))).map(data => (
-                        Number(data.date.split('-')[1]) === month &&
-                        Number(data.date.split('-')[0]) === year && (
+                {yearScheduleData && yearScheduleData.map(arr =>
+                    arr.contentsArr.sort((a, b) => Number(new Date(a.start)) - Number(new Date(b.start))).map(data => (
+                        Number(data.start.split('-')[1]) === month &&
+                        Number(data.start.split('-')[0]) === year && (
                             <List 
                                 key={data.id}
                                 onClick={() => handleEventClick(data.id)}
                             >
-                                {data.date.split('-')[2].replace('0', '')}일 - {data.title}
+                                {data.end ? (
+                                    `${data.start.split('-')[2].replace('0', '')} ~ ${data.end.split('-')[2].replace('0', '')}일 : ${data.title}`
+                                ) : (
+                                    `${data.start.split('-')[2].replace('0', '')}일 : ${data.title}`
+                                )} 
                             </List>
                         )
                     ))
@@ -76,6 +96,17 @@ const ListWeekHeader = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 0 10px;
+`;
+
+const Title = styled.input`
+    font-size: 20px;
+    font-weight: 900;
+    width: 150px;
+    border: 0;
+
+    &:focus {
+        outline: none;
+    }
 `;
 
 const HeaderBtnBox = styled.div`

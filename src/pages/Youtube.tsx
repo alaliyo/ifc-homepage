@@ -13,7 +13,7 @@ function Youtube() {
     const [arrIndex, setArrIndex] = useState(0);
     const linkInfoArr = [
         {title: '한국', LinkUrl: 'youtube-kr'},
-        {title: '영어', LinkUrl: 'youtube-en'},
+        {title: 'English', LinkUrl: 'youtube-en'},
     ]
 
     // GET

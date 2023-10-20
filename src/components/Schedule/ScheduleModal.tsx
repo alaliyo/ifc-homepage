@@ -12,7 +12,7 @@ function ScheduleModal({eventData, showModal, setShowModal}: any) {
                 {eventData && (
                     <>
                         <ModalData>{eventData?.title}</ModalData>
-                        <ModalData>{eventData?.date}</ModalData>
+                        <ModalData>{eventData?.start}{eventData.end && `~${eventData.end.slice(5)}`}</ModalData>
                         {eventData.content && <ModalData>{eventData.content}</ModalData>}
                         {eventData?.url && (
                             <ModalData>
