@@ -20,7 +20,7 @@ export interface YearScheduleDataprops {
 
 export function YearScheduleData() {
     const [YearsCheduleDatas, setYearScheduleDatas] = useState<YearScheduleDataprops[]>();
-
+    
     useEffect(() => {
         const q = query(
             collection(dbService, "year-schedules"),
@@ -124,6 +124,8 @@ export function WeeklyData() {
                 id: doc.id,
                 ...doc.data(),
             }));
+
+            console.log(historyArr);
             setWeeklyData(historyArr);
         });
     }, []);
@@ -160,6 +162,8 @@ export function ServersData() {
                 id: doc.id,
                 ...doc.data(),
             }));
+
+            
             setServersData(pastorsArr);
         });
     }, []);
@@ -195,6 +199,7 @@ export function EventStoryData() {
                 id: doc.id,
                 ...doc.data(),
             }));
+            
             setEventStoryData(historyArr);
         });
     }, []);
