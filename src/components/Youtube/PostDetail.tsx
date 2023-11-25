@@ -35,7 +35,7 @@ function PostDetail() {
                         <iframe
                             width="100%"
                             height="100%"
-                            src={`https://www.youtube.com/embed/PUs4-OiibxQ?si=${getData.id}`}
+                            src={`https://www.youtube.com/embed/${getData.id}`}
                             title="YouTube video player"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowFullScreen
