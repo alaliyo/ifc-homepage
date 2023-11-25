@@ -7,7 +7,7 @@ function PostDetail() {
     const { krVideos, enVideos } = useOutletContext<DateProps>();
     const location = useLocation().pathname.split("/");
     const [getData, setDate] = useState<VideoProps>();
-    console.log(getData);
+    
     const navigate = useNavigate();
 
     const handleGoBack = () => {
@@ -23,7 +23,7 @@ function PostDetail() {
             setDate(obj[0]);
         }     
     }, [enVideos, krVideos, location])
-
+    
     return (
         <PostDetailBox>
             <LinkBox>
@@ -32,6 +32,8 @@ function PostDetail() {
             {getData && (
                 <>
                     <PostBox>
+                        <h2>{getData.content.split("\n")[0]}</h2>
+                        <h5>{getData.content.split("\n")[2]}</h5>
                         <iframe
                             width="100%"
                             height="100%"
@@ -54,24 +56,14 @@ const PostDetailBox = styled.div`
     width: 80%;
     text-align: center;
 
-    h4 {
-        margin-top: 10px;
+    h2 {
+        margin-top: 20px;
         font-weight: 900;
-
-        @media screen and (max-width: 650px) {
-            font-size: 15px;
-            margin-top: 5px;
-        }
     }
 
     h5 {
-        margin-top: 10px;
+        margin: 10px 0 20px 0;
         font-weight: 900;
-
-        @media screen and (max-width: 650px) {
-            font-size: 15px;
-            margin-top: 5px;
-        }
     }
 
     @media screen and (max-width: 650px) {

@@ -38,6 +38,7 @@ function Youtube() {
                             id: item.snippet.resourceId.videoId,
                             title: item.snippet.title,
                             img: item.snippet.thumbnails.medium.url,
+                            content: item.snippet.description,
                         })),
                     ];
     
@@ -72,7 +73,7 @@ function Youtube() {
                             id: item.snippet.resourceId.videoId,
                             title: item.snippet.title,
                             img: item.snippet.thumbnails.medium.url,
-                            url: `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`,
+                            content: item.snippet.description,
                         })),
                     ];
     

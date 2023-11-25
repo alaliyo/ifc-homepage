@@ -45,7 +45,8 @@ export const PostsBody = styled.div`
         word-break: keep-all;
 
         @media screen and (max-width: 480px) {
-            font-size: 14px;
+            font-size: 13px;
+            padding: 10px 0;
         }
 
         :Hover {

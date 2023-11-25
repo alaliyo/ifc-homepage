@@ -20,6 +20,7 @@ export interface VideoProps {
     id: string;
     title: string;
     img: string;
+    content: string;
 }
 
 export interface DateProps {

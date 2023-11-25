@@ -64,15 +64,16 @@ function EnPosts() {
             {yearVideo && yearVideo.length > 0 ? (<>
                 <PostsBody>
                     {yearVideo && yearVideo.length > 0 && getPostsForCurrentPage().map((obj, i) => (
-                        <Link key={i} to={`/youtube/detail/en/${obj.id}`}>
-                            <ListContentBox>
-                                <Thumbnail src={obj.img} alt="" />
-                                <ContentBox>
-                                    <p>{obj.title.slice(0, -13)}</p>
-                                    <p>{obj.title.slice(-12, -1)}</p>
-                                </ContentBox>
-                            </ListContentBox>
-                        </Link>
+                        <Link key={i} to={`/youtube/detail/kr/${obj.id}`}>
+                        <ListContentBox>
+                            <Thumbnail src={obj.img} alt="" />
+                            <ContentBox>
+                                <p>{obj.content.split("\n")[0]}</p>
+                                <p>{obj.content.split("\n")[2]}</p>
+                                <p>{obj.title.slice(-12, -1)}</p>
+                            </ContentBox>
+                        </ListContentBox>
+                    </Link>
                     ))}
                 </PostsBody>
 

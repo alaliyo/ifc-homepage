@@ -52,7 +52,7 @@ function KrPosts() {
         }
         setYearVideo(arr)
     }, [krVideos, year]);
-
+    console.log(krVideos);
     return(
         <PostsBox>
             <ChildTitle>한국</ChildTitle>
@@ -68,7 +68,8 @@ function KrPosts() {
                             <ListContentBox>
                                 <Thumbnail src={obj.img} alt="" />
                                 <ContentBox>
-                                    <p>{obj.title.slice(0, -13)}</p>
+                                    <p>{obj.content.split("\n")[0]}</p>
+                                    <p>{obj.content.split("\n")[2]}</p>
                                     <p>{obj.title.slice(-12, -1)}</p>
                                 </ContentBox>
                             </ListContentBox>
