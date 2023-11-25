@@ -40,12 +40,11 @@ export const PostsBody = styled.div`
         text-decoration: none;
         font-weight: 900;
         color: black;
-        padding: 10px 10px 5px 10px;
+        padding: 10px;
         border-bottom: 1px solid #adadad;
         word-break: keep-all;
 
         @media screen and (max-width: 480px) {
-            padding: 10px 5px 5px 5px;
             font-size: 14px;
         }
 
@@ -55,15 +54,27 @@ export const PostsBody = styled.div`
             transition: .3s;
             border-radius: 5px;
         }
-
-        div {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-        }
     }
     
     @media screen and (max-width: 768px) {
         border-top: none;
+    }
+`;
+
+export const Thumbnail = styled.img`
+    height: 100px;
+    aspect-ratio: 16 / 9;
+`;
+
+export const ListContentBox = styled.div`
+    display: flex;
+
+`;
+
+export const ContentBox = styled.div`
+    margin-left: 10px;
+
+    p {
+        margin-bottom: 5px;
     }
 `;

@@ -45,7 +45,6 @@ import BulletinBoard from "./admin/pages/BulletinBoard";
 import AdminHistory from "./admin/components/BulletinBoard/AdminHistory";
 import AdminYear from "./admin/components/BulletinBoard/AdminYear";
 import AdminServers from "./admin/components/BulletinBoard/AdminServers";
-import AdminYoutube from "./admin/components/BulletinBoard/AdminYoutube";
 import AdminWeekly from "./admin/components/BulletinBoard/AdminWeekly";
 import AdminEventStory from "./admin/components/BulletinBoard/AdminEventStory";
 
@@ -215,10 +214,6 @@ const router = createBrowserRouter([
                     {
                         path: "year",
                         element: <AdminYear />,
-                    },
-                    {
-                        path: "youtube",
-                        element: <AdminYoutube />,
                     },
                     {
                         path: "servers",

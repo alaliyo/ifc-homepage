@@ -1,56 +1,46 @@
 import { useEffect, useState } from 'react';
-import { Link, useMatch, useLocation, useOutletContext } from 'react-router-dom';
+import { useLocation, useOutletContext, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { YoutubeData, YoutubeDataArrayProps, YoutubeDataProps } from '../../utils/dbService';
-import { DateProps } from './YoutubeProps';
+import { DateProps, VideoProps } from './YoutubeProps';
 
 function PostDetail() {
-    const [getData, setGetData] = useState<YoutubeDataArrayProps[]>([]);
-    const { arrIndex } = useOutletContext<DateProps>();
-    const [post, setPost] = useState<YoutubeDataProps>(); // id 값 비교 상세 데이터 들고옴
-    const match = useMatch('/youtube/detail/kr/:postsId');
-    const currentUrl = match?.pathname;
+    const { krVideos, enVideos } = useOutletContext<DateProps>();
     const location = useLocation().pathname.split("/");
+    const [getData, setDate] = useState<VideoProps>();
+    console.log(getData);
+    const navigate = useNavigate();
 
-    // GET
+    const handleGoBack = () => {
+        navigate(-1); // 뒤로 가기 기능을 수행하는 함수
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const youtubeData = await YoutubeData(location[3] === "kr" ? "youtube-kr" : "youtube-en");
-                setGetData(youtubeData ? youtubeData : []);
-            } catch (error) {
-                console.error("데이터를 불러오는 중 오류 발생:", error);
-            }
-        };
-        
-        fetchData();
-    }, [location]);
-    
-    useEffect(() => {
-        if (getData.length > 0) {
-            setPost(getData[arrIndex].contentsArr.find(e => e.id === Number(location[4])));
-        }
-    }, [arrIndex, getData, location]);
-    
+        if (location[3] === 'kr') {
+            const obj = krVideos.filter(obj => obj.id === location[4]);
+            setDate(obj[0]);
+        } else if (location[3] === 'en') {
+            const obj = enVideos.filter(obj => obj.id === location[4]);
+            setDate(obj[0]);
+        }     
+    }, [enVideos, krVideos, location])
+
     return (
         <PostDetailBox>
             <LinkBox>
-                <Link to={currentUrl === '/youtube/detail/kr/' ? '/youtube/youtube-kr' : '/youtube/youtube-en'}>←목록으로</Link>
+                <span onClick={handleGoBack}>←목록으로</span>
             </LinkBox>
-            {getData.length > 0 && post && (
+            {getData && (
                 <>
                     <PostBox>
                         <iframe
                             width="100%"
                             height="100%"
-                            src={post.url}
+                            src={`https://www.youtube.com/embed/PUs4-OiibxQ?si=${getData.id}`}
                             title="YouTube video player"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowFullScreen
                         ></iframe>
                     </PostBox>
-                    <h4>제목: {post.title}</h4>
-                    <h5>말씀: {post.bible}</h5>
                 </>
             )}
         </PostDetailBox>
@@ -93,7 +83,7 @@ const PostDetailBox = styled.div`
 const LinkBox = styled.div`
     text-align: end;
 
-    a{
+    span {
         color: gray;
         text-decoration: none;
         font-weight: 900;

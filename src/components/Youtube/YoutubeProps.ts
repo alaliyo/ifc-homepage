@@ -1,5 +1,3 @@
-import { YoutubeDataArrayProps } from "../../utils/dbService";
-
 export interface DataProps {
     postId: number;
     title: string;
@@ -18,8 +16,15 @@ export interface YoutubeProps {
     windowWidth: number;
 }
 
+export interface VideoProps {
+    id: string;
+    title: string;
+    img: string;
+}
+
 export interface DateProps {
-    getData: YoutubeDataArrayProps[];
+    krVideos: VideoProps[];
+    enVideos: VideoProps[];
     arrIndex: number;
     setArrIndex: any;
 };

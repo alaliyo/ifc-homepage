@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, onSnapshot, orderBy, query, setDoc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { dbService } from "../firebase";
 import { DeleteImages, uploadImage } from "./storageService";
@@ -65,36 +65,6 @@ export function HistoryData() {
     }, []);
 
     return historydata;
-}
-
-
-// 설교영상 GET
-export interface YoutubeDataProps {
-    id: number;
-    title: string;
-    date: string;
-    bible: string;
-    url: string;
-}
-
-export interface YoutubeDataArrayProps {
-    date: number;
-    contentsArr: Array<YoutubeDataProps>;
-}
-
-export async function YoutubeData(collectionPath: string): Promise<YoutubeDataArrayProps[]> {
-    try {
-        const q = query(collection(dbService, collectionPath), orderBy("date", "desc"));
-        const querySnapshot = await getDocs(q);
-        const pastorsData: YoutubeDataArrayProps[] = querySnapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-        })) as unknown as YoutubeDataArrayProps[];
-        return pastorsData;
-    } catch (error) {
-        console.error("데이터를 불러오는 중 오류 발생:", error);
-        throw error; // 오류를 호출한 곳으로 전파합니다.
-    }
 }
 
 
