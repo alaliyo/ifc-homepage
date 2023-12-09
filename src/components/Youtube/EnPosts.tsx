@@ -64,7 +64,7 @@ function EnPosts() {
             {yearVideo && yearVideo.length > 0 ? (<>
                 <PostsBody>
                     {yearVideo && yearVideo.length > 0 && getPostsForCurrentPage().map((obj, i) => (
-                        <Link key={i} to={`/youtube/detail/kr/${obj.id}`}>
+                        <Link key={i} to={`/youtube/detail/en/${obj.id}`}>
                         <ListContentBox>
                             <Thumbnail src={obj.img} alt="" />
                             <ContentBox>

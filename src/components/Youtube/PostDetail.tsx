@@ -13,7 +13,7 @@ function PostDetail() {
     const handleGoBack = () => {
         navigate(-1); // 뒤로 가기 기능을 수행하는 함수
     };
-
+    
     useEffect(() => {
         if (location[3] === 'kr') {
             const obj = krVideos.filter(obj => obj.id === location[4]);

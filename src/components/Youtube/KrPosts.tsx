@@ -52,7 +52,7 @@ function KrPosts() {
         }
         setYearVideo(arr)
     }, [krVideos, year]);
-    console.log(krVideos);
+    
     return(
         <PostsBox>
             <ChildTitle>한국</ChildTitle>

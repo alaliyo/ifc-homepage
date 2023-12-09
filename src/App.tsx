@@ -9,10 +9,8 @@ function Root() {
   const [windowWidth, setwindowWidth] = useState(window.innerWidth); //웹 넓이 
   const [init, setInit] = useState(false);
   const location = useLocation().pathname;
-  const youtubeKey = process.env.YOUTUBE_API_KEY;
-    const playlistId = process.env.KR_PLAYLIST_ID;  
-    console.log( youtubeKey, playlistId);
-  //웹 넓이에 반응
+
+  //웹 넓이에 반응  
   useEffect(() => { 
     const handleResize = () => {
         setwindowWidth(window.innerWidth);

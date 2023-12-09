@@ -9,7 +9,7 @@ function ListWeek({setEventData, setShowModal}: any) {
     const [year, setYear] = useState(date.getFullYear());
     const [month, setMonth] = useState(date.getMonth() + 1);
     const [dateLocation, setDateLocation] = useState(`${year}-${month}`);
-
+    
     const dateChange = (e: any) => {
         const newDate = new Date(e.target.value);
         setYear(newDate.getFullYear());
