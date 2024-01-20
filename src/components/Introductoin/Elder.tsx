@@ -10,7 +10,7 @@ function Elder() {
         <Body>
             <ChildTitle>장로 소개</ChildTitle>
             <CardBox>
-            {serversData && serversData[2].contentsArr.map((obj, i) => (
+            {serversData && serversData[1].contentsArr.map((obj, i) => (
                 <CardFrame key={i}>
                     <Card>
                         <Card.Img variant="top" src={obj.imgUrls[0]} />

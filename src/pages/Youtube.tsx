@@ -31,16 +31,19 @@ function Youtube() {
                     const response = await axios.get(
                         `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${KR_PLAYLIST_ID}&key=${YOUTUBE_API_KEY}&maxResults=100000${nextPageToken ? `&pageToken=${nextPageToken}` : ''}`
                     );
+
+                    const dataItems = [...response.data.items];
                     
-                    fetchedVideos = [
-                        ...fetchedVideos,
-                        ...response.data.items.map((item: any) => ({
-                            id: item.snippet.resourceId.videoId,
-                            title: item.snippet.title,
-                            img: item.snippet.thumbnails.medium.url,
-                            content: item.snippet.description,
-                        })),
-                    ];
+                    for (let e of dataItems) {
+                        if (e.snippet.title !== "Deleted video") {
+                            fetchedVideos.push({
+                                id: e.snippet.resourceId.videoId,
+                                title: e.snippet.title,
+                                img: e.snippet.thumbnails.medium.url,
+                                content: e.snippet.description,
+                            })
+                        }
+                    }
     
                     nextPageToken = response.data.nextPageToken || '';
                 } while (nextPageToken);
@@ -66,16 +69,18 @@ function Youtube() {
                     const response = await axios.get(
                         `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${EN_PLAYLIST_ID}&key=${YOUTUBE_API_KEY}&maxResults=100000${nextPageToken ? `&pageToken=${nextPageToken}` : ''}`
                     );
+                    const dataItems = [...response.data.items];
                     
-                    fetchedVideos = [
-                        ...fetchedVideos,
-                        ...response.data.items.map((item: any) => ({
-                            id: item.snippet.resourceId.videoId,
-                            title: item.snippet.title,
-                            img: item.snippet.thumbnails.medium.url,
-                            content: item.snippet.description,
-                        })),
-                    ];
+                    for (let e of dataItems) {
+                        if (e.snippet.title !== "Deleted video") {
+                            fetchedVideos.push({
+                                id: e.snippet.resourceId.videoId,
+                                title: e.snippet.title,
+                                img: e.snippet.thumbnails.medium.url,
+                                content: e.snippet.description,
+                            })
+                        }
+                    }
     
                     nextPageToken = response.data.nextPageToken || '';
                 } while (nextPageToken);

@@ -9,7 +9,7 @@ function Pastors() {
     return(
         <Body>
             <ChildTitle>교역자 소개</ChildTitle>
-            {serversData && serversData.slice(0, 2).map((arr, i) => (
+            {serversData && serversData.slice(0, 1).map((arr, i) => (
                 <div key={i}>
                     <SeparationText>{arr.separationText}</SeparationText>
                     <CardBox>
